@@ -1,9 +1,9 @@
 if (Meteor.isClient) {
-  Template.hello.greeting = function () {
+  Template.welcome.greeting = function () {
     return "Welcome to techsonomy.";
   };
 
-  Template.hello.events({
+  Template.welcome.events({
     'click input' : function () {
       // template data, if any, is available in 'this'
       if (typeof console !== 'undefined')

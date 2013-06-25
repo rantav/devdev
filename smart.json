@@ -1,6 +1,7 @@
 {
   "packages": {
     "bootstrap-updated": {},
-    "router": {}
+    "router": {},
+    "blade": {}
   }
 }
