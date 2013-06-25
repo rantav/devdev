@@ -1,5 +1,6 @@
 {
   "packages": {
-    "bootstrap-updated": {}
+    "bootstrap-updated": {},
+    "router": {}
   }
 }
