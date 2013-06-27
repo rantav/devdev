@@ -2,17 +2,17 @@
   button.btn.btn-primary Claim
 h1= Session.get('technology')
 
-table.table.table-hover
+table.table
   tr
     th Tagline
     td
-      div.contribution
+      include 'contribution-actions'
+      .contribution.gutter-author-1(rel='tooltip' title='Contributed by Ran Tavory')
         span A better way to build apps.
-      div.contribution-to-be
-        input(type='text' placeholder='Contribute...')
   tr
     th Websites
     td
+      include 'contribution-actions'
       div.contribution
         a(href="http://www.meteor.com") http://www.meteor.com
       div.contribution
@@ -20,6 +20,7 @@ table.table.table-hover
   tr
     th Source
     td
+      include 'contribution-actions'
       div.contribution
         a(href="https://github.com/meteor/meteor") https://github.com/meteor/meteor
   tr
@@ -150,3 +151,11 @@ table.table.table-hover
     th
     td
       div.contribution
+
+.contributors
+  .contributor
+    | Ran Tavory
+  .contributor
+    | Maya Tavory
+  .contributor
+    | Yael Tavory
