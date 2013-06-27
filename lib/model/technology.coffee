@@ -1,37 +1,37 @@
 root = exports ? this
 
 root.Technologies = new Meteor.Collection "technogies"
-if Meteor.isServer and Technologies.find().count() is 0
-  technologies = [
-    name: "MeteorJS"
-    aspects: [
-      name: 'Tagline'
-      contributions: [
-        contributor:
-          name: 'Ran Tavory'
-          id: 1
-        html: 'A better way to build apps.'
+
+if Meteor.isServer
+  ran = Meteor.users.findOne {'profile.name': 'Ran Tavory'}
+  yael = Meteor.users.findOne {'profile.name': 'Yael Tavory'}
+  if ran and not ran.profile.color
+    ran.profile.color = '#a979d9'
+    # unused color: rgb(255, 177, 177)
+    Meteor.users.update ran._id, ran
+  if Technologies.find().count() is 0 and ran and yael
+    technologies = [
+      name: "MeteorJS"
+      aspects: [
+        name: 'Tagline'
+        contributions: [
+          contributorId: ran._id
+          html: 'A better way to build apps.'
+        ,
+          contributorId: yael._id
+          html: 'A really good way to build apps, daddy!'
+        ]
       ,
-        contributor:
-          name: 'Yael Tavory'
-          id: 2
-        html: 'A really good way to build apps, daddy!'
+        name: 'Websites'
+        contributions: [
+          contributorId: ran._id
+          html: '<a href="http://www.meteor.com">http://www.meteor.com</a>'
+        ,
+          contributorId: ran._id
+          html: '<a href="https://github.com/meteor/meteor">https://github.com/meteor/meteor</a>'
+        ]
       ]
     ,
-      name: 'Websites'
-      contributions: [
-        contributor:
-          name: 'Ran Tavory'
-          id: 1
-        html: '<a href="http://www.meteor.com">http://www.meteor.com</a>'
-      ,
-        contributor:
-          name: 'Ran Tavory'
-          id: 1
-        html: '<a href="https://github.com/meteor/meteor">https://github.com/meteor/meteor</a>'
-      ]
     ]
-  ,
-  ]
-  _.each technologies, (technology) ->
-    Technologies.insert technology
+    _.each technologies, (technology) ->
+      Technologies.insert technology
