@@ -1,7 +1,10 @@
 Meteor.Router.add
   "/": "welcome"
-  "/technology/:name": (name) ->
-    Session.set "technology", name
+  "/technology/:id": (id) ->
+    Session.set "technologyId", id
+    "technology"
+  "/technology/:id/:name": (id) ->
+    Session.set "technologyId", id
     "technology"
   "*": "welcome"
 
