@@ -1,6 +1,10 @@
-include 'technology-page-actions'
-
 - if (technology)
+  .technology-page-actions
+    .pull-right
+      button.btn.btn-primary Claim #{technology.name}
+      <button.btn Follow
+      <button.btn Share
+
   h1= technology.name
   table.table
     foreach technology.aspects as aspect
