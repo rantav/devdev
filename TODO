@@ -1,1 +1,3 @@
 Check out http://bourbon.io/
+
+Take care of XSS when inserting HTML to the contribution

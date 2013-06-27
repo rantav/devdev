@@ -1,0 +1,10 @@
+tr.aspect
+  th Tagline
+  td
+    include 'aspect-actions'
+    .contribution.gutter-author-1(rel='tooltip' data-placement='left' title='Ran Tavory')
+      span A better way to build apps.
+      include 'contribution-actions'
+    .contribution.gutter-author-2(rel='tooltip' data-placement='left' title='Maya Tavory')
+      span A really good way to build apps, daddy!
+      include 'contribution-actions'

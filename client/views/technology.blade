@@ -1,161 +1,57 @@
-.pull-right
-  button.btn.btn-primary Claim
+include 'technology-page-actions'
+
+
 h1= Session.get('technology')
 
 table.table
-  tr
-    th Tagline
-    td
-      include 'contribution-actions'
-      .contribution.gutter-author-1(rel='tooltip' title='Contributed by Ran Tavory')
-        span A better way to build apps.
-  tr
-    th Websites
-    td
-      include 'contribution-actions'
-      div.contribution
-        a(href="http://www.meteor.com") http://www.meteor.com
-      div.contribution
-        a(href="https://github.com/meteor/meteor") https://github.com/meteor/meteor
-  tr
-    th Source
-    td
-      include 'contribution-actions'
-      div.contribution
-        a(href="https://github.com/meteor/meteor") https://github.com/meteor/meteor
-  tr
-    th Typical Use Cases
-    td
-      div.contribution
-        span Full stack (mostly frontend) realtime collaborative web apps
-  tr
-    th Sweet Spots
-    td
-      div.contribution
-        span javascript
-      div.contribution
-        span realtime
-      div.contribution
-        span collaborative apps
-      div.contribution
-        span no backend knowledge required
-  tr
-    th Weaknesses
-    td
-      div.contribution
-        span propiatary technology
-      div.contribution
-        span
-          | no trivial integration with
-          |
-          a(href="/technology/npm") npm
-          |
-          | packages
+  block aspect(name, contributions)
+    tr.aspect
+      th= name
+      td
+        div.aspect-actions.pull-right
+          a(href='#') Contribute
+        foreach contributions as contribution
+          div(class='contribution gutter-contributor-#{contribution.contributor.id}'
+              rel='tooltip'
+              data-placement='left'
+              title='#{contribution.contributor.name}')
+            div.contribution-actions.pull-right
+              <a(href='#') Delete
+              <a(href='#') +1
+              <a(href='#') -1
+            p.contribution!= contribution.html
+  render aspect('Tagline', [{contributor: {id: 1, name: 'Ran Tavory'}, html: 'A better way to build apps.'},
+                            {contributor: {id: 2, name: 'Maya Tavory'}, html: 'A really good way to build apps, daddy!'}])
 
-  tr
-    th Docs
-    td
-      div.contribution
-        a(href="http://docs.meteor.com/") http://docs.meteor.com/
-  tr
-    th Tutorials
-    td
-      div.contribution
-        a(href="http://www.meteor.com/screencast") Screencast
-      div.contribution
-        a(href="http://net.tutsplus.com/tutorials/javascript-ajax/prototyping-with-meteor/") Prototyping With Meteor
-      div.contribution
-        a(href='http://meteor.com/examples') Examples
-  tr
-    th StackOverflow
-    td
-      div.contribution
-  tr
-    th Mainling list
-    td
-      div.contribution
-        a(href='mailto:meteor-talk@googlegroups.com') meteor-talk@googlegroups.com
-        span
-          |
-          | is for general questions, requests for help, and new project announcements.
-          |
-        a(href='mailto:meteor-core@googlegroups.com') meteor-core@googlegroups.com
-        span
-          |
-          | is for discussing Meteor internals and proposed changes.
-  tr
-    th IRC
-    td
-      div.contribution
-        span #meteor on irc.freenode.net
-  tr
-    th Development Status
-    td
-      div.contribution
-        a(href="http://www.ohloh.net/p/meteor-js") ohlo
-      div.contribution
-        // look here http://developer.github.com/v3/
-        a(href="https://github.com/meteor/meteor/pulse") github pulse
-  tr
-    th Used By
-    td
-      div.contribution
-  tr
-    th Alternative Technologies
-    td
-      div.contribution
-        a(href='/technology/derbyjs') DerbyJS
-  tr
-    th Complement Technologies
-    td
-      div.contribution
-        a(href='/technology/nodejs') NodeJS
-  tr
-    th Talk, Video, Slides
-    td
-      div.contribution
-  tr
-    th Prerequisites
-    td
-      div.contribution
-        a(href='/technology/nodejs') NodeJS
-      div.contribution
-        a(href='/technology/javascript') JavaScript
-      div.contribution
-        a(href='/technology/html') HTML
-  tr
-    th Reviews
-    td
-      div.contribution
-  tr
-    th Developers
-    td
-      div.contribution
-        a(href="http://meteor.com/") Meteor, the company
-      div.contribution
-        a(href="https://github.com/dgreensp") David Greenspa
-      div.contribution
-        a(href="https://github.com/glasser") David Glasser
-      div.contribution
-        a(href="https://github.com/imslavko") Slava Kim
+  render aspect('Websites', [{contributor: {id: 1, name: 'Ran Tavory'}, html: '<a href="http://www.meteor.com">http://www.meteor.com</a>'},
+                             {contributor: {id: 1, name: 'Ran Tavory'}, html: '<a href="https://github.com/meteor/meteor">https://github.com/meteor/meteor</a>'}])
+  render aspect('Source Code', [{contributor: {id: 1, name: 'Ran Tavory'}, html: '<a href="https://github.com/meteor/meteor">https://github.com/meteor/meteor</a>'}])
+  render aspect('Typical Use Cases', [{contributor: {id: 1, name: 'Ran Tavory'}, html: 'Full stack (mostly frontend) realtime collaborative web apps'},
+                                      {contributor: {id: 1, name: 'Ran Tavory'}, html: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br/>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}])
+  render aspect('Sweet Spots', [{html: 'Full stack (mostly frontend) realtime collaborative web apps, javascript, realtime', contributor: {id: 1, name: 'Ran Tavory'}},
+                                {html: 'collaborative apps', contributor: {id: 2, name: 'Maya Tavory'}},
+                                {html: 'no backend knowledge required', contributor: {id: 3, name: 'Yael Tavory'}}])
+  render aspect('Weaknesses', [{html: '<a href="/technology/npm">NPM</a> integration is still lacking. And no official extension mechanism yet', contributor: {id: 1, name: 'Ran Tavory'}}])
+  render aspect('Docs', [{html: '<a href="http://docs.meteor.com/">http://docs.meteor.com/</a>', contributor: {id: 1, name: 'Ran Tavory'}}])
+  render aspect('Tutorials', [{html: '<a href="http://www.meteor.com/screencast">Meteor Screencast</a>, <a href="http://net.tutsplus.com/tutorials/javascript-ajax/prototyping-with-meteor/">Prototyping with Meteor</a>, <a href="http://meteor.com/examples">Meteor Examples</a>', contributor: {id: 1, name: 'Ran Tavory'}}])
+  render aspect('StackOverflow', [{html: '<a href="http://stackoverflow.com/questions/tagged/meteor">Questions tagged with #meteor</a>', contributor: {id: 1, name: 'Ran Tavory'}}])
+  render aspect('Mainling list', [{html: '<a href="mailto:meteor-talk@googlegroups.com">meteor-talk@googlegroups.com</a> is for general questions, requests for help, and new project announcements. <a href="mailto:meteor-core@googlegroups.com">meteor-code@googlegroups.com</a> is for discussing Meteor internals and proposed changes.', contributor: {id: 1, name: 'Ran Tavory'}}])
+  render aspect('IRC', [{html: '#meteor on irc.freenode.net', contributor: {id: 1, name: 'Ran Tavory'}}])
+  render aspect('Development Status', [{html: '<a href="http://www.ohloh.net/p/meteor-js">ohlo</a>, <a href="https://github.com/meteor/meteor/pulse">Github pulse', contributor: {id: 1, name: 'Ran Tavory'}}])
+  render aspect('Used By', [])
+  render aspect('Alternatives', [{html: '<a href="/technology/derbyjs">DerbyJS</a>', contributor: {id: 1, name: 'Ran Tavory'}}])
+  render aspect('Complement Technologies', [{html: '<a href="/technology/nodejs">NodeJS</a>', contributor: {id: 1, name: 'Ran Tavory'}}])
+  render aspect('Talk, Video, Slides', [])
+  render aspect('Prerequisites', [{html: '<ul><li><a href="/technology/nodejs">NodeJS</a></li><li><a href="/technology/javascript">JavaScript</a></li><li><a href="/technology/html">HTML</a></li></ul>', contributor: {id: 1, name: 'Ran Tavory'}}])
+  render aspect('Reviews', [])
+  render aspect('Developers', [{html: '<ul><li><a href="http://meteor.com/">Meteor, the company</a></li><li><a href="https://github.com/dgreensp">David Greenspan</a></li><li><a href="https://github.com/glasser">David Glasser</a></li><li><a href="https://github.com/imslavko">Slava Kim</a></li></ul>', contributor: {id: 1, name: 'Ran Tavory'}}])
 
-  tr
-    th
-    td
-      div.contribution
-  tr
-    th
-    td
-      div.contribution
-  tr
-    th
-    td
-      div.contribution
 
 .contributors
-  .contributor
-    | Ran Tavory
-  .contributor
-    | Maya Tavory
-  .contributor
-    | Yael Tavory
+  h3 Contributors
+  block contributor(contributor)
+    div(class="contributor gutter-contributor-#{contributor.id} pull-left")
+      a(href='/contributor/#{contributor.id}')= contributor.name
+  render contributor({name: 'Ran Tavory', id: 1})
+  render contributor({name: 'Maya Tavory', id: 2})
+  render contributor({name: 'Yael Tavory', id: 3})

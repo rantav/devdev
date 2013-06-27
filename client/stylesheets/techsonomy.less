@@ -1,8 +1,22 @@
+.technology-page-actions {
+  margin: 10px;
+}
 .contribution-actions {
   display: none;
 }
-tr:hover .contribution-actions {
+.contribution:hover .contribution-actions {
   display: block;
+}
+
+.aspect-actions {
+  display: none;
+}
+.aspect:hover .aspect-actions {
+  display: block;
+}
+
+p.contribution {
+  margin: 0 0 1px;
 }
 
 @contribution-border-width: 6px;
@@ -11,6 +25,18 @@ tr:hover .contribution-actions {
   padding-right: 150px;
   border-left: @contribution-border-width solid white;
 }
-.gutter-author-1 {
+
+.contributor {
+  padding: 0 20px 0 10px;
+  margin: 2px;
+}
+.gutter-contributor-1 {
   border-left: @contribution-border-width solid rgb(195, 228, 228);
 }
+.gutter-contributor-2 {
+  border-left: @contribution-border-width solid rgb(255, 177, 177);
+}
+.gutter-contributor-3 {
+  border-left: @contribution-border-width solid #a979d9;
+}
+
