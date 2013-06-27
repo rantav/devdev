@@ -9,16 +9,22 @@ table.table
       th= name
       td
         div.aspect-actions.pull-right
-          a(href='#') Contribute
+          a(href='#' title='Contribute')
+            i.icon-plus
         foreach contributions as contribution
           div(class='contribution gutter-contributor-#{contribution.contributor.id}'
               rel='tooltip'
               data-placement='left'
               title='#{contribution.contributor.name}')
             div.contribution-actions.pull-right
-              <a(href='#') Delete
-              <a(href='#') +1
-              <a(href='#') -1
+              <a(href='#' title='Edit your contribution')
+                i.icon-edit
+              <a(href='#' title='Delete your contribution')
+                i.icon-trash
+              <a(href='#' title='Vote up')
+                i.icon-thumbs-up
+              <a(href='#' title='Vote down')
+                i.icon-thumbs-down
             p.contribution!= contribution.html
   render aspect('Tagline', [{contributor: {id: 1, name: 'Ran Tavory'}, html: 'A better way to build apps.'},
                             {contributor: {id: 2, name: 'Maya Tavory'}, html: 'A really good way to build apps, daddy!'}])
@@ -51,6 +57,8 @@ table.table
   h3 Contributors
   block contributor(contributor)
     div(class="contributor gutter-contributor-#{contributor.id} pull-left")
+      i.icon-user
+      |
       a(href='/contributor/#{contributor.id}')= contributor.name
   render contributor({name: 'Ran Tavory', id: 1})
   render contributor({name: 'Maya Tavory', id: 2})
