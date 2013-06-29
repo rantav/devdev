@@ -12,7 +12,7 @@
         th= aspect.name
         td
           div.aspect-actions.pull-right
-            a(href='#' title='Contribute')
+            a(href='javascript:void(0)' title='Contribute')
               i.icon-plus
           foreach aspect.contributions as contribution
             - contributor = Meteor.users.findOne(contribution.contributorId)
@@ -31,6 +31,11 @@
                 <a(href='#' title='Vote down')
                   i.icon-thumbs-down
               p.contribution!= contribution.html
+          form.contribute-form(style='#{aspect["contributing-" + Meteor.userId()] ? "" : "display:none"}')
+            textarea.contribute-text
+            .controls
+              button(type="submit" class="btn btn-primary") Save changes
+              <button(type="button" class="btn") Cancel
 
 
   //-
