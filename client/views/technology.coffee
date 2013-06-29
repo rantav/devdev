@@ -11,10 +11,13 @@ Template.technology.contributors = ->
   contributors = (value for key, value of output)
 
 Template.technology.events
-  'click .icon-plus': (event, element) ->
+  'click .icon-plus': ->
     @['contributing-' + Meteor.userId()] = !@['contributing-' + Meteor.userId()]
     Technologies.update(technology._id, technology)
-    #$(element.find('.contribute-form')).toggle()
+
+  'click .cancel-contribution': ->
+    @['contributing-' + Meteor.userId()] = false
+    Technologies.update(technology._id, technology)
 
 $ ->
   Template.technology.rendered = () ->
