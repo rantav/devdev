@@ -19,6 +19,17 @@ Template.technology.events
     @['contributing-' + Meteor.userId()] = false
     Technologies.update(technology._id, technology)
 
+  'submit form.contribute-form': (event) ->
+    @['contributing-' + Meteor.userId()] = false
+    if not @contributions
+      @contributions = []
+    text = $('textarea.contribute-text', event.target).val()
+    @contributions.push
+      contributorId: Meteor.userId()
+      html: text
+    Technologies.update(technology._id, technology)
+    false
+
 $ ->
   Template.technology.rendered = () ->
     $('.contribution[rel=tooltip]').tooltip() # initialize all tooltips in this template
