@@ -22,15 +22,16 @@
                   data-placement='left'
                   title='#{contributor.profile.name}')
                 div.contribution-actions.pull-right
-                  <a(href='javascript:void(0)' title='Edit your contribution')
-                    i.icon-edit.icon-white
                   - if (Meteor.userId() === contribution.contributorId)
+                    <a(href='javascript:void(0)' title='Edit your contribution')
+                      i.icon-edit.icon-white
                     <a(href='javascript:void(0)' title='Delete your contribution')
                       i.icon-trash
-                  <a(href='javascript:void(0)' title='Vote up')
-                    i.icon-thumbs-up.icon-white
-                  <a(href='javascript:void(0)' title='Vote down')
-                    i.icon-thumbs-down.icon-white
+                  - else
+                    <a(href='javascript:void(0)' title='Vote up')
+                      i.icon-thumbs-up.icon-white
+                    <a(href='javascript:void(0)' title='Vote down')
+                      i.icon-thumbs-down.icon-white
                 p.contribution
                   != contribution.markdown ? marked(contribution.markdown) : ''
           - if (Meteor.userId())
