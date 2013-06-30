@@ -31,15 +31,16 @@
                   i.icon-thumbs-down.icon-white
               p.contribution
                 != contribution.markdown ? marked(contribution.markdown) : ''
-          form.contribute-form(style='#{aspect["contributing-" + Meteor.userId()] ? "" : "display:none"}')
-            .span5
-              textarea.contribute-text
-              small.muted.pull-right Markdown enabled
-              .controls
-                button(type="submit" class="btn btn-primary submit-contribution") Save changes
-                <button(type="button" class="btn cancel-contribution") Cancel
-            .span5
-              p.contribute-preview(style='border-left-color: #{Meteor.user().profile.color}')
+          - if (Meteor.userId())
+            form.contribute-form(style='#{aspect["contributing-" + Meteor.userId()] ? "" : "display:none"}')
+              .span5
+                textarea.contribute-text
+                small.muted.pull-right Markdown enabled
+                .controls
+                  button(type="submit" class="btn btn-primary submit-contribution") Save changes
+                  <button(type="button" class="btn cancel-contribution") Cancel
+              .span5
+                p.contribute-preview(style='border-left-color: #{Meteor.user().profile.color}')
 
 
   //-
