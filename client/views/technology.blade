@@ -1,9 +1,9 @@
 - if (technology)
   .technology-page-actions
     .pull-right
-      button.btn.btn-primary Claim #{technology.name}
-      <button.btn Follow
-      <button.btn Share
+      button.btn.btn-primary.disabled Claim #{technology.name}
+      <button.btn.disabled Follow
+      <button.btn.disabled Share
 
   h1= technology.name
   table.table
@@ -21,14 +21,14 @@
                 data-placement='left'
                 title='#{contributor.profile.name}')
               div.contribution-actions.pull-right
-                <a(href='#' title='Edit your contribution')
-                  i.icon-edit
-                <a(href='#' title='Delete your contribution')
-                  i.icon-trash
-                <a(href='#' title='Vote up')
-                  i.icon-thumbs-up
-                <a(href='#' title='Vote down')
-                  i.icon-thumbs-down
+                <a(href='javascript:void(0)' title='Edit your contribution')
+                  i.icon-edit.icon-white
+                <a(href='javascript:void(0)' title='Delete your contribution')
+                  i.icon-trash.icon-white
+                <a(href='javascript:void(0)' title='Vote up')
+                  i.icon-thumbs-up.icon-white
+                <a(href='javascript:void(0)' title='Vote down')
+                  i.icon-thumbs-down.icon-white
               p.contribution
                 != contribution.markdown ? marked(contribution.markdown) : ''
           form.contribute-form(style='#{aspect["contributing-" + Meteor.userId()] ? "" : "display:none"}')
