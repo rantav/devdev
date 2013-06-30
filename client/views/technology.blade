@@ -15,22 +15,24 @@
             a(href='javascript:void(0)' title='Contribute')
               i.icon-plus
           foreach aspect.contributions as contribution
-            - contributor = Meteor.users.findOne(contribution.contributorId)
-            div.contribution(style='border-left-color: #{contributor.profile.color}'
-                rel='tooltip'
-                data-placement='left'
-                title='#{contributor.profile.name}')
-              div.contribution-actions.pull-right
-                <a(href='javascript:void(0)' title='Edit your contribution')
-                  i.icon-edit.icon-white
-                <a(href='javascript:void(0)' title='Delete your contribution')
-                  i.icon-trash.icon-white
-                <a(href='javascript:void(0)' title='Vote up')
-                  i.icon-thumbs-up.icon-white
-                <a(href='javascript:void(0)' title='Vote down')
-                  i.icon-thumbs-down.icon-white
-              p.contribution
-                != contribution.markdown ? marked(contribution.markdown) : ''
+            - if (!contribution.deletedAt)
+              - contributor = Meteor.users.findOne(contribution.contributorId)
+              div.contribution(style='border-left-color: #{contributor.profile.color}'
+                  rel='tooltip'
+                  data-placement='left'
+                  title='#{contributor.profile.name}')
+                div.contribution-actions.pull-right
+                  <a(href='javascript:void(0)' title='Edit your contribution')
+                    i.icon-edit.icon-white
+                  - if (Meteor.userId() === contribution.contributorId)
+                    <a(href='javascript:void(0)' title='Delete your contribution')
+                      i.icon-trash
+                  <a(href='javascript:void(0)' title='Vote up')
+                    i.icon-thumbs-up.icon-white
+                  <a(href='javascript:void(0)' title='Vote down')
+                    i.icon-thumbs-down.icon-white
+                p.contribution
+                  != contribution.markdown ? marked(contribution.markdown) : ''
           - if (Meteor.userId())
             form.contribute-form(style='#{aspect["contributing-" + Meteor.userId()] ? "" : "display:none"}')
               .span5

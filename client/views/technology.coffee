@@ -28,6 +28,7 @@ Template.technology.events
       @contributions.push
         contributorId: Meteor.userId()
         markdown: text
+        contributionId: Meteor.uuid()
     Technologies.update(technology._id, technology)
     false
 
@@ -36,6 +37,10 @@ Template.technology.events
     text = $target.val()
     html = marked(text)
     $target.parent().parent().find('.contribute-preview').html(html)
+
+  'click .icon-trash': ->
+    @deletedAt = new Date()
+    Technologies.update(technology._id, technology)
 
 $ ->
   marked.setOptions
