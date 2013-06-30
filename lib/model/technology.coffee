@@ -16,19 +16,19 @@ if Meteor.isServer
         name: 'Tagline'
         contributions: [
           contributorId: ran._id
-          html: 'A better way to build apps.'
+          markdown: 'A better way to build apps.'
         ,
           contributorId: yael._id
-          html: 'A really good way to build apps, daddy!'
+          markdown: 'A really good way to build apps, daddy!'
         ]
       ,
         name: 'Websites'
         contributions: [
           contributorId: ran._id
-          html: '<a href="http://www.meteor.com">http://www.meteor.com</a>'
+          markdown: '<a href="http://www.meteor.com">http://www.meteor.com</a>'
         ,
           contributorId: ran._id
-          html: '<a href="https://github.com/meteor/meteor">https://github.com/meteor/meteor</a>'
+          markdown: '<a href="https://github.com/meteor/meteor">https://github.com/meteor/meteor</a>'
         ]
       ]
     ,

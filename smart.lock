@@ -4,7 +4,8 @@
     "basePackages": {
       "bootstrap-updated": {},
       "router": {},
-      "blade": {}
+      "blade": {},
+      "marked": {}
     },
     "packages": {
       "bootstrap-updated": {
@@ -21,6 +22,11 @@
         "git": "https://github.com/bminer/meteor-blade.git",
         "tag": "v3.2.6meteor1",
         "commit": "f0810fd031781c84a9b5a14fd84c5b9d060ab336"
+      },
+      "marked": {
+        "git": "https://github.com/chuangbo/meteor-marked.git",
+        "tag": "v0.2.8.2",
+        "commit": "f5d9d6dbc013ad1bd568fa610eb4d8a479943f18"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

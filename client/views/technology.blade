@@ -16,8 +16,7 @@
               i.icon-plus
           foreach aspect.contributions as contribution
             - contributor = Meteor.users.findOne(contribution.contributorId)
-            div(class='contribution'
-                style='border-left-color: #{contributor.profile.color}'
+            div.contribution(style='border-left-color: #{contributor.profile.color}'
                 rel='tooltip'
                 data-placement='left'
                 title='#{contributor.profile.name}')
@@ -30,12 +29,17 @@
                   i.icon-thumbs-up
                 <a(href='#' title='Vote down')
                   i.icon-thumbs-down
-              p.contribution!= contribution.html
+              p.contribution
+                != contribution.markdown ? marked(contribution.markdown) : ''
           form.contribute-form(style='#{aspect["contributing-" + Meteor.userId()] ? "" : "display:none"}')
-            textarea.contribute-text
-            .controls
-              button(type="submit" class="btn btn-primary submit-contribution") Save changes
-              <button(type="button" class="btn cancel-contribution") Cancel
+            .span5
+              textarea.contribute-text
+              small.muted.pull-right Markdown enabled
+              .controls
+                button(type="submit" class="btn btn-primary submit-contribution") Save changes
+                <button(type="button" class="btn cancel-contribution") Cancel
+            .span5
+              p.contribute-preview(style='border-left-color: #{Meteor.user().profile.color}')
 
 
   //-

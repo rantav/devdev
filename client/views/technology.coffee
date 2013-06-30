@@ -26,10 +26,25 @@ Template.technology.events
     text = $('textarea.contribute-text', event.target).val()
     @contributions.push
       contributorId: Meteor.userId()
-      html: text
+      markdown: text
     Technologies.update(technology._id, technology)
     false
 
+  'keyup textarea.contribute-text': (event) ->
+    $target = $(event.target)
+    text = $target.val()
+    html = marked(text)
+    $target.parent().parent().find('.contribute-preview').html(html)
+
 $ ->
+  marked.setOptions
+    gfm: true,
+    tables: true,
+    breaks: true,
+    pedantic: false,
+    sanitize: true,
+    smartLists: true,
+    smartypants: false,
+
   Template.technology.rendered = () ->
     $('.contribution[rel=tooltip]').tooltip() # initialize all tooltips in this template
