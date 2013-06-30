@@ -21,12 +21,13 @@ Template.technology.events
 
   'submit form.contribute-form': (event) ->
     @['contributing-' + Meteor.userId()] = false
-    if not @contributions
-      @contributions = []
     text = $('textarea.contribute-text', event.target).val()
-    @contributions.push
-      contributorId: Meteor.userId()
-      markdown: text
+    if text
+      if not @contributions
+        @contributions = []
+      @contributions.push
+        contributorId: Meteor.userId()
+        markdown: text
     Technologies.update(technology._id, technology)
     false
 
