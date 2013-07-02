@@ -5,7 +5,8 @@
       "bootstrap-updated": {},
       "router": {},
       "blade": {},
-      "marked": {}
+      "marked": {},
+      "font-awesome": {}
     },
     "packages": {
       "bootstrap-updated": {
@@ -27,6 +28,11 @@
         "git": "https://github.com/chuangbo/meteor-marked.git",
         "tag": "v0.2.8.2",
         "commit": "f5d9d6dbc013ad1bd568fa610eb4d8a479943f18"
+      },
+      "font-awesome": {
+        "git": "https://github.com/nate-strauser/meteor-font-awesome.git",
+        "tag": "v3.2.0",
+        "commit": "2cba6f907a2579cae2d399b522f9544c13d5e091"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

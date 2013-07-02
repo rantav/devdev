@@ -74,6 +74,6 @@
     foreach contributors as contributorId
       - contributor = Meteor.users.findOne({_id: contributorId})
       div(class="contributor pull-left" style='border-left-color: #{contributor.profile.color}')
-        img(src='#{contributor.services.google.picture}' class='img-polaroid')
+        != User.getUserPictureHtml(contributor)
         |
         a(href='/contributor/#{contributorId}/#{contributor.profile.name}')= contributor.profile.name

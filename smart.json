@@ -3,6 +3,7 @@
     "bootstrap-updated": {},
     "router": {},
     "blade": {},
-    "marked": {}
+    "marked": {},
+    "font-awesome": {}
   }
 }
