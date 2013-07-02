@@ -1,0 +1,7 @@
+h1 Technologies
+
+table.table
+  foreach technologies as technology
+    tr
+      th
+        a(href='/technology/#{technology._id}/#{technology.name}')= technology.name

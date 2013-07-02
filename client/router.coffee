@@ -1,5 +1,6 @@
 Meteor.Router.add
-  "/": "welcome"
+  '/technology': 'technologies'
+  '/technologies': 'technologies'
   "/technology/:id": (id) ->
     Session.set "technologyId", id
     "technology"
