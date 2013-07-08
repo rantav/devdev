@@ -6,6 +6,19 @@ h2 Technologies
 
 table.table
   foreach technologies as technology
-    tr
-      th
-        a(href='/technology/#{technology._id}/#{technology.name}')= technology.name
+    - if (!technology.deletedAt)
+      - creator = Meteor.users.findOne(technology.contributorId)
+      tr
+        th
+          a(href='/technology/#{technology._id}/#{technology.name}')= technology.name
+        td
+          | Started by
+          |
+          strong
+            = creator.profile.name
+        td
+          - if (Meteor.userId() === technology.contributorId)
+            .pull-right
+              a.action(href='javascript:void(0)' title='Delete #{technology.name}')
+                i.icon-trash
+

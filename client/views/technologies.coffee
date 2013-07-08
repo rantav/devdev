@@ -11,5 +11,8 @@ Template.technologies.events
             return
           Meteor.Router.to routes.technology(ret)
           alertify.success "Great, now add some smarts to #{str}"
+  'click i.icon-trash': ->
+    @deletedAt = new Date()
+    Technologies.update(@_id, @)
 
 

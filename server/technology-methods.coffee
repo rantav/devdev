@@ -7,6 +7,7 @@ Meteor.methods
   createNewTechnology: (technologyName) ->
     tech =
       name: technologyName
+      contributorId: Meteor.userId()
       aspects: [
         createAspect 'Tagline'
       ,
