@@ -1,3 +1,5 @@
+root = exports ? this
+
 Meteor.Router.add
   '/technology': 'technologies'
   '/technologies': 'technologies'
@@ -9,3 +11,7 @@ Meteor.Router.add
     "technology"
   "*": "welcome"
 
+
+routes = root.routes = {}
+routes.technology = (tech) ->
+  "/technology/#{tech._id}/#{tech.name}"
