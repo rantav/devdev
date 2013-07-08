@@ -7,7 +7,7 @@ Template.technologies.events
       if e
         Meteor.call 'createNewTechnology', str, (err, ret) ->
           if err
-            console.error(err)
+            alertify.error err
             return
           Meteor.Router.to routes.technology(ret)
           alertify.success "Great, now add some smarts to #{str}"
