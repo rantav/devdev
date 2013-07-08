@@ -8,6 +8,12 @@ Sanitize H1s etx when adding a contribution
 Allocate colors to users when they register
 http://stackoverflow.com/questions/16605549/cant-add-user-attribute-using-accounts-oncreateuser
 
+Create an about page
+    rantav
+    thank:
+        meteor
+        alertify
+
 
     render aspectBlock('Source Code', [{contributor: {id: 1, name: 'Ran Tavory'}, html: '<a href="https://github.com/meteor/meteor">https://github.com/meteor/meteor</a>'}])
     render aspectBlock('Typical Use Cases', [{contributor: {id: 1, name: 'Ran Tavory'}, html: 'Full stack (mostly frontend) realtime collaborative web apps'},

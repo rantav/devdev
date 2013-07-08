@@ -3,10 +3,13 @@ Template.technologies.technologies = ->
 
 Template.technologies.events
   'click #add-technology': ->
-    console.log(routes)
-    Meteor.call 'createNewTechnology', 'yyy', (err, ret) ->
-      if err
-        console.error(err)
-        return
-      document.location = routes.technology(ret)
+    alertify.prompt '<h1>Technology Name:</h1>', (e, str) ->
+      if e
+        Meteor.call 'createNewTechnology', str, (err, ret) ->
+          if err
+            console.error(err)
+            return
+          Meteor.Router.to routes.technology(ret)
+          alertify.success "Great, now add some smarts to #{str}"
+
 
