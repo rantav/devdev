@@ -13,7 +13,7 @@
         td.aspect-data
           div.aspect-actions.pull-right
             a.action(href='javascript:void(0)' title='Contribute')
-              i.icon-plus
+              i.icon-plus(class='#{Meteor.userId() ? "" : "disabled"}')
           foreach aspect.contributions as contribution
             - if (!contribution.deletedAt)
               - contributor = Meteor.users.findOne(contribution.contributorId)
@@ -24,14 +24,14 @@
                 div.contribution-actions.pull-right
                   - if (Meteor.userId() === contribution.contributorId)
                     <a.action(href='javascript:void(0)' title='Edit your contribution')
-                      i.icon-edit.icon-white
+                      i.icon-edit.disabled
                     <a.action(href='javascript:void(0)' title='Delete your contribution')
                       i.icon-trash
                   - else
                     <a.action(href='javascript:void(0)' title='Vote up')
-                      i.icon-thumbs-up.icon-white
+                      i.icon-thumbs-up.disabled
                     <a.action(href='javascript:void(0)' title='Vote down')
-                      i.icon-thumbs-down.icon-white
+                      i.icon-thumbs-down.disabled
                 p.contribution
                   != contribution.markdown ? marked(contribution.markdown) : ''
           - if (Meteor.userId())
