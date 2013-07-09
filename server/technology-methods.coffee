@@ -5,48 +5,17 @@ createAspect = (aspectName) ->
 
 Meteor.methods
   createNewTechnology: (technologyName) ->
+    aspectNames = ['Tagline', 'Websites', 'Source Code', 'Typical Use Cases',
+        'Sweet Spots', 'Weaknesses', 'Documentation', 'Tutorials', 'StackOverflow',
+        'Mailing Lists', 'IRC', 'Development Status', 'Used By', 'Alternatives',
+        'Complement Technologies', 'Talks, Videos, Slides', 'Prerequisites',
+        'Reviews', 'Developers']
+
     tech =
       name: technologyName
       contributorId: Meteor.userId()
-      aspects: [
-        createAspect 'Tagline'
-      ,
-        createAspect 'Websites'
-      ,
-        createAspect 'Source Code'
-      ,
-        createAspect 'Typical Use Cases'
-      ,
-        createAspect 'Sweet Spots'
-      ,
-        createAspect 'Weaknesses'
-      ,
-        createAspect 'Documentation'
-      ,
-        createAspect 'Tutorials'
-      ,
-        createAspect 'StackOverflow'
-      ,
-        createAspect 'Mailing Lists'
-      ,
-        createAspect 'IRC'
-      ,
-        createAspect 'Development Status'
-      ,
-        createAspect 'Used By'
-      ,
-        createAspect 'Alternatives'
-      ,
-        createAspect 'Complement Technologies'
-      ,
-        createAspect 'Talks, Videos, Slides'
-      ,
-        createAspect 'Prerequisites'
-      ,
-        createAspect 'Reviews'
-      ,
-        createAspect 'Developers'
-      ]
+      aspects: []
+    tech.aspects.push createAspect(a) for a in aspectNames
     _id = Technologies.insert tech
     {_id: _id, name: technologyName}
 
