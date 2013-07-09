@@ -2,6 +2,12 @@ root = exports ? this
 
 Technologies = root.Technologies = new Meteor.Collection "technogies"
 
+# Finds an aspect by its name, in the given technology object
+Technologies.findAspect = (technology, aspectName) ->
+  candidates = (aspect for aspect in technology.aspects when aspect.name == aspectName)
+  candidates[0]
+
+
 if Meteor.isServer
   ran = Meteor.users.findOne {'profile.name': 'Ran Tavory'}
   yael = Meteor.users.findOne {'profile.name': 'Yael Tavory'}

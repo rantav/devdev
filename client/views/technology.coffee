@@ -1,7 +1,7 @@
 Template.technology.technology = ->
   # Save the selected technology in the window object for the events to work...
   # Kind of lame, but...
-  window.technology = Technologies.findOne Session.get("technologyId")
+  window.technology = Technologies.findOne Session.get('technologyId')
 
 Template.technology.contributors = ->
   technology = Technologies.findOne Session.get("technologyId")
@@ -23,13 +23,8 @@ Template.technology.events
     @['contributing-' + Meteor.userId()] = false
     text = $('textarea.contribute-text', event.target).val()
     if text
-      if not @contributions
-        @contributions = []
-      @contributions.push
-        contributorId: Meteor.userId()
-        markdown: text
-        contributionId: Meteor.uuid()
-    Technologies.update(technology._id, technology)
+      Meteor.call('contributeToAspect', Session.get('technologyId'), @name, text)
+    # return false to prevent browser form submission
     false
 
   'keyup textarea.contribute-text': (event) ->

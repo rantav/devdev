@@ -19,3 +19,16 @@ Meteor.methods
     _id = Technologies.insert tech
     {_id: _id, name: technologyName}
 
+  contributeToAspect: (technologyId, aspectName, contributionText) ->
+    if technologyId and aspectName and contributionText
+      technology = Technologies.findOne technologyId
+      aspect = Technologies.findAspect(technology, aspectName)
+      if not aspect.contributions
+        aspect.contributions = []
+      aspect.contributions.push
+        contributorId: Meteor.userId()
+        markdown: contributionText
+        contributionId: Meteor.uuid()
+    Technologies.update(technology._id, technology)
+
+
