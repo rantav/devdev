@@ -42,3 +42,13 @@ Meteor.methods
     aspect = Technologies.findAspect(technology, aspectName)
     aspect['contributing-' + Meteor.userId()] = false
     Technologies.update(technologyId, technology)
+
+  deleteAspectContribution: (technologyId, contributionId) ->
+    technology = Technologies.findOne(technologyId)
+    contribution = Technologies.findContribution(technology, contributionId)
+    # Permission check
+    if contribution.contributorId == Meteor.userId()
+      contribution.deletedAt = new Date()
+      Technologies.update(technologyId, technology)
+    else
+      Meteor.error 404, 'Sorry, you cannot delete someone else\'s contribution'

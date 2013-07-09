@@ -1,7 +1,5 @@
 Template.technology.technology = ->
-  # Save the selected technology in the window object for the events to work...
-  # Kind of lame, but...
-  window.technology = Technologies.findOne Session.get('technologyId')
+  Technologies.findOne Session.get('technologyId')
 
 Template.technology.contributors = ->
   technology = Technologies.findOne Session.get("technologyId")
@@ -32,8 +30,7 @@ Template.technology.events
     $target.parent().parent().find('.contribute-preview').html(html)
 
   'click .icon-trash': ->
-    @deletedAt = new Date()
-    Technologies.update(technology._id, technology)
+    Meteor.call('deleteAspectContribution', Session.get('technologyId'), @contributionId)
 
 $ ->
   marked.setOptions

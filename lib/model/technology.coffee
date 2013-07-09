@@ -8,6 +8,12 @@ Technologies.findAspect = (technology, aspectName) ->
   candidates[0]
 
 
+Technologies.findContribution = (technology, contributionId) ->
+  for aspect in technology.aspects
+    for contribution in aspect.contributions
+      if contribution.contributionId == contributionId
+        return contribution
+
 # TODO: Move this out of here
 if Meteor.isServer
   ran = Meteor.users.findOne {'profile.name': 'Ran Tavory'}
