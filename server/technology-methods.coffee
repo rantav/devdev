@@ -31,4 +31,14 @@ Meteor.methods
         contributionId: Meteor.uuid()
     Technologies.update(technology._id, technology)
 
+  toggleContributingAspect: (technologyId, aspectName) ->
+    technology = Technologies.findOne technologyId
+    aspect = Technologies.findAspect(technology, aspectName)
+    aspect['contributing-' + Meteor.userId()] = !aspect['contributing-' + Meteor.userId()]
+    Technologies.update(technologyId, technology)
 
+  endContributingAspect: (technologyId, aspectName) ->
+    technology = Technologies.findOne technologyId
+    aspect = Technologies.findAspect(technology, aspectName)
+    aspect['contributing-' + Meteor.userId()] = false
+    Technologies.update(technologyId, technology)

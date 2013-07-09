@@ -12,18 +12,16 @@ Template.technology.contributors = ->
 
 Template.technology.events
   'click .icon-plus': ->
-    @['contributing-' + Meteor.userId()] = !@['contributing-' + Meteor.userId()]
-    Technologies.update(technology._id, technology)
+    Meteor.call('toggleContributingAspect', Session.get('technologyId'), @name)
 
   'click .cancel-contribution': ->
-    @['contributing-' + Meteor.userId()] = false
-    Technologies.update(technology._id, technology)
+    Meteor.call('endContributingAspect', Session.get('technologyId'), @name)
 
   'submit form.contribute-form': (event) ->
-    @['contributing-' + Meteor.userId()] = false
     text = $('textarea.contribute-text', event.target).val()
     if text
       Meteor.call('contributeToAspect', Session.get('technologyId'), @name, text)
+    Meteor.call('endContributingAspect', Session.get('technologyId'), @name)
     # return false to prevent browser form submission
     false
 

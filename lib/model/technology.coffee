@@ -8,6 +8,7 @@ Technologies.findAspect = (technology, aspectName) ->
   candidates[0]
 
 
+# TODO: Move this out of here
 if Meteor.isServer
   ran = Meteor.users.findOne {'profile.name': 'Ran Tavory'}
   yael = Meteor.users.findOne {'profile.name': 'Yael Tavory'}
