@@ -13,4 +13,5 @@ Template.technologies.events
           alertify.success "Great, now add some smarts to #{str}"
 
   'click i.icon-trash': ->
+    #TODO: Ask for confirmation before deleting
     Meteor.call 'deleteTechnology', @_id
