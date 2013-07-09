@@ -53,3 +53,12 @@ Meteor.methods
       Technologies.update(technologyId, technology)
     else
       Meteor.error 404, 'Sorry, you cannot delete someone else\'s contribution'
+
+  deleteTechnology: (technologyId) ->
+    technology = Technologies.findOne(technologyId)
+    # Permission check
+    if technology.contributorId == Meteor.userId()
+      technology.deletedAt = new Date()
+      Technologies.update(technologyId, technology)
+    else
+      Meteor.error 404, 'Sorry, you cannot delete someone else\'s contribution'
