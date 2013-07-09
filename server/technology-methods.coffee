@@ -1,6 +1,7 @@
 createAspect = (aspectName) ->
   name: aspectName
   contributions: []
+  aspectId: Meteor.uuid()
 
 
 Meteor.methods
