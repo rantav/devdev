@@ -5,9 +5,6 @@ Add Dates when adding contributions
 Take care of XSS when inserting HTML to the contribution
 Sanitize H1s etx when adding a contribution
 
-Allocate colors to users when they register
-http://stackoverflow.com/questions/16605549/cant-add-user-attribute-using-accounts-oncreateuser
-
 Create an about page
     rantav
     thank:
