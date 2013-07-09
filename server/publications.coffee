@@ -1,5 +1,7 @@
 Meteor.publish "technologies", ->
-  Technologies.find() # TODO: filter out deleted technologies
+  Technologies.find
+    deletedAt:
+      $exists: false
 
 Meteor.publish "users", ->
   Meteor.users.find {},
