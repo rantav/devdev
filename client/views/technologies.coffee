@@ -13,5 +13,8 @@ Template.technologies.events
           alertify.success "Great, now add some smarts to #{str}"
 
   'click i.icon-trash': ->
-    #TODO: Ask for confirmation before deleting
-    Meteor.call 'deleteTechnology', @_id
+    alertify.confirm "<i class='icon-exclamation-sign pull-left icon-4x'> </i><h2>Sure you want to delete #{@name}?</h2>", (ok) ->
+      if ok
+        Meteor.call 'deleteTechnology', @_id
+      else
+        alertify.log "<i class='icon-thumbs-up-alt pull-right'></i> <em>Oh, that was close!...</em>"
