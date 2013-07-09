@@ -10,7 +10,7 @@ table.table
       - creator = Meteor.users.findOne(technology.contributorId)
       tr
         th
-          a(href='/technology/#{technology._id}/#{technology.name}')= technology.name
+          a(href='#{routes.technology(technology)}')= technology.name
         td
           | Started by
           |
