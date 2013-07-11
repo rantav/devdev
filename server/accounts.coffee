@@ -2,7 +2,6 @@ Accounts.onCreateUser (options, user) ->
   if (options.profile)
     user.profile = options.profile
   user.profile.color = randomColor()
-  console.log('user.profile.color: ' + user.profile.color)
   user
 
 randomColor = ->
