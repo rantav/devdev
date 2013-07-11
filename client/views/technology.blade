@@ -23,11 +23,11 @@
             foreach aspect.contributions as contribution
               - if (!contribution.deletedAt)
                 - contributor = Meteor.users.findOne(contribution.contributorId)
-                div.contribution(style='border-left-color: #{contributor.profile.color}'
+                .contribution(style='border-left-color: #{contributor.profile.color}'
                     rel='tooltip'
                     data-placement='left'
-                    title='#{contributor.profile.name}, #{moment(contribution.updatedAt).fromNow()}')
-                  div.contribution-actions.pull-right
+                    title='#{contributor.profile.name}')
+                  .contribution-actions.pull-right
                     - if (Meteor.userId() === contribution.contributorId)
                       <a.action(href='javascript:void(0)' title='Edit your contribution')
                         i.icon-edit.disabled
@@ -39,6 +39,7 @@
                       <a.action(href='javascript:void(0)' title='Vote down')
                         i.icon-thumbs-down.disabled
                   p.contribution
+                    small.pull-right.muted= moment(contribution.updatedAt).fromNow()
                     != contribution.markdown ? marked(contribution.markdown) : ''
             - if (Meteor.userId())
               form.contribute-form(style='#{aspect["contributing-" + Meteor.userId()] ? "" : "display:none"}')
