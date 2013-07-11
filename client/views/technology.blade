@@ -1,4 +1,7 @@
-- if (technology)
+- if (!technology)
+  h2 #{Session.get('technologyId')} had not been created.
+  button#add-technology.btn.btn-primary(class='#{Meteor.userId() ? "" : "disabled"}') Create #{Session.get('technologyId')}
+- else
   - if (technology.deletedAt)
     .hero-unit
       h3 Sorry, this technology (technology.name) was deleted

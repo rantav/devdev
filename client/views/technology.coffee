@@ -35,6 +35,18 @@ Template.technology.events
   'click .icon-trash': ->
     Meteor.call('deleteAspectContribution', Session.get('technologyId'), @contributionId)
 
+  'click #add-technology': ->
+    if not Meteor.userId()
+      alertify.alert('<i class="icon-user icon-4x"> </i> <h2>Please log in</h2>')
+      return
+    name = Session.get('technologyId')
+    Meteor.call 'createNewTechnology', name, (err, ret) ->
+      if err
+        alertify.error err
+        return
+      Meteor.Router.to routes.technology(ret)
+      alertify.success "Great, now add some smarts to #{name}"
+
 $ ->
   marked.setOptions
     gfm: true,
