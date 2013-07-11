@@ -26,7 +26,7 @@
                 div.contribution(style='border-left-color: #{contributor.profile.color}'
                     rel='tooltip'
                     data-placement='left'
-                    title='#{contributor.profile.name}')
+                    title='#{contributor.profile.name}, #{moment(contribution.updatedAt).fromNow()}')
                   div.contribution-actions.pull-right
                     - if (Meteor.userId() === contribution.contributorId)
                       <a.action(href='javascript:void(0)' title='Edit your contribution')

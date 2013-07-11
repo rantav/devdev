@@ -1,7 +1,5 @@
 Check out http://bourbon.io/
 
-Add Dates when adding contributions
-
 Take care of XSS when inserting HTML to the contribution
 Sanitize H1s etx when adding a contribution
 
@@ -11,25 +9,4 @@ Create an about page
         meteor
         alertify
 
-
-    render aspectBlock('Source Code', [{contributor: {id: 1, name: 'Ran Tavory'}, html: '<a href="https://github.com/meteor/meteor">https://github.com/meteor/meteor</a>'}])
-    render aspectBlock('Typical Use Cases', [{contributor: {id: 1, name: 'Ran Tavory'}, html: 'Full stack (mostly frontend) realtime collaborative web apps'},
-                                        {contributor: {id: 1, name: 'Ran Tavory'}, html: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br/>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}])
-    render aspectBlock('Sweet Spots', [{html: 'Full stack (mostly frontend) realtime collaborative web apps, javascript, realtime', contributor: {id: 1, name: 'Ran Tavory'}},
-                                  {html: 'collaborative apps', contributor: {id: 2, name: 'Maya Tavory'}},
-                                  {html: 'no backend knowledge required', contributor: {id: 3, name: 'Yael Tavory'}}])
-    render aspectBlock('Weaknesses', [{html: '<a href="/technology/npm">NPM</a> integration is still lacking. And no official extension mechanism yet', contributor: {id: 1, name: 'Ran Tavory'}}])
-    render aspectBlock('Docs', [{html: '<a href="http://docs.meteor.com/">http://docs.meteor.com/</a>', contributor: {id: 1, name: 'Ran Tavory'}}])
-    render aspectBlock('Tutorials', [{html: '<a href="http://www.meteor.com/screencast">Meteor Screencast</a>, <a href="http://net.tutsplus.com/tutorials/javascript-ajax/prototyping-with-meteor/">Prototyping with Meteor</a>, <a href="http://meteor.com/examples">Meteor Examples</a>', contributor: {id: 1, name: 'Ran Tavory'}}])
-    render aspectBlock('StackOverflow', [{html: '<a href="http://stackoverflow.com/questions/tagged/meteor">Questions tagged with #meteor</a>', contributor: {id: 1, name: 'Ran Tavory'}}])
-    render aspectBlock('Mainling list', [{html: '<a href="mailto:meteor-talk@googlegroups.com">meteor-talk@googlegroups.com</a> is for general questions, requests for help, and new project announcements. <a href="mailto:meteor-core@googlegroups.com">meteor-code@googlegroups.com</a> is for discussing Meteor internals and proposed changes.', contributor: {id: 1, name: 'Ran Tavory'}}])
-    render aspectBlock('IRC', [{html: '#meteor on irc.freenode.net', contributor: {id: 1, name: 'Ran Tavory'}}])
-    render aspectBlock('Development Status', [{html: '<a href="http://www.ohloh.net/p/meteor-js">ohlo</a>, <a href="https://github.com/meteor/meteor/pulse">Github pulse', contributor: {id: 1, name: 'Ran Tavory'}}])
-    render aspectBlock('Used By', [])
-    render aspectBlock('Alternatives', [{html: '<a href="/technology/derbyjs">DerbyJS</a>', contributor: {id: 1, name: 'Ran Tavory'}}])
-    render aspectBlock('Complement Technologies', [{html: '<a href="/technology/nodejs">NodeJS</a>', contributor: {id: 1, name: 'Ran Tavory'}}])
-    render aspectBlock('Talk, Video, Slides', [])
-    render aspectBlock('Prerequisites', [{html: '<ul><li><a href="/technology/nodejs">NodeJS</a></li><li><a href="/technology/javascript">JavaScript</a></li><li><a href="/technology/html">HTML</a></li></ul>', contributor: {id: 1, name: 'Ran Tavory'}}])
-    render aspectBlock('Reviews', [])
-    render aspectBlock('Developers', [{html: '<ul><li><a href="http://meteor.com/">Meteor, the company</a></li><li><a href="https://github.com/dgreensp">David Greenspan</a></li><li><a href="https://github.com/glasser">David Glasser</a></li><li><a href="https://github.com/imslavko">Slava Kim</a></li></ul>', contributor: {id: 1, name: 'Ran Tavory'}}])
 

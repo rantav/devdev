@@ -16,6 +16,10 @@ table.table
           |
           strong
             = creator.profile.name
+          |,
+          |
+          = moment(technology.createdAt).fromNow()
+          <small.muted (Last modified #{moment(technology.updatedAt).fromNow()})
         td
           - if (Meteor.userId() === technology.contributorId)
             .pull-right

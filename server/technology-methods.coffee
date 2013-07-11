@@ -12,10 +12,13 @@ Meteor.methods
         'Complement Technologies', 'Talks, Videos, Slides', 'Prerequisites',
         'Reviews', 'Developers']
 
+    now = new Date()
     tech =
       name: technologyName
       contributorId: Meteor.userId()
       aspects: []
+      createdAt: now
+      updatedAt: now
     tech.aspects.push createAspect(a) for a in aspectNames
     _id = Technologies.insert tech
     {_id: _id, name: technologyName}
@@ -26,10 +29,14 @@ Meteor.methods
       aspect = Technologies.findAspect(technology, aspectName)
       if not aspect.contributions
         aspect.contributions = []
+      now = new Date()
       aspect.contributions.push
         contributorId: Meteor.userId()
         markdown: contributionText
         contributionId: Meteor.uuid()
+        createdAt: now
+        updatedAt: now
+    technology.updatedAt = now
     Technologies.update(technology._id, technology)
 
   toggleContributingAspect: (technologyId, aspectName) ->

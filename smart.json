@@ -4,6 +4,7 @@
     "router": {},
     "blade": {},
     "marked": {},
-    "font-awesome": {}
+    "font-awesome": {},
+    "momentjs": {}
   }
 }
