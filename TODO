@@ -1,4 +1,9 @@
-Check out http://bourbon.io/
+/user pages
+
+/technology/nodejs place saver
+
+Fix appearance of a user that does not have a photo
+
 
 Take care of XSS when inserting HTML to the contribution
 Sanitize H1s etx when adding a contribution
