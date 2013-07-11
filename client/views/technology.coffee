@@ -1,8 +1,11 @@
 Template.technology.technology = ->
-  Technologies.findOne Session.get('technologyId')
+  technology = Technologies.findOne Session.get('technologyId')
+  if not technology
+    technology = Technologies.findOne({name: Session.get('technologyId')})
+  technology
 
 Template.technology.contributors = ->
-  technology = Technologies.findOne Session.get("technologyId")
+  technology = Template.technology.technology()
   contributors = [].concat (contribution.contributorId for contribution in aspect.contributions for aspect in technology.aspects)...
   output = {}
   output[contributors[key]] = contributors[key] for key in [0...contributors.length]
