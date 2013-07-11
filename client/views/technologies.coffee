@@ -3,6 +3,10 @@ Template.technologies.technologies = ->
 
 Template.technologies.events
   'click #add-technology': ->
+    if not Meteor.userId()
+      alertify.alert('<i class="icon-user icon-4x"> </i> <h2>Please log in</h2>')
+      return
+
     alertify.prompt '<h1>Technology Name:</h1>', (e, str) ->
       if e
         Meteor.call 'createNewTechnology', str, (err, ret) ->
