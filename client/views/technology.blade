@@ -13,11 +13,13 @@
     table.table
       foreach technology.aspects as aspect
         tr.aspect
-          th= aspect.name
-          td.aspect-data
-            div.aspect-actions.pull-right
+          th
+            = aspect.name
+            .aspect-actions.pull-right
               a.action(href='javascript:void(0)' title='Contribute')
                 i.icon-plus(class='#{Meteor.userId() ? "" : "disabled"}')
+
+          td.aspect-data
             foreach aspect.contributions as contribution
               - if (!contribution.deletedAt)
                 - contributor = Meteor.users.findOne(contribution.contributorId)
