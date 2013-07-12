@@ -3,6 +3,29 @@ createAspect = (aspectName) ->
   contributions: []
   aspectId: Meteor.uuid()
 
+addTechnologyContributionToUser = (technologyId, now) ->
+  contributor = Meteor.user()
+  if not contributor.profile.contributions
+    contributor.profile.contributions = []
+  contributor.profile.contributions.push
+    technologyId: technologyId
+    contributionType: 'technology'
+    createdAt: now
+    updatedAt: now
+  Meteor.users.update(contributor._id, contributor)
+
+addAspectContributionToUser = (technologyId, aspectId, contributionId, now) ->
+  contributor = Meteor.user()
+  if not contributor.profile.contributions
+    contributor.profile.contributions = []
+  contributor.profile.contributions.push
+    technologyId: technologyId
+    aspectId: aspectId
+    contributionId: contributionId
+    contributionType: 'aspectContribution'
+    createdAt: now
+    updatedAt: now
+  Meteor.users.update(contributor._id, contributor)
 
 Meteor.methods
   createNewTechnology: (technologyName) ->
@@ -21,6 +44,7 @@ Meteor.methods
       updatedAt: now
     tech.aspects.push createAspect(a) for a in aspectNames
     _id = Technologies.insert tech
+    addTechnologyContributionToUser _id, now
     {_id: _id, name: technologyName}
 
   contributeToAspect: (technologyId, aspectName, contributionText) ->
@@ -30,14 +54,16 @@ Meteor.methods
       if not aspect.contributions
         aspect.contributions = []
       now = new Date()
+      contributionId = Meteor.uuid()
       aspect.contributions.push
         contributorId: Meteor.userId()
         markdown: contributionText
-        contributionId: Meteor.uuid()
+        contributionId: contributionId
         createdAt: now
         updatedAt: now
     technology.updatedAt = now
     Technologies.update(technology._id, technology)
+    addAspectContributionToUser technology._id, aspect.aspectId, contributionId, now
 
   toggleContributingAspect: (technologyId, aspectName) ->
     technology = Technologies.findOne technologyId
