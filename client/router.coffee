@@ -9,9 +9,20 @@ Meteor.Router.add
   "/technology/:id/:name": (id) ->
     Session.set "technologyId", id
     "technology"
+  '/contributor': 'contributors'
+  '/contributors': 'contributors'
+  "/contributor/:id": (id) ->
+    Session.set "contributorId", id
+    "contributor"
+  "/contributor/:id/:name": (id) ->
+    Session.set "contributorId", id
+    "contributor"
   "*": "welcome"
 
 
 routes = root.routes = {}
 routes.technology = (tech) ->
   "/technology/#{tech._id}/#{tech.name}"
+
+routes.contributor = (contributor) ->
+  "/contributor/#{contributor._id}/#{contributor.profile.name}"

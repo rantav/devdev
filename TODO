@@ -1,9 +1,11 @@
-/user pages
+/contributor pages
 
-/technology/nodejs place saver
+Add "Coming soonish" to all the inactive buttons
 
 Fix appearance of a user that does not have a photo
 
+- Add index to Technologies.name
+- Add index to Meteor.users.profile.name
 
 Take care of XSS when inserting HTML to the contribution
 Sanitize H1s etx when adding a contribution

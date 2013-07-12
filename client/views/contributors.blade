@@ -1,0 +1,9 @@
+h2 Contributors
+
+table.table
+  foreach contributors as contributor
+    tr
+      th
+        a(href='#{routes.contributor(contributor)}')= contributor.profile.name
+      td Thank you!
+

@@ -1,0 +1,18 @@
+- if (!contributor)
+  h2 Sorry, looks like a broken link, #{Session.get('contributorId')} is not here...
+- else
+  .contributor-page-actions
+    .pull-right
+      <button.btn.disabled Follow
+      <button.btn.disabled Share
+
+  .contributor.pull-left(style='border-left-color: #{contributor.profile.color}')
+    != User.getUserPictureHtml(contributor)
+
+  h1 Contributions by #{contributor.profile.name}
+  table.table
+    foreach contributor.contributions as contribution
+      tr.contribution
+        th= contribution.title
+
+        td.contribution-data ...
