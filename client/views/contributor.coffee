@@ -4,6 +4,10 @@ Template.contributor.contributor = ->
     contributor = Meteor.users.findOne({'profile.name': Session.get('contributorId')})
   contributor
 
+Template.contributor.contributions = ->
+  contributor = Template.contributor.contributor()
+  Contributors.getContributions(contributor)
+
 Template.contributor.getTechnology = (technologyId) ->
   Technologies.findOne technologyId
 

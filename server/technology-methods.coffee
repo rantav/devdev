@@ -82,8 +82,15 @@ Meteor.methods
     contribution = Technologies.findContribution(technology, contributionId)
     # Permission check
     if contribution.contributorId == Meteor.userId()
-      contribution.deletedAt = new Date()
+      now = new Date()
+      # Delete contribution
+      contribution.deletedAt = now
       Technologies.update(technologyId, technology)
+      # Delete from the users's registry
+      contributor = Meteor.user()
+      userContribution = Contributors.findAspectContribution(contributor, contributionId)
+      userContribution.deletedAt = now
+      Meteor.users.update(contributor._id, contributor)
     else
       Meteor.error 404, 'Sorry, you cannot delete someone else\'s contribution'
 
@@ -91,7 +98,13 @@ Meteor.methods
     technology = Technologies.findOne(technologyId)
     # Permission check
     if technology.contributorId == Meteor.userId()
-      technology.deletedAt = new Date()
+      now = new Date()
+      technology.deletedAt = now
       Technologies.update(technologyId, technology)
+      # Delete from the users's registry
+      contributor = Meteor.user()
+      technologyContributions = Contributors.findTechnologyContributions(contributor, technologyId)
+      contrib.deletedAt = now for contrib in technologyContributions
+      Meteor.users.update(contributor._id, contributor)
     else
       Meteor.error 404, 'Sorry, you cannot delete someone else\'s contribution'

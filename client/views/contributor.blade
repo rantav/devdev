@@ -11,27 +11,28 @@
 
   h1 Contributions by #{contributor.profile.name}
   table.table
-    foreach contributor.profile.contributions as contribution
+    foreach contributions as contribution
       tr.contribution
         - technology = Template.contributor.getTechnology(contribution.technologyId)
-        - if (contribution.type == 'technology')
-          th
-            | Created technology
-            <a(href='#{routes.technology(technology)}')= technology.name
-          td.contribution-data
-          td
-            small.pull-right.muted Created #{moment(technology.createdAt).fromNow()}, last update #{moment(technology.updatedAt).fromNow()}
-        - else if (contribution.type == 'aspectContribution')
-          - aspect = Template.contributor.getAspect(technology, contribution.aspectId)
-          - contributionData = Template.contributor.getContributionData(aspect, contribution.contributionId)
-          th
-            | Contributed to
-            <a(href='#{routes.technology(technology)}')= technology.name
-            |
-            | for aspect
-            |
-            =aspect.name
+        - if (technology)
+          - if (contribution.type == 'technology')
+            th
+              | Created technology
+              <a(href='#{routes.technology(technology)}')= technology.name
+            td.contribution-data
+            td
+              small.pull-right.muted Created #{moment(technology.createdAt).fromNow()}, last update #{moment(technology.updatedAt).fromNow()}
+          - else if (contribution.type == 'aspectContribution')
+            - aspect = Template.contributor.getAspect(technology, contribution.aspectId)
+            - contributionData = Template.contributor.getContributionData(aspect, contribution.contributionId)
+            th
+              | Contributed to
+              <a(href='#{routes.technology(technology)}')= technology.name
+              |
+              | to aspect
+              |
+              span.label= aspect.name
 
-          td.contribution-data!= marked(contributionData.markdown)
-          td
-            small.pull-right.muted Created #{moment(contributionData.createdAt).fromNow()}, last update #{moment(contributionData.updatedAt).fromNow()}
+            td.contribution-data!= marked(contributionData.markdown)
+            td
+              small.pull-right.muted Created #{moment(contributionData.createdAt).fromNow()}, last update #{moment(contributionData.updatedAt).fromNow()}
