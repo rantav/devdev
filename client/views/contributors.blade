@@ -5,5 +5,5 @@ table.table
     tr
       th
         a(href='#{routes.contributor(contributor)}')= contributor.profile.name
-      td Thank you!
+      td #{contributor.profile.contributions.length} contributions
 

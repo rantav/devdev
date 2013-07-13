@@ -3,16 +3,35 @@
 - else
   .contributor-page-actions
     .pull-right
-      <button.btn.disabled Follow
-      <button.btn.disabled Share
+      <button.btn.disabled Follow #{contributor.profile.name}
+      <button.btn.disabled Share #{contributor.profile.name}'s awesome work!
 
   .contributor.pull-left(style='border-left-color: #{contributor.profile.color}')
     != User.getUserPictureHtml(contributor)
 
   h1 Contributions by #{contributor.profile.name}
   table.table
-    foreach contributor.contributions as contribution
+    foreach contributor.profile.contributions as contribution
       tr.contribution
-        th= contribution.title
+        - technology = Template.contributor.getTechnology(contribution.technologyId)
+        - if (contribution.type == 'technology')
+          th
+            | Created technology
+            <a(href='#{routes.technology(technology)}')= technology.name
+          td.contribution-data
+          td
+            small.pull-right.muted Created #{moment(technology.createdAt).fromNow()}, last update #{moment(technology.updatedAt).fromNow()}
+        - else if (contribution.type == 'aspectContribution')
+          - aspect = Template.contributor.getAspect(technology, contribution.aspectId)
+          - contributionData = Template.contributor.getContributionData(aspect, contribution.contributionId)
+          th
+            | Contributed to
+            <a(href='#{routes.technology(technology)}')= technology.name
+            |
+            | for aspect
+            |
+            =aspect.name
 
-        td.contribution-data ...
+          td.contribution-data!= marked(contributionData.markdown)
+          td
+            small.pull-right.muted Created #{moment(contributionData.createdAt).fromNow()}, last update #{moment(contributionData.updatedAt).fromNow()}

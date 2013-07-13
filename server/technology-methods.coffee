@@ -9,7 +9,7 @@ addTechnologyContributionToUser = (technologyId, now) ->
     contributor.profile.contributions = []
   contributor.profile.contributions.push
     technologyId: technologyId
-    contributionType: 'technology'
+    type: 'technology'
     createdAt: now
     updatedAt: now
   Meteor.users.update(contributor._id, contributor)
@@ -22,7 +22,7 @@ addAspectContributionToUser = (technologyId, aspectId, contributionId, now) ->
     technologyId: technologyId
     aspectId: aspectId
     contributionId: contributionId
-    contributionType: 'aspectContribution'
+    type: 'aspectContribution'
     createdAt: now
     updatedAt: now
   Meteor.users.update(contributor._id, contributor)
@@ -50,7 +50,7 @@ Meteor.methods
   contributeToAspect: (technologyId, aspectName, contributionText) ->
     if technologyId and aspectName and contributionText
       technology = Technologies.findOne technologyId
-      aspect = Technologies.findAspect(technology, aspectName)
+      aspect = Technologies.findAspectByName(technology, aspectName)
       if not aspect.contributions
         aspect.contributions = []
       now = new Date()
@@ -67,13 +67,13 @@ Meteor.methods
 
   toggleContributingAspect: (technologyId, aspectName) ->
     technology = Technologies.findOne technologyId
-    aspect = Technologies.findAspect(technology, aspectName)
+    aspect = Technologies.findAspectByName(technology, aspectName)
     aspect['contributing-' + Meteor.userId()] = !aspect['contributing-' + Meteor.userId()]
     Technologies.update(technologyId, technology)
 
   endContributingAspect: (technologyId, aspectName) ->
     technology = Technologies.findOne technologyId
-    aspect = Technologies.findAspect(technology, aspectName)
+    aspect = Technologies.findAspectByName(technology, aspectName)
     aspect['contributing-' + Meteor.userId()] = false
     Technologies.update(technologyId, technology)
 
