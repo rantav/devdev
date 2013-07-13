@@ -6,7 +6,7 @@ Template.technology.technology = ->
 
 Template.technology.contributors = ->
   technology = Template.technology.technology()
-  contributors = [].concat (contribution.contributorId for contribution in aspect.contributions for aspect in technology.aspects)...
+  contributors = [technology.contributorId].concat (contribution.contributorId for contribution in aspect.contributions for aspect in technology.aspects)...
   output = {}
   output[contributors[key]] = contributors[key] for key in [0...contributors.length]
   contributors = (value for key, value of output)
