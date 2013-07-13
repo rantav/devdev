@@ -1,6 +1,6 @@
 root = exports ? this
 
-Technologies = root.Technologies = new Meteor.Collection "technogies"
+Technologies = root.Technologies = new Meteor.Collection "technologies"
 
 # Finds an aspect by its name, in the given technology object
 Technologies.findAspectByName = (technology, aspectName) ->
