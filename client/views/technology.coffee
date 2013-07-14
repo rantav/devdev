@@ -47,6 +47,9 @@ Template.technology.events
       Meteor.Router.to routes.technology(ret)
       alertify.success "Great, now add some smarts to #{name}"
 
+  'click .disabled': ->
+    alertify.log '<strong>Coming soonish...</strong> <i class="icon-cogs pull-right"> </i>'
+
 $ ->
   marked.setOptions
     gfm: true,

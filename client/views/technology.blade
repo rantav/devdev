@@ -8,9 +8,12 @@
   - else
     .technology-page-actions
       .pull-right
-        button.btn.btn-primary.disabled Claim #{technology.name}
-        <button.btn.disabled Follow
-        <button.btn.disabled Share
+        button.btn.btn-primary.disabled
+          i.icon-money
+          |
+          | Claim #{technology.name}
+        <button.btn.disabled Follow #{technology.name}
+        <button.btn.disabled Share #{technology.name}
 
     h1= technology.name
     table.table

@@ -16,3 +16,7 @@ Template.contributor.getAspect = (technology, aspectId) ->
 
 Template.contributor.getContributionData = (aspect, contributionId) ->
   Technologies.findContributionInAspect(aspect, contributionId)
+
+Template.contributor.events
+  'click .disabled': ->
+    alertify.log '<strong>Coming soonish...</strong> <i class="icon-cogs pull-right"> </i>'
