@@ -13,7 +13,10 @@ Template.technology.contributors = ->
 
 Template.technology.events
   'click .icon-plus': ->
-    Meteor.call('toggleContributingAspect', Session.get('technologyId'), @name)
+    if Meteor.userId()
+      Meteor.call('toggleContributingAspect', Session.get('technologyId'), @name)
+    else
+      alertify.alert('<i class="icon-user icon-4x"> </i> <h2>Please log in</h2>')
 
   'click .cancel-contribution': ->
     Meteor.call('endContributingAspect', Session.get('technologyId'), @name)
@@ -47,8 +50,10 @@ Template.technology.events
       Meteor.Router.to routes.technology(ret)
       alertify.success "Great, now add some smarts to #{name}"
 
-  'click .disabled': ->
-    alertify.log '<strong>Coming soonish...</strong> <i class="icon-cogs pull-right"> </i>'
+  'click .disabled': (event, element) ->
+    unless event.toElement.className.indexOf('icon-plus') >= 0
+      alertify.log '<strong>Coming soonish...</strong> <i class="icon-cogs pull-right"> </i>'
+
 
 $ ->
   marked.setOptions
