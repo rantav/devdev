@@ -25,11 +25,10 @@
           td.aspect-data
             foreach aspect.contributions as contribution
               - if (!contribution.deletedAt)
-                - contributor = Meteor.users.findOne(contribution.contributorId)
-                .contribution(style='border-left-color: #{contributor.profile.color}'
+                .contribution(style='border-left-color: #{Contributors.getColorById(contribution.contributorId)}'
                     rel='tooltip'
                     data-placement='left'
-                    title='#{contributor.profile.name}')
+                    title='#{Contributors.getNameById(contribution.contributorId)}')
                   .contribution-actions.pull-right
                     - if (Meteor.userId() === contribution.contributorId)
                       <a.action(href='javascript:void(0)' title='Edit your contribution')
@@ -58,8 +57,6 @@
     .contributors
       h5 Contributors:
       foreach contributors as contributorId
-        - contributor = Meteor.users.findOne({_id: contributorId})
-        div(class="contributor pull-left" style='border-left-color: #{contributor.profile.color}')
-          != User.getUserPictureHtml(contributor)
-          |
-          a(href='/contributor/#{contributorId}/#{contributor.profile.name}')= contributor.profile.name
+        div(class="contributor pull-left" style='border-left-color: #{Contributors.getColorById(contributorId)}')
+          != Contributors.getPhotoHtmlById(contributorId)
+          <a(href='/contributor/#{contributorId}/#{Contributors.getNameById(contributorId)}')= Contributors.getNameById(contributorId)

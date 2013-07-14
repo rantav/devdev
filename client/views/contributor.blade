@@ -7,7 +7,7 @@
       <button.btn.disabled Share #{contributor.profile.name}'s awesome work!
 
   .contributor.pull-left(style='border-left-color: #{contributor.profile.color}')
-    != User.getUserPictureHtml(contributor)
+    != Contributors.getPhotoHtml(contributor)
 
   h1 Contributions by #{contributor.profile.name}
   table.table
