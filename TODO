@@ -1,4 +1,3 @@
-- Fix appearance of a user that does not have a photo
 
 - Publish the deleted technologies but only with minimal data, not all data.
 - Add index to Technologies.name

@@ -19,11 +19,9 @@ Contributors.getPhotoHtmlById = (contributorId) ->
 Contributors.getPhotoHtml = (contributor) ->
   if contributor and contributor.services and contributor.services.google
     picture = contributor.services.google.picture
-    if picture
-      html = "<img src='#{picture}' class='img-polaroid'/>"
-  if not picture
-    html = '<i class="icon-user icon-3x img-polaroid">&nbsp</i>'
-  html
+    if not picture
+      picture = '/img/user.png'
+    "<img src='#{picture}' class='img-polaroid'/>"
 
 
 # Gets all undeleted contributions from the contributor
