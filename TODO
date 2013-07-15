@@ -2,6 +2,7 @@
 - Publish the deleted technologies but only with minimal data, not all data.
 - Add index to Technologies.name
 - Add index to Meteor.users.profile.name
+- Add index to all IDs laying around (contributionId, aspectId, contributorId etc)
 
 - Take care of XSS when inserting HTML to the contribution
 - Sanitize H1s etx when adding a contribution
@@ -13,5 +14,4 @@ Create an about page
         alertify
 
 - Add support for Yassib or just borrow the concepts from it http://www.yasiv.com/github/#/costars?q=meteor%2Fmeteor
-- Make technology search case insensitive, as in /technology/java
 - Add typing smartness: /github/user/project, /technology/name, /contributor/name with autocomplete and nice display

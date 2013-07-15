@@ -1,7 +1,7 @@
 Template.technology.technology = ->
   technology = Technologies.findOne Session.get('technologyId')
   if not technology
-    technology = Technologies.findOne({name: Session.get('technologyId')})
+    technology = Technologies.findOne({name: new RegExp('^' + Session.get('technologyId') + '$', 'i')})
   technology
 
 Template.technology.contributors = ->
