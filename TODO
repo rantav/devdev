@@ -1,4 +1,6 @@
-
+- Add analytics
+- Add Undo features to deleted items
+- Add "I use 'Java' to index page and technology page"
 - Publish the deleted technologies but only with minimal data, not all data.
 - Add index to Technologies.name
 - Add index to Meteor.users.profile.name
@@ -15,3 +17,8 @@ Create an about page
 
 - Add support for Yassib or just borrow the concepts from it http://www.yasiv.com/github/#/costars?q=meteor%2Fmeteor
 - Add typing smartness: /github/user/project, /technology/name, /contributor/name with autocomplete and nice display
+
+- SEO
+- Add comparison view
+- Add smart texts that allow relationships b/w technologies, such as nodejs requires javascript, v8 etc.
+- Draw charts with bubbles according to this model
