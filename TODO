@@ -1,4 +1,5 @@
 - Add analytics
+- Allow renaming a technology name
 - Add Undo features to deleted items
 - Add "I use 'Java' to index page and technology page"
 - Publish the deleted technologies but only with minimal data, not all data.
