@@ -3,36 +3,33 @@
 - else
   .contributor-page-actions
     .pull-right
-      <button.btn.disabled Follow #{contributor.profile.name}
-      <button.btn.disabled Share #{contributor.profile.name}'s awesome work!
+      <button.btn.disabled Follow #{contributor.name()}
+      <button.btn.disabled Share #{contributor.name()}'s awesome work!
 
-  .contributor.pull-left(style='border-left-color: #{contributor.profile.color}')
-    != Contributors.getPhotoHtml(contributor)
+  .contributor.pull-left(style='border-left-color: #{contributor.color()}')
+    != contributor.photoHtml()
 
-  h1 Contributions by #{contributor.profile.name}
+  h1 Contributions by #{contributor.name()}
   table.table
-    foreach contributions as contribution
+    foreach contributor.contributions() as contribution
       tr.contribution
-        - technology = Template.contributor.getTechnology(contribution.technologyId)
-        - if (technology)
-          - if (contribution.type == 'technology')
+        - if (contribution.technology())
+          - if (contribution.type() == 'technology')
             th
               | Created technology
-              <a(href='#{routes.technology(technology)}')= technology.name
+              <a(href='#{contribution.technology().route()}')= contribution.technology().name()
             td.contribution-data
             td
-              small.pull-right.muted Created #{moment(technology.createdAt).fromNow()}, last update #{moment(technology.updatedAt).fromNow()}
-          - else if (contribution.type == 'aspectContribution')
-            - aspect = Template.contributor.getAspect(technology, contribution.aspectId)
-            - contributionData = Template.contributor.getContributionData(aspect, contribution.contributionId)
+              small.pull-right.muted Created #{moment(contribution.technology().createdAt()).fromNow()}, last update #{moment(contribution.technology().updatedAt()).fromNow()}
+          - else if (contribution.type() == 'aspectContribution')
             th
               | Contributed to
-              <a(href='#{routes.technology(technology)}')= technology.name
+              <a(href='#{contribution.technology().route()}')= contribution.technology().name()
               |
               | to aspect
               |
-              span.label= aspect.name
+              span.label= contribution.aspect().name()
 
-            td.contribution-data!= marked(contributionData.markdown)
+            td.contribution-data!= marked(contribution.content().markdown())
             td
-              small.pull-right.muted Created #{moment(contributionData.createdAt).fromNow()}, last update #{moment(contributionData.updatedAt).fromNow()}
+              small.pull-right.muted Created #{moment(contribution.content().createdAt()).fromNow()}, last update #{moment(contribution.content().updatedAt()).fromNow()}

@@ -1,5 +1,5 @@
 Template.technologies.technologies = ->
-  Technologies.find()
+  Technology.all()
 
 Template.technologies.events
   'click #add-technology': ->
@@ -13,13 +13,19 @@ Template.technologies.events
           if err
             alertify.error err
             return
-          Meteor.Router.to routes.technology(ret)
-          alertify.success "Great, now add some smarts to #{str}"
+          technology = new Technology(ret)
+          Meteor.Router.to technology.route()
+          alertify.success "Great, now add some smarts to #{technology.name()}"
 
   'click i.icon-trash': ->
-    id = @_id
-    alertify.confirm "<i class='icon-exclamation-sign pull-left icon-4x'> </i><h2>Sure you want to delete #{@name}?</h2>", (ok) ->
+    id = @id()
+    name = @name()
+    alertify.confirm "<i class='icon-exclamation-sign pull-left icon-4x'> </i><h2>Sure you want to delete #{name}?</h2>", (ok) ->
       if ok
-        Meteor.call 'deleteTechnology', id
+        Meteor.call 'deleteTechnology', id, (err, ret) ->
+          if err
+            alertify.error err
+          else
+            alertify.log "OK, deleted #{name}"
       else
         alertify.log "<i class='icon-thumbs-up-alt pull-right'></i> <em>Oh, that was close!...</em>"

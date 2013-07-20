@@ -22,7 +22,7 @@ Meteor.Router.add
 
 routes = root.routes = {}
 routes.technology = (tech) ->
-  "/technology/#{tech._id}/#{tech.name}" if tech
+  "/technology/#{tech.id()}/#{tech.name()}" if tech
 
 routes.contributor = (contributor) ->
-  "/contributor/#{contributor._id}/#{contributor.profile.name}" if contributor
+  "/contributor/#{contributor.id()}/#{contributor.name()}" if contributor

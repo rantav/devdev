@@ -6,23 +6,19 @@ h2 Technologies
 
 table.table
   foreach technologies as technology
-    - if (!technology.deletedAt)
-      - creator = Meteor.users.findOne(technology.contributorId)
-      tr
-        th
-          a(href='#{routes.technology(technology)}')= technology.name
-        td
-          | Started by
-          |
-          strong
-            = creator.profile.name
-          |,
-          |
-          = moment(technology.createdAt).fromNow()
-          <small.muted (Last modified #{moment(technology.updatedAt).fromNow()})
-        td
-          - if (Meteor.userId() === technology.contributorId)
-            .pull-right
-              a.action(href='javascript:void(0)' title='Delete #{technology.name}')
-                i.icon-trash
+    tr
+      th
+        a(href='#{technology.route()}')= technology.name()
+      td
+        | Started by
+        <a(href='#{technology.creator().route()}')= technology.creator().name()
+        |,
+        |
+        = moment(technology.createdAt()).fromNow()
+        <small.muted (Last modified #{moment(technology.updatedAt()).fromNow()})
+      td
+        - if (Meteor.userId() === technology.contributorId())
+          .pull-right
+            a.action(href='javascript:void(0)' title='Delete #{technology.name()}')
+              i.icon-trash
 

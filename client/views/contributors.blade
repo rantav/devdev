@@ -4,6 +4,6 @@ table.table
   foreach contributors as contributor
     tr
       th
-        a(href='#{routes.contributor(contributor)}')= contributor.profile.name
-      td #{Template.contributors.countContributions(contributor)} contributions
+        a(href='#{contributor.route()}')= contributor.name()
+      td #{contributor.countContributions()} contributions
 

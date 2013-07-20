@@ -1,21 +1,8 @@
 Template.contributor.contributor = ->
-  contributor = Meteor.users.findOne Session.get('contributorId')
-  if not contributor
-    contributor = Meteor.users.findOne({'profile.name': Session.get('contributorId')})
-  contributor
-
-Template.contributor.contributions = ->
-  contributor = Template.contributor.contributor()
-  Contributors.getContributions(contributor)
-
-Template.contributor.getTechnology = (technologyId) ->
-  Technologies.findOne technologyId
-
-Template.contributor.getAspect = (technology, aspectId) ->
-  Technologies.findAspectById(technology, aspectId)
-
-Template.contributor.getContributionData = (aspect, contributionId) ->
-  Technologies.findContributionInAspect(aspect, contributionId)
+  contributorData = Meteor.users.findOne Session.get('contributorId')
+  if not contributorData
+    contributorData = Meteor.users.findOne({'profile.name': Session.get('contributorId')})
+  new Contributor(contributorData)
 
 Template.contributor.events
   'click .disabled': ->
