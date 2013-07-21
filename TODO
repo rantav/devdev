@@ -1,24 +1,40 @@
-- Allow renaming a technology name
-- Add Undo features to deleted items
-- Add "I use 'Java' to index page and technology page"
-- Publish the deleted technologies but only with minimal data, not all data.
-- Add index to Technologies.name
-- Add index to Meteor.users.profile.name
-- Add index to all IDs laying around (contributionId, aspectId, contributorId etc)
-
-- Take care of XSS when inserting HTML to the contribution
-- Sanitize H1s etx when adding a contribution
-
-Create an about page
-    rantav
+- Add an aspect for VersionEye (example: https://www.versioneye.com/search?q=hector-core-Java)
+- Add Comments aspect
+- Add "More" aspect
+- Add more aspects: Twitter, Facebook, Google+
+- Create an about page
+    About me and this project
     thank:
         meteor
         alertify
+        coffeescript
+        blade
 
+- Add a Feedback form
+- When deleting technology, delete all it's contribution references as well
+- Allow renaming a technology
+- Think about a nicer way (visually) to add or edit an aspect contribution
+- Allow adding aspects as you want (and suggest some names)
+- Add Undo features to deleted items
+- Add "I use It" to index page and technology page. For example "I use Java"
+- On the server: publish the deleted technologies but only with minimal data, not all data.
+- Add DB indices:
+    Technologies.name
+    Meteor.users.profile.name
+    to all IDs laying around (contributionId, aspectId, contributorId etc)
+- Add Icons for technologies (see like in versioneye - for java, clojure etc)
+- Take care of XSS when inserting HTML to the contribution
+- Sanitize H1s etc when adding a contribution
+
+- Make an favicon and a logo file (maybe fiverr)
+
+
+- Add somehow support for email. Something like - Send to devdev.io (and then have a pending item waiting to be categorized)
+- Add a Goodies section with a Bookmaklet and a Chrome/Firefox extension
 - Add support for Yassib or just borrow the concepts from it http://www.yasiv.com/github/#/costars?q=meteor%2Fmeteor
 - Add typing smartness: /github/user/project, /technology/name, /contributor/name with autocomplete and nice display
 
 - SEO
 - Add comparison view
 - Add smart texts that allow relationships b/w technologies, such as nodejs requires javascript, v8 etc.
-- Draw charts with bubbles according to this model
+- Draw charts with bubbles according to this model of usage. D3 magic etc.
