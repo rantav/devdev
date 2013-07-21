@@ -11,18 +11,20 @@ Template.technology.contributors = ->
 Template.technology.events
   'click .icon-plus': ->
     if Meteor.userId()
-      Meteor.call('toggleContributingAspect', Session.get('technologyId'), @name())
+      Meteor.call 'toggleContributingAspect', Session.get('technologyId'), @id()
     else
       alertify.alert('<i class="icon-user icon-4x"> </i> <h2>Please log in</h2>')
 
   'click .cancel-contribution': ->
-    Meteor.call('endContributingAspect', Session.get('technologyId'), @name())
+    Meteor.call('endContributingAspect', Session.get('technologyId'), @id())
 
   'submit form.contribute-form': (event) ->
     text = $('textarea.contribute-text', event.target).val()
     if text
-      Meteor.call('contributeToAspect', Session.get('technologyId'), @name(), text)
-    Meteor.call('endContributingAspect', Session.get('technologyId'), @name())
+      Meteor.call 'contributeToAspect', Session.get('technologyId'), @id(), text, (err, ret) ->
+        if err
+          alertify.error err
+    Meteor.call('endContributingAspect', Session.get('technologyId'), @id())
     # return false to prevent browser form submission
     false
 

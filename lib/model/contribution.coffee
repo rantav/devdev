@@ -9,10 +9,8 @@ root.Contribution = class Contribution
     if @data
       cached = @cache.technology
       if not cached
-        technologyData = Technologies.findOne(@data.technologyId)
-        if technologyData
-          cached = new Technology(technologyData)
-          @cache.technology = cached
+        cached = Technology.find(@data.technologyId)
+        @cache.technology = cached
       cached
 
   type: -> @data.type if @data
@@ -21,11 +19,9 @@ root.Contribution = class Contribution
     if @data
       cached = @cache.aspect
       if not cached
-        aspectData = @technology().findAspectById(@data.aspectId)
-        if aspectData
-          cached = new Aspect(aspectData)
-          @cache.aspect = cached
+        cached = @technology().findAspectById(@data.aspectId)
+        @cache.aspect = cached
       cached
 
   content: ->
-    new AspectContribution(@aspect().findContributionContentById(@data.contributionId)) if @data
+    new AspectContribution(@aspect().findContributionContentById(@data.contributionId), @) if @data

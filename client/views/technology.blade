@@ -46,10 +46,10 @@
                   p.contribution
                     small.pull-right.muted= moment(contribution.updatedAt()).fromNow()
                     != contribution.markdown() ? marked(contribution.markdown()) : ''
-            - if (Meteor.userId())
-              form.contribute-form(style='#{aspect.isCurrentUserContributing() ? "" : "display:none"}')
+            - if (Meteor.userId() && aspect.isCurrentUserContributing())
+              form.contribute-form
                 .span5
-                  textarea.contribute-text
+                  textarea.contribute-text(autofocus='1')
                   small.muted.pull-right Markdown enabled
                   .controls
                     button(type="submit" class="btn btn-primary submit-contribution") Save changes

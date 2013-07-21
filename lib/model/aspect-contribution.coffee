@@ -2,7 +2,7 @@ root = exports ? this
 
 root.AspectContribution = class AspectContribution
 
-  constructor: (@data) ->
+  constructor: (@data, @aspectRef) ->
 
   createdAt: -> @data.createdAt
 
@@ -18,3 +18,7 @@ root.AspectContribution = class AspectContribution
 
   # Is the current logged in use the owner of this contribution?
   isCurrentUserOwner: -> Meteor.userId() == @data.contributorId
+
+  aspect: -> @aspectRef
+
+  id: -> @data.contributionId

@@ -11,6 +11,26 @@ root.Technology = class Technology
     if technologyData
       new Technology(technologyData)
 
+  @add: (data) ->
+    id = Technologies.insert data
+    @find id
+
+  @create: (name) ->
+    aspectNames = ['Tagline', 'Websites', 'Source Code', 'Typical Use Cases',
+      'Sweet Spots', 'Weaknesses', 'Documentation', 'Tutorials', 'StackOverflow',
+      'Mailing Lists', 'IRC', 'Development Status', 'Used By', 'Alternatives',
+      'Complement Technologies', 'Talks, Videos, Slides', 'Prerequisites',
+      'Reviews', 'Developers']
+
+    now = new Date()
+    tech =
+      name: name
+      contributorId: Meteor.userId()
+      aspects: (createAspect(a) for a in aspectNames)
+      createdAt: now
+      updatedAt: now
+    Technology.add tech
+
   constructor: (@data) ->
 
   creator: -> new Contributor(Meteor.users.findOne(@data.contributorId)) if @data
@@ -30,7 +50,7 @@ root.Technology = class Technology
   route: -> routes.technology(@) if @data
 
   aspects: ->
-    (new Aspect(aspectData) for aspectData in @data.aspects) if @data
+    (new Aspect(aspectData, @) for aspectData in @data.aspects) if @data
 
   contributors: ->
     if @data
@@ -43,26 +63,37 @@ root.Technology = class Technology
   findAspectById: (aspectId) ->
     if @data
       candidates = (aspect for aspect in @data.aspects when aspect.aspectId == aspectId)
-      candidates[0]
+      new Aspect(candidates[0], @)
+
+  save: (updatedAt) ->
+    updatedAt = updatedAt or new Date()
+    @data.updatedAt = updatedAt
+    Technologies.update(@id(), @data)
+
+  saveNoTouch: ->
+    Technologies.update(@id(), @data)
+
+createAspect = (aspectName) ->
+  name: aspectName
+  contributions: []
+  aspectId: Meteor.uuid()
+
 
 Technologies = root.Technologies = new Meteor.Collection "technologies"
 
+# deleteme
 # Finds an aspect by its name, in the given technology object
 Technologies.findAspectByName = (technology, aspectName) ->
   candidates = (aspect for aspect in technology.aspects when aspect.name == aspectName)
   candidates[0]
 
-# deleteme
-Technologies.findAspectById = (technology, aspectId) ->
-  candidates = (aspect for aspect in technology.aspects when aspect.aspectId == aspectId)
-  candidates[0]
 
 # deleteme
 Technologies.findContributionInAspect = (aspect, contributionId) ->
   for contribution in aspect.contributions
     if contribution.contributionId == contributionId
       return contribution
-
+# deleteme
 Technologies.findContribution = (technology, contributionId) ->
   for aspect in technology.aspects
     contribution = Technologies.findContributionInAspect(aspect, contributionId)
