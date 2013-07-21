@@ -19,16 +19,16 @@ root.Contributor = class Contributor
   countContributions: ->
     (contribData for contribData in @data.profile.contributions when not contribData.deletedAt).length
 
-  id: -> @data._id
+  id: -> @data._id if @data
 
-  name: -> @data.profile.name
+  name: -> @data.profile.name if @data
 
-  color: -> @data.profile.color
+  color: -> @data.profile.color if @data
 
-  route: -> routes.contributor(@)
+  route: -> routes.contributor(@) if @data
 
   photoHtml: ->
-    if @data.services and @data.services.google
+    if @data and @data.services and @data.services.google
       picture = @data.services.google.picture
     if not picture
       picture = '/img/user.png'
@@ -36,7 +36,7 @@ root.Contributor = class Contributor
 
   # Gets all undeleted contributions from the contributor
   contributions: ->
-    (new Contribution(contribData) for contribData in @data.profile.contributions when not contribData.deletedAt)
+    (new Contribution(contribData) for contribData in @data.profile.contributions when not contribData.deletedAt) if @data
 
 
 root.Contributor = Contributor

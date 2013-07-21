@@ -13,35 +13,37 @@ root.Technology = class Technology
 
   constructor: (@data) ->
 
-  creator: -> new Contributor(Meteor.users.findOne(@data.contributorId))
+  creator: -> new Contributor(Meteor.users.findOne(@data.contributorId)) if @data
 
-  name: -> @data.name
+  name: -> @data.name if @data
 
-  id: -> @data._id
+  id: -> @data._id if @data
 
-  createdAt: -> @data.createdAt
+  createdAt: -> @data.createdAt if @data
 
-  updatedAt: -> @data.updatedAt
+  updatedAt: -> @data.updatedAt if @data
 
-  deletedAt: -> @data.deletedAt
+  deletedAt: -> @data.deletedAt if @data
 
-  contributorId: -> @data.contributorId
+  contributorId: -> @data.contributorId if @data
 
-  route: -> routes.technology(@)
+  route: -> routes.technology(@) if @data
 
   aspects: ->
-    (new Aspect(aspectData) for aspectData in @data.aspects)
+    (new Aspect(aspectData) for aspectData in @data.aspects) if @data
 
   contributors: ->
-    contributorIds = [@data.contributorId].concat (contribution.contributorId for contribution in aspect.contributions for aspect in @data.aspects)...
-    output = {}
-    output[contributorIds[key]] = contributorIds[key] for key in [0...contributorIds.length]
-    contributorIds = (value for key, value of output)
-    (Contributor.find(contributorId) for contributorId in contributorIds)
+    if @data
+      contributorIds = [@data.contributorId].concat (contribution.contributorId for contribution in aspect.contributions for aspect in @data.aspects)...
+      output = {}
+      output[contributorIds[key]] = contributorIds[key] for key in [0...contributorIds.length]
+      contributorIds = (value for key, value of output)
+      (Contributor.find(contributorId) for contributorId in contributorIds)
 
   findAspectById: (aspectId) ->
-    candidates = (aspect for aspect in @data.aspects when aspect.aspectId == aspectId)
-    candidates[0]
+    if @data
+      candidates = (aspect for aspect in @data.aspects when aspect.aspectId == aspectId)
+      candidates[0]
 
 Technologies = root.Technologies = new Meteor.Collection "technologies"
 
