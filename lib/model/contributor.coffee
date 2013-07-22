@@ -70,8 +70,17 @@ root.Contributor = class Contributor
     candidates = (contribution for contribution in @data.profile.contributions when contribution.contributionId == aspectContribution.id())
     candidates[0]
 
-  deleteContribution: (aspectContribution) ->
+  findUserTechnologyContributions: (technology) ->
+    (contribution for contribution in @data.profile.contributions when contribution.technologyId == technology.id())
+
+  deleteAspectContribution: (aspectContribution) ->
     userContributionData = @findUserAspectContribution(aspectContribution)
+    userContributionData.deletedAt = new Date()
+    @save()
+
+  # TODO: Delete all other aspect contributions (from all other users as well)
+  deleteTechnologyContribution: (technology) ->
+    userContributionData = @findUserTechnologyContributions(technology)
     userContributionData.deletedAt = new Date()
     @save()
 
@@ -81,9 +90,11 @@ Contributors = root.Contributors = Meteor.users
 
 
 
+# deleteme
 Contributors.findAspectContribution = (contributor, contributionId) ->
   candidates = (contribution for contribution in contributor.profile.contributions when contribution.contributionId == contributionId)
   candidates[0]
 
+# deleteme
 Contributors.findTechnologyContributions = (contributor, technologyId) ->
   (contribution for contribution in contributor.profile.contributions when contribution.technologyId == technologyId)

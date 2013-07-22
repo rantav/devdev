@@ -16,7 +16,7 @@ root.AspectContribution = class AspectContribution
 
   contributionId: -> @data.contributionId
 
-  # Is the current logged in use the owner of this contribution?
+  # Is the current logged in user the owner of this contribution?
   isCurrentUserOwner: -> Meteor.userId() == @data.contributorId
 
   aspect: -> @aspectRef

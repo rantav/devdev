@@ -47,10 +47,16 @@ root.Technology = class Technology
 
   contributorId: -> @data.contributorId if @data
 
+  owner: -> Contributor.find(@data.contributorId) if @data
+
   route: -> routes.technology(@) if @data
 
   aspects: ->
     (new Aspect(aspectData, @) for aspectData in @data.aspects) if @data
+
+  # Is the current logged in user the owner of this technology?
+  # (owner is the one creating it in the first place)
+  isCurrentUserOwner: -> Meteor.userId() == @contributorId()
 
   contributors: ->
     if @data
@@ -77,6 +83,11 @@ root.Technology = class Technology
 
   saveNoTouch: ->
     Technologies.update(@id(), @data)
+
+  delete: ->
+    now = new Date()
+    @data.deletedAt = now
+    @save(now)
 
 createAspect = (aspectName) ->
   name: aspectName
