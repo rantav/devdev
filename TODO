@@ -1,15 +1,14 @@
-- Add an aspect for VersionEye (example: https://www.versioneye.com/search?q=hector-core-Java)
-- Add Comments aspect
-- Add "More" aspect
-- Add more aspects: Twitter, Facebook, Google+
+
 - Create an about page
     About me and this project
     thank:
+        nodejs
         meteor
         alertify
         coffeescript
         blade
 
+- Add Icons to: Twitter, Facebook, Google+, VersionEye, Github etc...
 - Add a Feedback form
 - When deleting technology, delete all it's contribution references as well
 - Allow renaming a technology

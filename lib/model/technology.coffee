@@ -20,7 +20,8 @@ root.Technology = class Technology
       'Sweet Spots', 'Weaknesses', 'Documentation', 'Tutorials', 'StackOverflow',
       'Mailing Lists', 'IRC', 'Development Status', 'Used By', 'Alternatives',
       'Complement Technologies', 'Talks, Videos, Slides', 'Prerequisites',
-      'Reviews', 'Developers']
+      'Reviews', 'Developers', 'VersionEye', 'Twitter', 'Facebook', 'Google+',
+      'Comments', 'More']
 
     now = new Date()
     tech =
