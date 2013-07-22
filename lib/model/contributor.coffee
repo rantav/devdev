@@ -84,17 +84,4 @@ root.Contributor = class Contributor
     userContributionData.deletedAt = new Date()
     @save()
 
-root.Contributor = Contributor
-
-Contributors = root.Contributors = Meteor.users
-
-
-
-# deleteme
-Contributors.findAspectContribution = (contributor, contributionId) ->
-  candidates = (contribution for contribution in contributor.profile.contributions when contribution.contributionId == contributionId)
-  candidates[0]
-
-# deleteme
-Contributors.findTechnologyContributions = (contributor, technologyId) ->
-  (contribution for contribution in contributor.profile.contributions when contribution.technologyId == technologyId)
+root.Contributors = Meteor.users

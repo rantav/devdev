@@ -95,22 +95,4 @@ createAspect = (aspectName) ->
   aspectId: Meteor.uuid()
 
 
-Technologies = root.Technologies = new Meteor.Collection "technologies"
-
-# deleteme
-# Finds an aspect by its name, in the given technology object
-Technologies.findAspectByName = (technology, aspectName) ->
-  candidates = (aspect for aspect in technology.aspects when aspect.name == aspectName)
-  candidates[0]
-
-
-# deleteme
-Technologies.findContributionInAspect = (aspect, contributionId) ->
-  for contribution in aspect.contributions
-    if contribution.contributionId == contributionId
-      return contribution
-# deleteme
-Technologies.findContribution = (technology, contributionId) ->
-  for aspect in technology.aspects
-    contribution = Technologies.findContributionInAspect(aspect, contributionId)
-    return contribution if contribution
+root.Technologies = new Meteor.Collection "technologies"

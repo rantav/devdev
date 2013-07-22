@@ -51,12 +51,3 @@ Meteor.methods
     contributor = technology.owner()
     technology.delete()
     contributor.deleteTechnologyContribution(technology)
-
-    # now = new Date()
-    # technology.deletedAt = now
-    # Technologies.update(technologyId, technology)
-    # # Delete from the users's registry
-    # contributor = Meteor.user()
-    # technologyContributions = Contributors.findTechnologyContributions(contributor, technologyId)
-    # contrib.deletedAt = now for contrib in technologyContributions
-    # Meteor.users.update(contributor._id, contributor)
