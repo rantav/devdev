@@ -22,3 +22,10 @@ root.AspectContribution = class AspectContribution
   aspect: -> @aspectRef
 
   id: -> @data.contributionId
+
+  delete: ->
+    @data.deletedAt = new Date()
+    @save()
+
+  save: ->
+    @aspectRef.save()

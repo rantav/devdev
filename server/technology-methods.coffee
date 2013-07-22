@@ -32,21 +32,24 @@ Meteor.methods
     aspect.setEditCurrentUser(false)
 
   deleteAspectContribution: (technologyId, contributionId) ->
-    technology = Technologies.findOne(technologyId)
-    contribution = Technologies.findContribution(technology, contributionId)
-    # Permission check
-    if contribution.contributorId == Meteor.userId()
-      now = new Date()
-      # Delete contribution
-      contribution.deletedAt = now
-      Technologies.update(technologyId, technology)
-      # Delete from the users's registry
-      contributor = Meteor.user()
-      userContribution = Contributors.findAspectContribution(contributor, contributionId)
-      userContribution.deletedAt = now
-      Meteor.users.update(contributor._id, contributor)
-    else
+    technology = Technology.find(technologyId)
+    aspectContribution = technology.findContributionById(contributionId)
+
+    if not aspectContribution.isCurrentUserOwner()
       throw new Meteor.Error 404, 'Sorry, you cannot delete someone else\'s contribution'
+
+    contributor = aspectContribution.contributor()
+    aspectContribution.delete()
+    contributor.deleteContribution(aspectContribution)
+    # now = new Date()
+    # # Delete contribution
+    # contribution.deletedAt = now
+    # Technologies.update(technologyId, technology)
+    # # Delete from the users's registry
+    # contributor = Meteor.user()
+    # userContribution = Contributors.findAspectContribution(contributor, contributionId)
+    # userContribution.deletedAt = now
+    # Meteor.users.update(contributor._id, contributor)
 
   deleteTechnology: (technologyId) ->
     technology = Technologies.findOne(technologyId)

@@ -63,10 +63,17 @@ root.Contributor = class Contributor
       updatedAt: aspectContribution.updatedAt()
     @save(aspectContribution.updatedAt())
 
-
   save: ->
     Meteor.users.update(@data._id, @data)
 
+  findUserAspectContribution: (aspectContribution) ->
+    candidates = (contribution for contribution in @data.profile.contributions when contribution.contributionId == aspectContribution.id())
+    candidates[0]
+
+  deleteContribution: (aspectContribution) ->
+    userContributionData = @findUserAspectContribution(aspectContribution)
+    userContributionData.deletedAt = new Date()
+    @save()
 
 root.Contributor = Contributor
 

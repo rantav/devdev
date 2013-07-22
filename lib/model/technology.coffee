@@ -65,6 +65,11 @@ root.Technology = class Technology
       candidates = (aspect for aspect in @data.aspects when aspect.aspectId == aspectId)
       new Aspect(candidates[0], @)
 
+  findContributionById: (contributionId) ->
+    for aspect in @aspects()
+      contribution = aspect.findContributionById(contributionId)
+      return contribution if contribution
+
   save: (updatedAt) ->
     updatedAt = updatedAt or new Date()
     @data.updatedAt = updatedAt

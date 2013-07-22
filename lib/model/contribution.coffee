@@ -24,4 +24,7 @@ root.Contribution = class Contribution
       cached
 
   content: ->
-    new AspectContribution(@aspect().findContributionContentById(@data.contributionId), @) if @data
+    @aspect().findContributionById(@data.contributionId) if @data
+
+  contributorId: -> @data.contributorId
+

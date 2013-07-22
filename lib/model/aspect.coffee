@@ -31,10 +31,10 @@ root.Aspect = class Aspect
   isCurrentUserContributing: ->
     @data["contributing-" + Meteor.userId()]
 
-  findContributionContentById: (contributionId) ->
+  findContributionById: (contributionId) ->
     for contribution in @data.contributions
       if contribution.contributionId == contributionId
-        return contribution
+        return new AspectContribution(contribution, @)
 
   toggleEditCurrentUser: ->
     @data['contributing-' + Meteor.userId()] = !@data['contributing-' + Meteor.userId()]
@@ -44,3 +44,5 @@ root.Aspect = class Aspect
     @data['contributing-' + Meteor.userId()] = edit
     @technologyRef.saveNoTouch()
 
+  save: ->
+    @technologyRef.save()

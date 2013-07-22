@@ -29,7 +29,6 @@
               | to aspect
               |
               span.label= contribution.aspect().name()
-
             td.contribution-data!= marked(contribution.content().markdown())
             td
               small.pull-right.muted Created #{moment(contribution.content().createdAt()).fromNow()}, last update #{moment(contribution.content().updatedAt()).fromNow()}
