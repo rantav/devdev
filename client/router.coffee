@@ -17,6 +17,7 @@ Meteor.Router.add
   "/contributor/:id/:name": (id) ->
     Session.set "contributorId", id
     "contributor"
+  '/about': 'about'
   "*": "welcome"
 
 

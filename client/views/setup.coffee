@@ -15,6 +15,12 @@ Template.setup.rendered = ->
 
   ga('send', 'pageview');
 
+  $('ul.nav li a').each( (index, elem) ->
+    if document.location.href.indexOf(elem.href) == 0
+      $(elem).parent().addClass('active')
+    else
+      $(elem).parent().removeClass('active')
+    )
 
 
 
