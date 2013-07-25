@@ -47,6 +47,12 @@ Template.technology.events
       Meteor.Router.to routes.technology(Technology.find(ret))
       alertify.success "Great, now add some smarts to #{name}"
 
+  'keyup .name': (event) ->
+    esc = event.which == 27
+    if esc
+      document.execCommand('undo')
+      $(event.target).blur()
+
   'blur .name': (event, element)->
     name = event.srcElement.innerText
     if name != technology.name()

@@ -77,13 +77,26 @@ i.disabled {
   color: #bbc;
 }
 
-
 [contenteditable="true"] {
-  padding: 10px;
-  outline: 2px dashed #CCC;
+  padding: 5px;
+  outline: 1px dashed #CCC;
 }
 [contenteditable="true"]:hover {
-  outline: 2px dashed #0090D2;
+  outline: 1px dashed #0090D2;
+  background-color: #fffff9;
+}
+[contenteditable]:focus {
+  content: '';
   background-color: #ffd;
 }
+[contenteditable="true"]:hover:after {
+  content: ' click to edit';
+  font-style: italic;
+  font-size: 12px;
+  color: #ccc;
+  float: right;
+}
 
+[contenteditable]:focus:after {
+  content: '';
+}
