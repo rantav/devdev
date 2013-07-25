@@ -1,10 +1,11 @@
 {
   "packages": {
-    "bootstrap-updated": {},
     "router": {},
     "blade": {},
     "marked": {},
     "font-awesome": {},
-    "momentjs": {}
+    "momentjs": {},
+    "accounts-ui-bootstrap-dropdown": {},
+    "bootstrap-themes": {}
   }
 }

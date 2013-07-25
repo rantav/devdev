@@ -1,4 +1,10 @@
 Template.setup.rendered = ->
+  setupGa()
+  ga('send', 'pageview');
+  setupNavigation()
+  setupDropdowns()
+
+setupGa = ->
   if !window.ga?
     (
       (i, s, o, g, r, a, m) ->
@@ -13,8 +19,8 @@ Template.setup.rendered = ->
     )(window, document, 'script', '//www.google-analytics.com/analytics.js','ga')
     ga('create', 'UA-42577800-1', 'devdev.io')
 
-  ga('send', 'pageview');
-
+setupNavigation = ->
+  # Highlight the selected navigation item.
   $('ul.nav li a').each( (index, elem) ->
     if document.location.href.indexOf(elem.href) == 0
       $(elem).parent().addClass('active')
@@ -22,5 +28,5 @@ Template.setup.rendered = ->
       $(elem).parent().removeClass('active')
     )
 
-
-
+setupDropdowns = ->
+  Meteor.setTimeout (-> $('.dropdown-toggle').dropdown()), 1000

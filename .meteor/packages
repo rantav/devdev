@@ -4,7 +4,6 @@
 # but you can also edit it by hand.
 
 preserve-inputs
-accounts-ui
 accounts-google
 coffeescript
 less
