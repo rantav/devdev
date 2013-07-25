@@ -1,5 +1,7 @@
 Template.technologies.technologies = ->
-  Technology.all()
+  technologies = Technology.all()
+  document.title = "#{technologies.length} technologies | devdev.io"
+  technologies
 
 Template.technologies.events
   'click #add-technology': ->

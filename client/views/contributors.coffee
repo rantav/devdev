@@ -1,3 +1,4 @@
 Template.contributors.contributors = ->
-  Contributor.all()
-
+  contributors = Contributor.all()
+  document.title = "#{contributors.length} contributors | devdev.io"
+  contributors

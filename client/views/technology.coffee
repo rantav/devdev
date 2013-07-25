@@ -1,4 +1,7 @@
-Template.technology.technology = -> Technology.find  Session.get('technologyId')
+Template.technology.technology = ->
+  technology = Technology.find  Session.get('technologyId')
+  document.title = "#{technology.name()} | devdev.io"
+  technology
 
 Template.technology.events
   'click .icon-plus': ->
