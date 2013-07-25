@@ -45,9 +45,16 @@ Meteor.methods
   deleteTechnology: (technologyId) ->
     technology = Technology.find(technologyId)
     # Permission check
-    if not technology.isCurrentUserOwner() #contributorId == Meteor.userId()
+    if not technology.isCurrentUserOwner()
       throw new Meteor.Error 404, 'Sorry, you cannot delete someone else\'s contribution'
 
     contributor = technology.owner()
     technology.delete()
     contributor.deleteTechnologyContribution(technology)
+
+  setName: (technologyId, newName) ->
+    technology = Technology.find(technologyId)
+    # Permission check
+    if not technology.isCurrentUserOwner()
+      throw new Meteor.Error 404, 'Sorry, you cannot change the name of technology not created by you'
+    technology.setName(newName)

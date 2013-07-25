@@ -90,6 +90,13 @@ root.Technology = class Technology
     @data.deletedAt = now
     @save(now)
 
+  nameEditableByCurrentUser: ->
+    return Meteor.userId() == @data.contributorId
+
+  setName: (newName) ->
+    @data.name = newName
+    @save()
+
 createAspect = (aspectName) ->
   name: aspectName
   contributions: []

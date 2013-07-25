@@ -17,7 +17,7 @@
         <button.btn.disabled Follow #{technology.name()}
         <button.btn.disabled Share #{technology.name()}
 
-    h1= technology.name()
+    h1.name(contenteditable='#{technology.nameEditableByCurrentUser() ? true : false}')= technology.name()
     table.table
       foreach technology.aspects() as aspect
         tr.aspect

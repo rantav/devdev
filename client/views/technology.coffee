@@ -17,10 +17,10 @@ Template.technology.events
   'submit form.contribute-form': (event) ->
     text = $('textarea.contribute-text', event.target).val()
     if text
-      Meteor.call 'contributeToAspect', Session.get('technologyId'), @id(), text, (err, ret) ->
+      Meteor.call 'contributeToAspect', technology.id(), @id(), text, (err, ret) ->
         if err
           alertify.error err
-    Meteor.call('endContributingAspect', Session.get('technologyId'), @id())
+    Meteor.call('endContributingAspect', technology.id(), @id())
     # return false to prevent browser form submission
     false
 
@@ -31,7 +31,7 @@ Template.technology.events
     $target.parent().parent().find('.contribute-preview').html(html)
 
   'click .icon-trash': ->
-    Meteor.call('deleteAspectContribution', Session.get('technologyId'), @contributionId())
+    Meteor.call('deleteAspectContribution', technology.id(), @contributionId())
 
   'click #add-technology': ->
     if not Meteor.userId()
@@ -46,7 +46,16 @@ Template.technology.events
       Meteor.Router.to routes.technology(Technology.find(ret))
       alertify.success "Great, now add some smarts to #{name}"
 
-  'click .disabled': (event, element) ->
+  'blur .name': (event, element)->
+    name = event.srcElement.innerText
+    Meteor.call 'setName', technology.id(), name, (err, ret) ->
+      if err
+        alertify.error err
+      else
+        Meteor.Router.to technology.route()
+
+
+  'click .disabled': (event) ->
     unless event.toElement.className.indexOf('icon-plus') >= 0
       alertify.log '<strong>Coming soonish...</strong> <i class="icon-cogs pull-right"> </i>'
 
