@@ -8,16 +8,15 @@
       <button#add-technology.btn.btn-primary(class='#{Meteor.userId() ? "" : "disabled"}') Create #{technology.name()} again
 
   - else
-    .technology-page-actions
-      .pull-right
-        button.btn.btn-primary.disabled
-          i.icon-money
-          |
-          | Claim #{technology.name()}
-        <button.btn.disabled Follow #{technology.name()}
-        <button.btn.disabled Share #{technology.name()}
+    .span3.technology-page-actions.pull-right
+      button.btn.btn-primary.disabled
+        i.icon-money
+        |
+        | Claim #{technology.name()}
+      <button.btn.disabled Follow #{technology.name()}
+      <button.btn.disabled Share #{technology.name()}
 
-    h1.name(contenteditable='#{technology.nameEditableByCurrentUser() ? true : false}')= technology.name()
+    h1.name.span8(contenteditable='#{technology.nameEditableByCurrentUser() ? true : false}')= technology.name()
     table.table
       foreach technology.aspects() as aspect
         tr.aspect
