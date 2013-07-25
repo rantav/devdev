@@ -42,7 +42,7 @@
       "accounts-ui-bootstrap-dropdown": {
         "git": "https://github.com/rantav/meteor-accounts-ui-bootstrap-dropdown",
         "branch": "master",
-        "commit": "bdde850dec61be965caad521d1fb455e6fd4009b"
+        "commit": "1fd4244547b5cb727cecca4ac284cf87f46a3fab"
       },
       "bootstrap-themes": {
         "git": "https://github.com/eprochasson/meteor-bootstrap-themes",

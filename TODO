@@ -7,12 +7,12 @@
         coffeescript
         blade
 
-- Add Icons to: Twitter, Facebook, Google+, VersionEye, Github etc...
-- Add a Feedback form
-- When deleting technology, delete all it's contribution references as well
 - Allow renaming a technology
-- Think about a nicer way (visually) to add or edit an aspect contribution
+- Add a Feedback form
 - Allow adding aspects as you want (and suggest some names)
+- Add Icons to: Twitter, Facebook, Google+, VersionEye, Github etc...
+- When deleting technology, delete all it's contribution references as well
+- Think about a nicer way (visually) to add or edit an aspect contribution
 - Add Undo features to deleted items
 - Add "I use It" to index page and technology page. For example "I use Java"
 - On the server: publish the deleted technologies but only with minimal data, not all data.
