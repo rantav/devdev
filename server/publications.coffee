@@ -8,3 +8,4 @@ Meteor.publish "users", ->
     fields:
       profile: 1
       'services.google.picture': 1
+      'services.github.picture': 1

@@ -31,8 +31,12 @@ root.Contributor = class Contributor
   route: -> routes.contributor(@) if @data
 
   photoHtml: ->
-    if @data and @data.services and @data.services.google
-      picture = @data.services.google.picture
+    if @data and @data.services
+      if @data.services.google
+        picture = @data.services.google.picture
+      else if @data.services.github
+        picture = @data.services.github.picture
+
     if not picture
       picture = '/img/user.png'
     "<img src='#{picture}' class='img-polaroid'/>"

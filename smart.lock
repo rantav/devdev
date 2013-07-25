@@ -7,7 +7,10 @@
       "marked": {},
       "font-awesome": {},
       "momentjs": {},
-      "accounts-ui-bootstrap-dropdown": {},
+      "accounts-ui-bootstrap-dropdown": {
+        "git": "https://github.com/rantav/meteor-accounts-ui-bootstrap-dropdown",
+        "branch": "master"
+      },
       "bootstrap-themes": {}
     },
     "packages": {
@@ -37,9 +40,9 @@
         "commit": "f421f51c2cb40093374a83adb932937da2f991d3"
       },
       "accounts-ui-bootstrap-dropdown": {
-        "git": "https://github.com/erobit/meteor-accounts-ui-bootstrap-dropdown.git",
-        "tag": "v0.1.5",
-        "commit": "e12b128f140caa2797720cbd5fae084de7810c6a"
+        "git": "https://github.com/rantav/meteor-accounts-ui-bootstrap-dropdown",
+        "branch": "master",
+        "commit": "bdde850dec61be965caad521d1fb455e6fd4009b"
       },
       "bootstrap-themes": {
         "git": "https://github.com/eprochasson/meteor-bootstrap-themes",
