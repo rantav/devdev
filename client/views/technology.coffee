@@ -1,6 +1,7 @@
 Template.technology.technology = ->
   technology = Technology.find  Session.get('technologyId')
-  document.title = "#{technology.name()} | devdev.io"
+  if technology
+    document.title = "#{technology.name()} | devdev.io"
   technology
 
 Template.technology.events
@@ -36,12 +37,13 @@ Template.technology.events
     if not Meteor.userId()
       alertify.alert('<i class="icon-user icon-4x"> </i> <h2>Please log in</h2>')
       return
-    name = Session.get('technologyId')
+    name = if technology then technology.name() else Session.get('technologyId')
+    console.log(name)
     Meteor.call 'createNewTechnology', name, (err, ret) ->
       if err
         alertify.error err
         return
-      Meteor.Router.to routes.technology(ret)
+      Meteor.Router.to routes.technology(Technology.find(ret))
       alertify.success "Great, now add some smarts to #{name}"
 
   'click .disabled': (event, element) ->

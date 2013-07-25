@@ -4,7 +4,9 @@
 - else
   - if (technology.deletedAt())
     .hero-unit
-      h3 Sorry, this technology (technology.name()) was deleted
+      h3 Sorry, this technology (#{technology.name()}) was deleted
+      <button#add-technology.btn.btn-primary(class='#{Meteor.userId() ? "" : "disabled"}') Create #{technology.name()} again
+
   - else
     .technology-page-actions
       .pull-right
