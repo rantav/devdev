@@ -49,11 +49,13 @@ Template.technology.events
 
   'blur .name': (event, element)->
     name = event.srcElement.innerText
-    Meteor.call 'setName', technology.id(), name, (err, ret) ->
-      if err
-        alertify.error err
-      else
-        Meteor.Router.to technology.route()
+    if name != technology.name()
+      Meteor.call 'setName', technology.id(), name, (err, ret) ->
+        if err
+          alertify.error err
+        else
+          alertify.success "OK, renamed to #{name}"
+          Meteor.Router.to technology.route()
 
 
   'click .disabled': (event) ->
