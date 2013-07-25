@@ -4,8 +4,11 @@ root = exports ? this
 
 root.Text = {}
 
+capturePatterns = [/( \/technology\/[^ ]+)/g, /^(\/technology\/[^ ]+)/g]
 # Same as markdown, but looks for "smart links and makes them actual links".
 # for example /technology/javascript becomes [/technology/javascript](/technology/javascript)
 # which is easily translated by marked to html links
 Text.markdownWithSmartLinks = (markdown) ->
-  markdown = markdown.replace(/(\/technology\/[^ ]+)/g, '[$1]($1)')
+  for pattern in capturePatterns
+    markdown = markdown.replace(pattern, '[$1]($1)')
+  markdown

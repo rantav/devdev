@@ -27,6 +27,7 @@ Template.technology.events
   'keyup textarea.contribute-text': (event) ->
     $target = $(event.target)
     text = $target.val()
+    text = Text.markdownWithSmartLinks(text)
     html = marked(text)
     $target.parent().parent().find('.contribute-preview').html(html)
 
