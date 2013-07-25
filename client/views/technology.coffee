@@ -53,6 +53,12 @@ Template.technology.events
       document.execCommand('undo')
       $(event.target).blur()
 
+  'keydown .name': (event) ->
+    enter = event.which == 13
+    if enter
+      $(event.target).blur()
+      false
+
   'blur .name': (event, element)->
     name = event.srcElement.innerText
     if name != technology.name()
