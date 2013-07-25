@@ -22,7 +22,9 @@ setupGa = ->
 setupNavigation = ->
   # Highlight the selected navigation item.
   $('ul.nav li a').each( (index, elem) ->
-    if document.location.href.indexOf(elem.href) == 0
+    aliases = $(elem).data('hrefAliases')
+    href = document.location.href
+    if href.indexOf(elem.href) == 0 or (aliases and (alias for alias in aliases.split(' ') when href.indexOf(alias) >= 0).length)
       $(elem).parent().addClass('active')
     else
       $(elem).parent().removeClass('active')
