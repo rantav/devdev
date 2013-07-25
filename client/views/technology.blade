@@ -47,7 +47,7 @@
                         i.icon-thumbs-down.disabled
                   p.contribution
                     small.pull-right.muted= moment(contribution.updatedAt()).fromNow()
-                    != marked(contribution.markdown())
+                    != marked(contribution.markdownWithSmartLinks())
             - if (Meteor.userId() && aspect.isCurrentUserContributing())
               form.contribute-form
                 .span5

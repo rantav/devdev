@@ -12,6 +12,12 @@ root.AspectContribution = class AspectContribution
 
   markdown: -> @data.markdown
 
+  # Same as markdown, but looks for "smart links and makes them actual links".
+  # for example /technology/javascript becomes [/technology/javascript](/technology/javascript)
+  # which is easily translated by marked to html links
+  markdownWithSmartLinks: ->
+    Text.markdownWithSmartLinks(@markdown())
+
   contributor: -> Contributor.find(@data.contributorId)
 
   contributionId: -> @data.contributionId
