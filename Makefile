@@ -1,2 +1,2 @@
 deploy:
-	mrt deploy devdev.io
+	bash deploy.sh
