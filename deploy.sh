@@ -7,4 +7,4 @@ v="$(cat version)"
 echo deploying new version: $v
 git tag -a v$v -m "Deployment from $now, v$v"
 mrt deploy devdev.io
-git push
+git push --tags
