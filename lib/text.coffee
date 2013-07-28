@@ -4,7 +4,7 @@ root = exports ? this
 
 root.Text = {}
 
-capturePatterns = [/( \/technology\/[^ ]+)/g, /^(\/technology\/[^ ]+)/g]
+capturePatterns = [/( \/technology\/[^\s]+)/g, /^(\/technology\/[^\s]+)/g]
 # Same as markdown, but looks for "smart links and makes them actual links".
 # for example /technology/javascript becomes [/technology/javascript](/technology/javascript)
 # which is easily translated by marked to html links
