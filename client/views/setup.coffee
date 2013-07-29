@@ -53,9 +53,8 @@ identify = ->
   Deps.autorun ->
     if Meteor.userId()
       user = Contributor.current()
-      analytics.identify(user.id(),
-        name: user.name()
-      )
+      if user.id()
+        analytics.identify("#{user.name()} - #{user.id()}")
 
 setupGa = ->
   if !window.ga?
