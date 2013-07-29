@@ -1,6 +1,6 @@
 Template.setup.rendered = ->
   setupSegmentIo()
-  analytics.pageview(document.location.href)
+  analytics.pageview(document.location.pathname)
   # setupGa()
   # ga('send', 'pageview',
   #   'page': document.location.pathname,
