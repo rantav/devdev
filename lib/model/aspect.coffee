@@ -4,7 +4,7 @@ root.Aspect = class Aspect
 
   constructor: (@data, @technologyRef) ->
 
-  name: -> @data.name
+  name: -> @data.name if @data
 
   id: -> @data.aspectId
 
@@ -24,7 +24,7 @@ root.Aspect = class Aspect
     new AspectContribution(aspectContributionData, @)
 
   contributions: ->
-    (new AspectContribution(aspectContributionData, @) for aspectContributionData in @data.contributions)
+    (new AspectContribution(aspectContributionData, @) for aspectContributionData in @data.contributions) if @data
 
   technology: -> @technologyRef
 
@@ -32,6 +32,9 @@ root.Aspect = class Aspect
     @data["contributing-" + Meteor.userId()]
 
   findContributionById: (contributionId) ->
+    if not @data
+      return new AspectContribution(null, @)
+
     for contribution in @data.contributions
       if contribution.contributionId == contributionId
         return new AspectContribution(contribution, @)

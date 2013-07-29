@@ -68,9 +68,11 @@ root.Technology = class Technology
       (Contributor.find(contributorId) for contributorId in contributorIds)
 
   findAspectById: (aspectId) ->
-    if @data
+    if @data and @data.aspects
       candidates = (aspect for aspect in @data.aspects when aspect.aspectId == aspectId)
-      new Aspect(candidates[0], @)
+      return new Aspect(candidates[0], @)
+    else
+      return new Aspect(null, @)
 
   findContributionById: (contributionId) ->
     for aspect in @aspects()

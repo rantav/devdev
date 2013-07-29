@@ -4,13 +4,13 @@ root.AspectContribution = class AspectContribution
 
   constructor: (@data, @aspectRef) ->
 
-  createdAt: -> @data.createdAt
+  createdAt: -> @data.createdAt if @data
 
-  updatedAt: -> @data.updatedAt
+  updatedAt: -> @data.updatedAt if @data
 
-  deletedAt: -> @data.deletedAt
+  deletedAt: -> @data.deletedAt if @data
 
-  markdown: -> @data.markdown
+  markdown: -> if @data then @data.markdown else ""
 
   markdownWithSmartLinks: ->
     Text.markdownWithSmartLinks(@markdown())
