@@ -9,12 +9,12 @@
 
   - else
     .span4.technology-page-actions.pull-right
-      button.btn.btn-primary.disabled
+      button#claim-technology.btn.btn-primary.disabled.not-implemented
         i.icon-money
         |
         | Claim #{technology.name()}
-      <button.btn.disabled Follow #{technology.name()}
-      <button.btn.disabled Share #{technology.name()}
+      <button#follow-technology.btn.disabled.not-implemented Follow #{technology.name()}
+      <button#share-technology.btn.disabled.not-implemented Share #{technology.name()}
 
     h1.name.span7(contenteditable='#{technology.nameEditableByCurrentUser() ? true : false}')= technology.name()
     table.table
@@ -23,7 +23,7 @@
           th
             = aspect.name()
             .aspect-actions.pull-right
-              a.action(href='javascript:void(0)' title='Contribute')
+              a#contribute-aspect.action(href='javascript:void(0)' title='Contribute')
                 i.icon-plus(class='#{Meteor.userId() ? "" : "disabled"}')
 
           td.aspect-data
@@ -35,15 +35,15 @@
                     title='#{contribution.contributor().name()}')
                   .contribution-actions.pull-right
                     - if (contribution.isCurrentUserOwner())
-                      <a.action(href='javascript:void(0)' title='Edit your contribution')
-                        i.icon-edit.disabled
+                      <a.action.not-implemented(href='javascript:void(0)' title='Edit your contribution')
+                        i#edit-aspect-contribution.icon-edit.disabled
                       <a.action(href='javascript:void(0)' title='Delete your contribution')
-                        i.icon-trash
+                        i#delete-aspect-contribution.icon-trash
                     - else
-                      <a.action(href='javascript:void(0)' title='Vote up')
-                        i.icon-thumbs-up.disabled
-                      <a.action(href='javascript:void(0)' title='Vote down')
-                        i.icon-thumbs-down.disabled
+                      <a.not-implemented.action(href='javascript:void(0)' title='Vote up')
+                        i#vote-up-aspect-contribution.icon-thumbs-up.disabled
+                      <a.not-implemented.action(href='javascript:void(0)' title='Vote down')
+                        i#vote-down-aspect-contribution.icon-thumbs-down.disabled
                   p.contribution
                     small.pull-right.muted= moment(contribution.updatedAt()).fromNow()
                     != marked(contribution.markdownWithSmartLinks())

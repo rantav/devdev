@@ -5,6 +5,7 @@ Template.technologies.technologies = ->
 
 Template.technologies.events
   'click #add-technology': ->
+    analytics.track('Add technology', {loggedIn: !!Meteor.userId()})
     if not Meteor.userId()
       alertify.alert('<i class="icon-user icon-4x"> </i> <h2>Please log in</h2>')
       return
@@ -20,6 +21,7 @@ Template.technologies.events
           alertify.success "Great, now add some smarts to #{technology.name()}"
 
   'click i.icon-trash': ->
+    analytics.track('Delete technology')
     id = @id()
     name = @name()
     alertify.confirm "<i class='icon-exclamation-sign pull-left icon-4x'> </i><h2>Sure you want to delete #{name}?</h2>", (ok) ->

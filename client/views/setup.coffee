@@ -1,10 +1,61 @@
 Template.setup.rendered = ->
-  setupGa()
-  ga('send', 'pageview',
-    'page': document.location.pathname,
-    'location': document.location.href)
+  setupSegmentIo()
+  analytics.pageview(document.location.href)
+  # setupGa()
+  # ga('send', 'pageview',
+  #   'page': document.location.pathname,
+  #   'location': document.location.href)
   setupNavigation()
   setupDropdowns()
+
+setupSegmentIo = ->
+  if !window.analytics?
+    # Create a queue, but don't obliterate an existing one!
+    window.analytics = [];
+
+    # A list of all the methods we want to generate queueing stubs for.
+    methods = ['identify', 'track', 'trackLink', 'trackForm', 'trackClick',
+      'trackSubmit','page', 'pageview', 'ab', 'alias', 'ready', 'group']
+
+    # For each of our methods, generate a queueing method that pushes arrays of
+    # arguments onto our `analytics` queue. The first element of the array
+    # is always the name of the analytics.js method itself (eg. `track`), so that
+    # we know where to replay them when analytics.js finally loads.
+    factory = (method) ->
+      -> analytics.push([method].concat(Array.prototype.slice.call(arguments, 0)))
+
+
+    i = 0
+    while i < methods.length
+      analytics[methods[i]] = factory(methods[i])
+      i++
+
+    # Define a method that will asynchronously load analytics.js from our CDN.
+    analytics.load = (apiKey) ->
+      # Create an async script element for analytics.js based on your API key.
+      script = document.createElement('script')
+      script.type = 'text/javascript'
+      script.async = true
+      script.src = "//d2dq2ahtl5zl1z.cloudfront.net/analytics.js/v1/#{apiKey}/analytics.min.js"
+
+      # Find the first script element on the page and insert our script next to it.
+      firstScript = document.getElementsByTagName('script')[0]
+      firstScript.parentNode.insertBefore(script, firstScript)
+
+
+    # Load analytics.js with your API key, which will automatically load all of the
+    # analytics integrations you've turned on for your account. Boosh!
+    analytics.load('kqcpdlo36m');
+    identify()
+
+# Identifies the user for analytics purpose
+identify = ->
+  Deps.autorun ->
+    if Meteor.userId()
+      user = Contributor.current()
+      analytics.identify(user.id(),
+        name: user.name()
+      )
 
 setupGa = ->
   if !window.ga?

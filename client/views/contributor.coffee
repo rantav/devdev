@@ -7,5 +7,7 @@ Template.contributor.contributor = ->
   contributor
 
 Template.contributor.events
-  'click .disabled': ->
+  'click .not-implemented': (event) ->
     alertify.log '<strong>Coming soonish...</strong> <i class="icon-cogs pull-right"> </i>'
+    analytics.track('Clicked disabled', {id: event.srcElement.id})
+

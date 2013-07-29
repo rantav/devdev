@@ -3,8 +3,8 @@
 - else
   .contributor-page-actions
     .pull-right
-      <button.btn.disabled Follow #{contributor.name()}
-      <button.btn.disabled Share #{contributor.name()}'s awesome work!
+      <button#follow-contributor.btn.disabled.not-implemented Follow #{contributor.name()}
+      <button#share-contributor.btn.disabled.not-implemented Share #{contributor.name()}'s awesome work!
 
   .contributor.pull-left(style='border-left-color: #{contributor.color()}')
     != contributor.photoHtml()
