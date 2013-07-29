@@ -1,6 +1,7 @@
 Template.setup.rendered = ->
   setupGa()
-  ga('send', 'pageview');
+  ga('send', 'pageview',
+    'page': document.location.href)
   setupNavigation()
   setupDropdowns()
 
