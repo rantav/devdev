@@ -24,3 +24,13 @@ describe 'Contributor', ->
       it 'should return the user "unknown"', ->
         expect(Contributor.find('2').id()).toEqual('unknown')
         expect(Contributor.find('2').name()).toEqual('unknown')
+  describe 'countContributions', ->
+    it 'should count 0 when the user has none', ->
+      c = new Contributor({profile: {contributions: []}})
+      expect(c.countContributions()).toEqual(0)
+    it 'should count 1 when the user has one', ->
+      c = new Contributor({profile: {contributions: [{}]}})
+      expect(c.countContributions()).toEqual(1)
+    it 'should count 1 when the user has one deleted and one not deleted', ->
+      c = new Contributor({profile: {contributions: [{}, {deletedAt: new Date()}]}})
+      expect(c.countContributions()).toEqual(1)
