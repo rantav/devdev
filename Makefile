@@ -1,3 +1,6 @@
+run:
+	pushd app && mrt ; popd
+
 deploy:
 	bash deploy.sh
 
