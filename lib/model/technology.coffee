@@ -19,7 +19,7 @@ root.Technology = class Technology
     aspectNames = ['Tagline', 'Websites', 'Source Code', 'Typical Use Cases',
       'Sweet Spots', 'Weaknesses', 'Documentation', 'Tutorials', 'StackOverflow',
       'Mailing Lists', 'IRC', 'Development Status', 'Used By', 'Alternatives',
-      'Complement Technologies', 'Talks, Videos, Slides', 'Prerequisites',
+      'Complement Technologies', 'Talks, Videos, Slides', 'Cheatsheet / Examples', 'Prerequisites',
       'Reviews', 'Developers', 'VersionEye', 'Twitter', 'Facebook', 'Google+',
       'Comments', 'More']
 
