@@ -6,9 +6,9 @@ root.Contributor = class Contributor
     (new Contributor(contribData) for contribData in Meteor.users.find().fetch())
 
   @find: (idOrName) ->
-    contribData = Meteor.users.findOne(idOrName)
+    contribData = Contributors.findOne(idOrName)
     if not contribData
-      contribData = Contributors.findOne({name: new RegExp('^' + idOrName + '$', 'i')})
+      contribData = Contributors.findOne({'profile.name': new RegExp('^' + idOrName + '$', 'i')})
     if contribData
       new Contributor(contribData)
     else
