@@ -4,6 +4,9 @@ run:
 deploy:
 	bash deploy.sh
 
+deploy-no-tag:
+	pushd app; mrt deploy devdev.io; popd
+
 setup:
 	bash setup.sh
 
