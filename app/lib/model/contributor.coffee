@@ -2,7 +2,7 @@ root = exports ? this
 
 root.Contributor = class Contributor
 
-  @all: -> @find()
+  @all: -> @find({})
 
   @find: (selector, options) ->
     (new Contributor(contribData) for contribData in Meteor.users.find(selector, options).fetch())

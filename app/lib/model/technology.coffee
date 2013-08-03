@@ -2,7 +2,7 @@ root = exports ? this
 
 root.Technology = class Technology
 
-  @all: -> @find()
+  @all: -> @find({})
 
   # Finds all technologies, and filters out the ones that were deleted
   @find: (selector, options) ->
