@@ -2,8 +2,10 @@ root = exports ? this
 
 root.Contributor = class Contributor
 
-  @all: ->
-    (new Contributor(contribData) for contribData in Meteor.users.find().fetch())
+  @all: -> @find()
+
+  @find: (selector, options) ->
+    (new Contributor(contribData) for contribData in Meteor.users.find(selector, options).fetch())
 
   @findOne: (idOrName) ->
     contribData = Contributors.findOne(idOrName)

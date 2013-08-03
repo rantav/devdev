@@ -1,8 +1,15 @@
 root = exports ? this
 
 root.Technology = class Technology
-  @all: ->
-    (new Technology(techData) for techData in Technologies.find().fetch() when not techData.deletedAt)
+
+  @all: -> @find()
+
+  # Finds all technologies, and filters out the ones that were deleted
+  @find: (selector, options) ->
+    if not selector
+      selector = {}
+    selector['deletedAt'] = {$exists: false}
+    (new Technology(techData) for techData in Technologies.find(selector, options).fetch())
 
   @findOne: (idOrName) ->
     technologyData = Technologies.findOne idOrName

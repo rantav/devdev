@@ -1,5 +1,5 @@
 Template.technologies.technologies = ->
-  technologies = Technology.all()
+  technologies = Technology.find({}, {sort: {updatedAt: -1}})
   document.title = "#{technologies.length} technologies | devdev.io"
   technologies
 

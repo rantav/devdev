@@ -1,5 +1,5 @@
 describe 'Contributor', ->
-  describe 'all', ->
+  describe '@all', ->
     describe 'when there are no users', ->
       beforeEach -> Meteor.users.find = -> {fetch: -> []}
       it 'should return an empty array', ->
@@ -10,7 +10,7 @@ describe 'Contributor', ->
         expect(Contributor.all().length).toEqual(1)
       it 'should return a contributor with the ID 1', ->
         expect(Contributor.all()[0].id()).toEqual('1')
-  describe 'find', ->
+  describe '@findOne', ->
     beforeEach -> Meteor.users.findOne = (idOrName) ->
       if idOrName == '1' or idOrName['profile.name'] and idOrName['profile.name'].source == '^one$'
         return {_id: '1', profile: {name: 'one'}}
