@@ -36,3 +36,16 @@ db.technologies.find().forEach(function(t){
     }
   }
 })
+
+// Update the number of contributions
+db.users.find().forEach(function(u) {
+  var contributions = u.profile.contributions;
+  var count = 0;
+  for (var i= 0; i < contributions.length; ++i) {
+    if (!contributions[i].deletedAt) {
+      ++count;
+    }
+  }
+  u.profile.contributionCount = count;
+  db.users.save(u);
+})
