@@ -21,6 +21,7 @@ Accounts.onCreateUser (options, user) ->
     user.profile = options.profile
   user.profile.color = randomColor()
   user.profile.contributions = []
+  profile.contributionCount = 0
   user
 
 randomColor = ->

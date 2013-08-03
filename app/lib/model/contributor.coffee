@@ -11,26 +11,31 @@ root.Contributor = class Contributor
     contribData = Contributors.findOne(idOrName)
     if not contribData
       contribData = Contributors.findOne({'profile.name': new RegExp('^' + idOrName + '$', 'i')})
-    if contribData
-      new Contributor(contribData)
-    else
-      new Contributor({_id: 'unknown', profile: {name: 'unknown', 'color': '#fff'}})
+    new Contributor(contribData)
 
   # Current logged in user; undefined if the user is not logged in
   @current: -> new Contributor(Meteor.user()) if Meteor.userId()
 
   constructor: (@data) ->
+    if not @data
+      @data =
+        _id: 'unknown',
+        profile:
+          name: 'unknown',
+          color: '#fff'
+          contributions: []
+          contributionCount: 0
 
-  countContributions: ->
-    (contribData for contribData in @data.profile.contributions when not contribData.deletedAt).length
+  contributionCount: ->
+    @data.profile.contributionCount || 0
 
-  id: -> @data._id if @data
+  id: -> @data._id
 
-  name: -> @data.profile.name if @data
+  name: -> @data.profile.name
 
-  color: -> @data.profile.color if @data
+  color: -> @data.profile.color
 
-  route: -> routes.contributor(@) if @data
+  route: -> routes.contributor(@)
 
   photoHtml: ->
     if @data and @data.services
@@ -50,16 +55,21 @@ root.Contributor = class Contributor
   addTechnologyContribution: (technology) ->
     if not @data.profile.contributions
       @data.profile.contributions = []
+    if not @data.profile.contributionCount
+      @data.profile.contributionCount = 0
     @data.profile.contributions.push
       technologyId: technology.id()
       type: 'technology'
       createdAt: technology.createdAt()
       updatedAt: technology.updatedAt()
+    @data.profile.contributionCount++;
     @save(technology.updatedAt())
 
   addAspectContribution: (aspectContribution) ->
     if not @data.profile.contributions
       @data.profile.contributions = []
+    if not @data.profile.contributionCount
+      @data.profile.contributionCount = 0
     @data.profile.contributions.push
       technologyId: aspectContribution.aspect().technology().id()
       aspectId: aspectContribution.aspect().id()
@@ -67,6 +77,7 @@ root.Contributor = class Contributor
       type: 'aspectContribution'
       createdAt: aspectContribution.createdAt()
       updatedAt: aspectContribution.updatedAt()
+    @data.profile.contributionCount++;
     @save(aspectContribution.updatedAt())
 
   save: ->
@@ -82,12 +93,14 @@ root.Contributor = class Contributor
   deleteAspectContribution: (aspectContribution) ->
     userContributionData = @findUserAspectContribution(aspectContribution)
     userContributionData.deletedAt = new Date()
+    @data.profile.contributionCount--;
     @save()
 
   # TODO: Delete all other aspect contributions (from all other users as well)
   deleteTechnologyContribution: (technology) ->
     userContributionData = @findUserTechnologyContributions(technology)
     userContributionData.deletedAt = new Date()
+    @data.profile.contributionCount--;
     @save()
 
 root.Contributors = Meteor.users

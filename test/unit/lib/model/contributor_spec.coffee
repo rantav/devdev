@@ -24,16 +24,35 @@ describe 'Contributor', ->
       it 'should return the user "unknown"', ->
         expect(Contributor.findOne('2').id()).toEqual('unknown')
         expect(Contributor.findOne('2').name()).toEqual('unknown')
-  describe 'countContributions', ->
+  describe 'contributionCount', ->
     it 'should count 0 when the user has none', ->
       c = new Contributor({profile: {contributions: []}})
-      expect(c.countContributions()).toEqual(0)
+      expect(c.contributionCount()).toEqual(0)
     it 'should count 1 when the user has one', ->
-      c = new Contributor({profile: {contributions: [{}]}})
-      expect(c.countContributions()).toEqual(1)
-    it 'should count 1 when the user has one deleted and one not deleted', ->
-      c = new Contributor({profile: {contributions: [{}, {deletedAt: new Date()}]}})
-      expect(c.countContributions()).toEqual(1)
+      c = new Contributor({profile: {contributionCount: 1}})
+      expect(c.contributionCount()).toEqual(1)
+    it 'should count 1 when starting from 0 and then adding one technologyContribution', ->
+      c = new Contributor()
+      c.addTechnologyContribution(new Technology())
+      expect(c.contributionCount()).toEqual(1)
+    it 'should count 1 when starting from 0 and then adding one aspectContribution', ->
+      c = new Contributor()
+      t = new Technology({aspects: [{_id: '1'}]})
+      a = t.aspects()[0]
+      c.addAspectContribution(new AspectContribution({}, a))
+      expect(c.contributionCount()).toEqual(1)
+    it 'should count 0 when starting from 0 and then adding two contributions of each type and then deleting them', ->
+      c = new Contributor()
+      t = new Technology({aspects: [{_id: '1'}]})
+      a = t.aspects()[0]
+      c.addTechnologyContribution(new Technology())
+      ac = new AspectContribution({}, a)
+      c.addAspectContribution(ac)
+      c.deleteAspectContribution(ac)
+      c.deleteTechnologyContribution(c)
+      expect(c.contributionCount()).toEqual(0)
+
+
   describe 'photoHtml', ->
     describe 'for google user', ->
       it 'should display the picture when the user has one', ->
