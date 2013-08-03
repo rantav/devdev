@@ -1,5 +1,5 @@
 Template.technology.technology = ->
-  technology = Technology.find  Session.get('technologyId')
+  technology = Technology.findOne(Session.get('technologyId'))
   if technology
     document.title = "#{technology.name()} | devdev.io"
   technology
@@ -49,7 +49,7 @@ Template.technology.events
       if err
         alertify.error err
         return
-      Meteor.Router.to routes.technology(Technology.find(ret))
+      Meteor.Router.to routes.technology(Technology.findOne(ret))
       alertify.success "Great, now add some smarts to #{name}"
 
   'keyup .name': (event) ->

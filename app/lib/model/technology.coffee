@@ -4,7 +4,7 @@ root.Technology = class Technology
   @all: ->
     (new Technology(techData) for techData in Technologies.find().fetch() when not techData.deletedAt)
 
-  @find: (idOrName) ->
+  @findOne: (idOrName) ->
     technologyData = Technologies.findOne idOrName
     if not technologyData
       technologyData = Technologies.findOne({name: new RegExp('^' + idOrName + '$', 'i')})
@@ -48,7 +48,7 @@ root.Technology = class Technology
 
   contributorId: -> @data.contributorId if @data
 
-  owner: -> Contributor.find(@data.contributorId) if @data
+  owner: -> Contributor.findOne(@data.contributorId) if @data
 
   route: -> routes.technology(@) if @data
 
@@ -65,7 +65,7 @@ root.Technology = class Technology
       output = {}
       output[contributorIds[key]] = contributorIds[key] for key in [0...contributorIds.length]
       contributorIds = (value for key, value of output)
-      (Contributor.find(contributorId) for contributorId in contributorIds)
+      (Contributor.findOne(contributorId) for contributorId in contributorIds)
 
   findAspectById: (aspectId) ->
     if @data and @data.aspects

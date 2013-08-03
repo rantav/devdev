@@ -15,7 +15,7 @@ root.AspectContribution = class AspectContribution
   markdownWithSmartLinks: ->
     Text.markdownWithSmartLinks(@markdown())
 
-  contributor: -> Contributor.find(@data.contributorId)
+  contributor: -> Contributor.findOne(@data.contributorId)
 
   contributionId: -> @data.contributionId
 

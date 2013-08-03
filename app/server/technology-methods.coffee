@@ -15,24 +15,24 @@ Meteor.methods
       throw new Meteor.Error 404, 'Please log in'
 
     if technologyId and aspectId and contributionText
-      technology = Technology.find(technologyId)
+      technology = Technology.findOne(technologyId)
       aspect = technology.findAspectById(aspectId)
       aspectContribution = aspect.addContribution(contributionText)
       contributor.addAspectContribution(aspectContribution)
       aspectContribution.data
 
   toggleContributingAspect: (technologyId, aspectId) ->
-    technology = Technology.find(technologyId)
+    technology = Technology.findOne(technologyId)
     aspect = technology.findAspectById(aspectId)
     aspect.toggleEditCurrentUser()
 
   endContributingAspect: (technologyId, aspectId) ->
-    technology = Technology.find(technologyId)
+    technology = Technology.findOne(technologyId)
     aspect = technology.findAspectById(aspectId)
     aspect.setEditCurrentUser(false)
 
   deleteAspectContribution: (technologyId, contributionId) ->
-    technology = Technology.find(technologyId)
+    technology = Technology.findOne(technologyId)
     aspectContribution = technology.findContributionById(contributionId)
 
     if not aspectContribution.isCurrentUserOwner()
@@ -43,7 +43,7 @@ Meteor.methods
     contributor.deleteAspectContribution(aspectContribution)
 
   deleteTechnology: (technologyId) ->
-    technology = Technology.find(technologyId)
+    technology = Technology.findOne(technologyId)
     # Permission check
     if not technology.isCurrentUserOwner()
       throw new Meteor.Error 404, 'Sorry, you cannot delete someone else\'s contribution'
@@ -53,7 +53,7 @@ Meteor.methods
     contributor.deleteTechnologyContribution(technology)
 
   setName: (technologyId, newName) ->
-    technology = Technology.find(technologyId)
+    technology = Technology.findOne(technologyId)
     # Permission check
     if not technology.isCurrentUserOwner()
       throw new Meteor.Error 404, 'Sorry, you cannot change the name of technology not created by you'

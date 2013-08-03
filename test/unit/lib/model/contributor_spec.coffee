@@ -16,14 +16,14 @@ describe 'Contributor', ->
         return {_id: '1', profile: {name: 'one'}}
     describe 'by id', ->
       it 'should return the user with id 1', ->
-        expect(Contributor.find('1').id()).toEqual('1')
+        expect(Contributor.findOne('1').id()).toEqual('1')
     describe 'by name', ->
       it 'should return the user with id 1, name one', ->
-        expect(Contributor.find('one').name()).toEqual('one')
+        expect(Contributor.findOne('one').name()).toEqual('one')
     describe 'by nonexisting id', ->
       it 'should return the user "unknown"', ->
-        expect(Contributor.find('2').id()).toEqual('unknown')
-        expect(Contributor.find('2').name()).toEqual('unknown')
+        expect(Contributor.findOne('2').id()).toEqual('unknown')
+        expect(Contributor.findOne('2').name()).toEqual('unknown')
   describe 'countContributions', ->
     it 'should count 0 when the user has none', ->
       c = new Contributor({profile: {contributions: []}})

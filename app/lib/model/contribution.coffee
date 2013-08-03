@@ -9,7 +9,7 @@ root.Contribution = class Contribution
     if @data
       cached = @cache.technology
       if not cached
-        cached = Technology.find(@data.technologyId)
+        cached = Technology.findOne(@data.technologyId)
         @cache.technology = cached
       cached
 
