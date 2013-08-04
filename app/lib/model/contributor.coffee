@@ -37,16 +37,16 @@ root.Contributor = class Contributor
 
   route: -> routes.contributor(@)
 
-  photoHtml: ->
+  photoHtml: (imgClass) ->
     if @data and @data.services
       if @data.services.google
         picture = @data.services.google.picture
       else if @data.services.github
         picture = @data.services.github.picture
 
-    if not picture
-      picture = '/img/user.png'
-    "<img src='#{picture}' class='img-polaroid'/>"
+    if not imgClass then imgClass = 'img-polaroid'
+    if not picture then picture = '/img/user.png'
+    "<img src='#{picture}' class='#{imgClass}'/>"
 
   # Gets all undeleted contributions from the contributor
   contributions: ->

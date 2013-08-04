@@ -4,6 +4,7 @@ table.table
   foreach contributors as contributor
     tr
       th
-        a(href='#{contributor.route()}')= contributor.name()
+        a.contributor-small(href='#{contributor.route()}' style='border-left-color: #{contributor.color()}')
+          != contributor.photoHtml('img')
+          |= contributor.name()
       td #{contributor.contributionCount()} contributions
-
