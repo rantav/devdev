@@ -45,8 +45,9 @@ setupSegmentIo = ->
 
     # Load analytics.js with your API key, which will automatically load all of the
     # analytics integrations you've turned on for your account. Boosh!
-    analytics.load('kqcpdlo36m');
-    identify()
+    if document.location.host.indexOf('localhost') == -1
+      analytics.load('kqcpdlo36m');
+      identify()
 
 # Identifies the user for analytics purpose
 identify = ->
