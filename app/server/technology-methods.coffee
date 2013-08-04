@@ -5,8 +5,8 @@ Meteor.methods
     if not contributor
       throw new Meteor.Error 404, 'Please log in'
 
-    technology = Technology.create technologyName
-    contributor.addTechnologyContribution technology
+    technology = Technology.create(technologyName)
+    contributor.addTechnologyContribution(technology)
     technology.data
 
   contributeToAspect: (technologyId, aspectId, contributionText) ->

@@ -20,7 +20,7 @@ root.Technology = class Technology
 
   @add: (data) ->
     id = Technologies.insert data
-    @find id
+    @findOne(id)
 
   @create: (name) ->
     aspectNames = ['Tagline', 'Websites', 'Source Code', 'Typical Use Cases',
@@ -37,7 +37,7 @@ root.Technology = class Technology
       aspects: (createAspect(a) for a in aspectNames)
       createdAt: now
       updatedAt: now
-    Technology.add tech
+    Technology.add(tech)
 
   constructor: (@data) ->
 

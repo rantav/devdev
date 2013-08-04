@@ -17,14 +17,13 @@ root.Contributor = class Contributor
   @current: -> new Contributor(Meteor.user()) if Meteor.userId()
 
   constructor: (@data) ->
-    if not @data
-      @data =
-        _id: 'unknown',
-        profile:
-          name: 'unknown',
-          color: '#fff'
-          contributions: []
-          contributionCount: 0
+    if not @data then @data = {}
+    if not @data._id then @data._id = 'unknown'
+    if not @data.profile then @data.profile = {}
+    if not @data.profile.color then @data.profile.color = '#fff'
+    if not @data.profile.contributions then @data.profile.contributions = []
+    if not @data.profile.contributionCount then @data.profile.contributionCount = 0
+    if not @data.profile.name then @data.profile.name = 'unknown'
 
   contributionCount: ->
     @data.profile.contributionCount || 0
@@ -38,7 +37,7 @@ root.Contributor = class Contributor
   route: -> routes.contributor(@)
 
   photoHtml: (imgClass) ->
-    if @data and @data.services
+    if @data.services
       if @data.services.google
         picture = @data.services.google.picture
       else if @data.services.github
@@ -50,7 +49,7 @@ root.Contributor = class Contributor
 
   # Gets all undeleted contributions from the contributor
   contributions: ->
-    (new Contribution(contribData) for contribData in @data.profile.contributions when not contribData.deletedAt) if @data
+    (new Contribution(contribData) for contribData in @data.profile.contributions when not contribData.deletedAt)
 
   addTechnologyContribution: (technology) ->
     if not @data.profile.contributions

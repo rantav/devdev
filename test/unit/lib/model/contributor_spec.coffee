@@ -51,8 +51,41 @@ describe 'Contributor', ->
       c.deleteAspectContribution(ac)
       c.deleteTechnologyContribution(c)
       expect(c.contributionCount()).toEqual(0)
-
-
+  describe 'addTechnologyContribution', ->
+    describe 'adding the technology contribution to the contributor', ->
+      c = null
+      t = null
+      beforeEach ->
+        c = new Contributor({_id: '2'})
+        createdAt = new Date(0)
+        updatedAt = new Date(200000)
+        t = new Technology({_id: '1', createdAt: createdAt, updatedAt: updatedAt})
+        expect(c.contributionCount()).toEqual(0)
+        expect(c.contributions()).toEqual([])
+        c.addTechnologyContribution(t)
+        Technology.findOne = (technologyId) -> if technologyId == '1' then t
+      it 'should count exactly 1 contribution', ->
+        expect(c.contributionCount()).toEqual(1)
+      it 'should have the exact same contribution that we added', ->
+        contribs = c.contributions()
+        expect(contribs.length).toEqual(1)
+        contrib = contribs[0]
+        expect(contrib.type()).toEqual('technology')
+        expect(contrib.technology()).toEqual(t)
+  describe 'findUserTechnologyContributions', ->
+    it 'should not find a contribution that doesn\'t exist', ->
+      c = new Contributor()
+      t = new Technology()
+      expect(c.findUserTechnologyContributions(t)).toEqual([])
+    it 'should find a contribution after it\'s been added', ->
+      c = new Contributor()
+      createdAt = new Date(0)
+      updatedAt = new Date(200000)
+      t = new Technology({_id: '1', createdAt: createdAt, updatedAt: updatedAt})
+      c.addTechnologyContribution(t)
+      expect(c.findUserTechnologyContributions(t)).toEqual([{
+        technologyId: '1', type: 'technology', createdAt: createdAt,
+        updatedAt: updatedAt}])
   describe 'photoHtml', ->
     describe 'for google user', ->
       it 'should display the picture when the user has one', ->
