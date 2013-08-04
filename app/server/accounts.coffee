@@ -17,11 +17,15 @@ Accounts.onCreateUser (options, user) ->
 
   # Google login details take care of themselves
 
-  if (options.profile)
+  # Now set up the profile
+  if options.profile
     user.profile = options.profile
+  else
+    user.profile = {}
+
   user.profile.color = randomColor()
   user.profile.contributions = []
-  profile.contributionCount = 0
+  user.profile.contributionCount = 0
   user
 
 randomColor = ->
