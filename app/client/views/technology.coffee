@@ -44,13 +44,12 @@ Template.technology.events
     $target.parent().find('.controls').hide(200)
 
   'blur .controls button': (event) ->
-    $relatedTarget = $(event.relatedTarget)
     $target = $(event.target)
-    console.log($target.data('referred-id'))
-    console.log($relatedTarget.data('referred-id'))
-    if $relatedTarget.data('referred-id') == $target.data('referred-id') or event.relatedTarget.id == $target.data('referred-id')
-      # Don't hide the controls if they have the focus
-      return
+    if event.relatedTarget
+      $relatedTarget = $(event.relatedTarget)
+      if $relatedTarget.data('referred-id') == $target.data('referred-id') or event.relatedTarget.id == $target.data('referred-id')
+        # Don't hide the controls if they have the focus
+        return
     $target.parent().hide(200)
 
   'focus textarea.contribute-text': (event) ->
