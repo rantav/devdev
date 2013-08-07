@@ -5,16 +5,12 @@ Template.technology.technology = ->
   window.technology = technology
 
 Template.technology.events
-  'click .icon-plus': ->
-    analytics.track('Clic add aspect contribution', {loggedIn: !!Meteor.userId()})
-    if Meteor.userId()
-      Meteor.call 'toggleContributingAspect', Session.get('technologyId'), @id()
-    else
-      alertify.alert('<i class="icon-user icon-4x"> </i> <h2>Please log in</h2>')
-
   'click .cancel-contribution': ->
     analytics.track('Cancel aspect contribution')
-    Meteor.call('endContributingAspect', Session.get('technologyId'), @id())
+    $target = $(event.target)
+    $target.parent().hide(200)
+    $target.parent().parent().find('textarea.contribute-text').val('')
+    $target.parent().parent().parent().find('p.contribute-preview').html('')
 
   'submit form.contribute-form': (event) ->
     analytics.track('Submit aspect contribution')
@@ -23,7 +19,10 @@ Template.technology.events
       Meteor.call 'contributeToAspect', technology.id(), @id(), text, (err, ret) ->
         if err
           alertify.error err
-    Meteor.call('endContributingAspect', technology.id(), @id())
+        else
+          $target = $(event.target)
+          $target.parent().parent().find('textarea.contribute-text').val('')
+
     # return false to prevent browser form submission
     false
 
@@ -120,5 +119,6 @@ Template.technology.rendered = () ->
       limit: 10,
       local: technology.suggestAspectNames()
 
-  $('textarea.contribute-text').autogrow()
-
+  contributeText = $('textarea.contribute-text')
+  if Meteor.userId()
+    contributeText.autogrow()

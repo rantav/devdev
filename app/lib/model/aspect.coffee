@@ -28,9 +28,6 @@ root.Aspect = class Aspect
 
   technology: -> @technologyRef
 
-  isCurrentUserContributing: ->
-    @data["contributing-" + Meteor.userId()]
-
   findContributionById: (contributionId) ->
     if not @data
       return new AspectContribution(null, @)

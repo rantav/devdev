@@ -21,15 +21,15 @@ Meteor.methods
       contributor.addAspectContribution(aspectContribution)
       aspectContribution.data
 
-  toggleContributingAspect: (technologyId, aspectId) ->
-    technology = Technology.findOne(technologyId)
-    aspect = technology.findAspectById(aspectId)
-    aspect.toggleEditCurrentUser()
+  # toggleContributingAspect: (technologyId, aspectId) ->
+  #   technology = Technology.findOne(technologyId)
+  #   aspect = technology.findAspectById(aspectId)
+  #   aspect.toggleEditCurrentUser()
 
-  endContributingAspect: (technologyId, aspectId) ->
-    technology = Technology.findOne(technologyId)
-    aspect = technology.findAspectById(aspectId)
-    aspect.setEditCurrentUser(false)
+  # endContributingAspect: (technologyId, aspectId) ->
+  #   technology = Technology.findOne(technologyId)
+  #   aspect = technology.findAspectById(aspectId)
+  #   aspect.setEditCurrentUser(false)
 
   deleteAspectContribution: (technologyId, contributionId) ->
     technology = Technology.findOne(technologyId)

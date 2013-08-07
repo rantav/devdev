@@ -18,27 +18,22 @@
 
     h1.name.span7(contenteditable='#{technology.nameEditableByCurrentUser() ? true : false}')= technology.name()
     table.table
-      tr.aspect
-        th
-          input#new-aspect-name(type='text' placeholder='Add aspect...')
-        td.edit-section
-          .span5
-            textarea#new-aspect-value.contribute-text
-            .controls
-              small.muted.pull-right Markdown enabled
-              button(type="submit" class="btn btn-primary submit-contribution" data-referred-id='new-aspect-value') Save
-          .span5
-            p.contribute-preview(style='border-left-color: #{Meteor.user().profile.color}')
-
+      - if (Meteor.userId())
+        tr.aspect
+          th
+            input#new-aspect-name(type='text' placeholder='Add aspect...')
+          td.edit-section
+            .span5
+              textarea#new-aspect-value.contribute-text
+              .controls(style='display:none')
+                small.muted.pull-right Markdown enabled
+                button(type="submit" class="btn btn-primary submit-contribution" data-referred-id='new-aspect-value') Save
+            .span5
+              p.contribute-preview(style='border-left-color: #{Meteor.user().profile.color}')
 
       foreach technology.aspects() as aspect
         tr.aspect
-          th
-            = aspect.name()
-            .aspect-actions.pull-right
-              a#contribute-aspect.action(href='javascript:void(0)' title='Contribute')
-                i.icon-plus(class='#{Meteor.userId() ? "" : "disabled"}')
-
+          th= aspect.name()
           td.aspect-data
             foreach aspect.contributions() as contribution
               - if (!contribution.deletedAt())
@@ -60,11 +55,11 @@
                   p.contribution
                     small.pull-right.muted= moment(contribution.updatedAt()).fromNow()
                     != marked(contribution.markdownProcessed())
-            - if (Meteor.userId() && aspect.isCurrentUserContributing())
+            - if (Meteor.userId())
               form.contribute-form
                 .span5
-                  textarea.contribute-text(autofocus='1' id='#{aspect.id()}')
-                  .controls
+                  textarea.contribute-text(id='#{aspect.id()}')
+                  .controls(style='display:none')
                     small.muted.pull-right Markdown enabled
                     button(type='submit' class='btn btn-primary submit-contribution' data-referred-id='#{aspect.id()}') Save
                     <button(type='button' class='btn cancel-contribution' data-referred-id='#{aspect.id()}') Cancel
