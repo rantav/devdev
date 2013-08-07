@@ -2,7 +2,7 @@ Template.technology.technology = ->
   technology = Technology.findOne(Session.get('technologyId'))
   if technology
     document.title = "#{technology.name()} | devdev.io"
-  technology
+  window.technology = technology
 
 Template.technology.events
   'click .icon-plus': ->
@@ -31,8 +31,31 @@ Template.technology.events
     $target = $(event.target)
     text = $target.val()
     text = Text.markdownWithSmartLinks(text)
+    text = Text.escapeMarkdown(text)
     html = marked(text)
     $target.parent().parent().find('.contribute-preview').html(html)
+
+  'blur textarea.contribute-text': (event) ->
+    $relatedTarget = $(event.relatedTarget)
+    if $relatedTarget.data('referred-id') == event.target.id
+      # Don't hide the controls if they have the focus
+      return
+    $target = $(event.target)
+    $target.parent().find('.controls').hide(200)
+
+  'blur .controls button': (event) ->
+    $relatedTarget = $(event.relatedTarget)
+    $target = $(event.target)
+    console.log($target.data('referred-id'))
+    console.log($relatedTarget.data('referred-id'))
+    if $relatedTarget.data('referred-id') == $target.data('referred-id') or event.relatedTarget.id == $target.data('referred-id')
+      # Don't hide the controls if they have the focus
+      return
+    $target.parent().hide(200)
+
+  'focus textarea.contribute-text': (event) ->
+    $target = $(event.target)
+    $target.parent().find('.controls').show(200)
 
   'click .icon-trash': ->
     analytics.track('Delete aspect contribution')
@@ -75,7 +98,6 @@ Template.technology.events
           alertify.success "OK, renamed to #{name}"
           Meteor.Router.to technology.route()
 
-
   'click .not-implemented': (event) ->
     alertify.log '<strong>Coming soonish...</strong> <i class="icon-cogs pull-right"> </i>'
     analytics.track('Clicked disabled', {id: event.srcElement.id})
@@ -93,3 +115,11 @@ $ ->
 
 Template.technology.rendered = () ->
   $('.contribution[rel=tooltip]').tooltip() # initialize all tooltips in this template
+  if technology
+    $('input#new-aspect-name').typeahead
+      name: 'aspects',
+      limit: 10,
+      local: technology.suggestAspectNames()
+
+  $('textarea.contribute-text').autogrow()
+

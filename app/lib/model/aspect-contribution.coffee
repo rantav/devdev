@@ -12,8 +12,11 @@ root.AspectContribution = class AspectContribution
 
   markdown: -> if @data then @data.markdown else ""
 
-  markdownWithSmartLinks: ->
-    Text.markdownWithSmartLinks(@markdown())
+  markdownProcessed: ->
+    text = @markdown()
+    text = Text.escapeMarkdown(text)
+    text = Text.markdownWithSmartLinks(text)
+    text
 
   contributor: -> Contributor.findOne(@data.contributorId)
 

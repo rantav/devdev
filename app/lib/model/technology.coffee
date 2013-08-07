@@ -22,13 +22,16 @@ root.Technology = class Technology
     id = Technologies.insert data
     @findOne(id)
 
-  @create: (name) ->
-    aspectNames = ['Tagline', 'Websites', 'Source Code', 'Typical Use Cases',
+  @allAspectNames: ->
+    ['Tagline', 'Websites', 'Source Code', 'Typical Use Cases',
       'Sweet Spots', 'Weaknesses', 'Documentation', 'Tutorials', 'StackOverflow',
       'Mailing Lists', 'IRC', 'Development Status', 'Used By', 'Alternatives',
       'Complement Technologies', 'Talks, Videos, Slides', 'Cheatsheet / Examples', 'Prerequisites',
       'Reviews', 'Developers', 'VersionEye', 'Twitter', 'Facebook', 'Google+',
-      'Comments', 'More']
+      'Hello World', 'Comments', 'More']
+
+  @create: (name) ->
+    aspectNames = @allAspectNames
 
     now = new Date()
     tech =
@@ -65,6 +68,13 @@ root.Technology = class Technology
   # Is the current logged in user the owner of this technology?
   # (owner is the one creating it in the first place)
   isCurrentUserOwner: -> Meteor.userId() == @contributorId()
+
+  suggestAspectNames: ->
+    _.difference(Technology.allAspectNames(), @aspectNames())
+
+  aspectNames: ->
+    (aspectData.name for aspectData in @data.aspects)
+
 
   contributors: ->
     if @data
