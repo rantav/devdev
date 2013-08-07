@@ -11,7 +11,8 @@
         "git": "https://github.com/rantav/meteor-accounts-ui-bootstrap-dropdown",
         "branch": "master"
       },
-      "bootstrap-themes": {}
+      "bootstrap-themes": {},
+      "typeahead-js": {}
     },
     "packages": {
       "router": {
@@ -46,8 +47,13 @@
       },
       "bootstrap-themes": {
         "git": "https://github.com/eprochasson/meteor-bootstrap-themes",
-        "tag": "v0.0.3",
-        "commit": "e587bb068b9284b5d3d4efc103669811a2f2623d"
+        "tag": "v0.0.4",
+        "commit": "4bc8859ba82dd2daee9230c58fceaf28ff9202c8"
+      },
+      "typeahead-js": {
+        "git": "https://github.com/olragon/meteor-typeahead-js.git",
+        "tag": "v0.9.3",
+        "commit": "9241c6c68f39cf37699b5de7b03d60a5434a5d21"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
