@@ -9,8 +9,9 @@ Template.technology.events
     analytics.track('Cancel aspect contribution')
     $target = $(event.target)
     $target.parent().hide(200)
-    $target.parent().parent().find('textarea.contribute-text').val('')
-    $target.parent().parent().parent().find('p.contribute-preview').html('')
+    $target.parents('.edit-section').find('textarea.contribute-text').val('')
+    $target.parents('.edit-section').find('p.contribute-preview').html('')
+    $target.parents('.edit-section').find('.control-group').removeClass('error')
 
   'submit form.contribute-form': (event) ->
     analytics.track('Submit aspect contribution')
@@ -21,10 +22,40 @@ Template.technology.events
           alertify.error err
         else
           $target = $(event.target)
-          $target.parent().parent().find('textarea.contribute-text').val('')
+          $target.find('textarea.contribute-text').val('')
 
     # return false to prevent browser form submission
     false
+
+  'click #new-aspect-submit': ->
+    $name = $('#new-aspect-name')
+    name = $name.val()
+    if not name
+      $name.parents('.control-group').addClass('error')
+      $name.focus()
+      return
+    $value = $('#new-aspect-value')
+    value = $value.val()
+    if not value
+      $value.parents('.control-group').addClass('error')
+      $value.focus()
+      return
+
+    analytics.track('add new aspect', {name: name})
+    # Meteor.call 'createNewAspect', technology.id(), name, value, (err, ret) ->
+    #   if err
+    #     alertify.error err
+    #   else
+    #     $target = $(event.target)
+    #     $target.parents('.edit-section').find('textarea.contribute-text').val('')
+
+  'keyup #new-aspect-name': ->
+    $name = $('#new-aspect-name')
+    name = $name.val()
+    if name
+      $name.parents('.control-group').removeClass('error')
+    else
+      $name.parents('.control-group').addClass('error')
 
   'keyup textarea.contribute-text': (event) ->
     $target = $(event.target)
@@ -32,7 +63,12 @@ Template.technology.events
     text = Text.markdownWithSmartLinks(text)
     text = Text.escapeMarkdown(text)
     html = marked(text)
-    $target.parent().parent().find('.contribute-preview').html(html)
+    $target.parents('.edit-section').find('.contribute-preview').html(html)
+    if text
+      $target.parents('.control-group').removeClass('error')
+    else
+      $target.parents('.control-group').addClass('error')
+
 
   'blur textarea.contribute-text': (event) ->
     $relatedTarget = $(event.relatedTarget)
@@ -40,7 +76,8 @@ Template.technology.events
       # Don't hide the controls if they have the focus
       return
     $target = $(event.target)
-    $target.parent().find('.controls').hide(200)
+    $target.parents('.edit-section').find('.controls').hide(200)
+    $target.parents('.edit-section').find('.control-group').removeClass('error')
 
   'blur .controls button': (event) ->
     $target = $(event.target)
@@ -50,10 +87,11 @@ Template.technology.events
         # Don't hide the controls if they have the focus
         return
     $target.parent().hide(200)
+    $target.parents('.edit-section').find('.control-group').removeClass('error')
 
   'focus textarea.contribute-text': (event) ->
     $target = $(event.target)
-    $target.parent().find('.controls').show(200)
+    $target.parents('.edit-section').find('.controls').show(200)
 
   'click .icon-trash': ->
     analytics.track('Delete aspect contribution')

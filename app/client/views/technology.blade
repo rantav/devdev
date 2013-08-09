@@ -21,13 +21,15 @@
       - if (Meteor.userId())
         tr.aspect
           th
-            input#new-aspect-name(type='text' placeholder='Add aspect...')
+            .control-group
+              input#new-aspect-name(type='text' placeholder='Add aspect...')
           td.edit-section
             .span5
-              textarea#new-aspect-value.contribute-text
+              .control-group
+                textarea#new-aspect-value.contribute-text
               .controls(style='display:none')
                 small.muted.pull-right Markdown enabled
-                button(type="submit" class="btn btn-primary submit-contribution" data-referred-id='new-aspect-value') Save
+                button#new-aspect-submit(type="submit" class="btn btn-primary" data-referred-id='new-aspect-value') Save
             .span5
               p.contribute-preview(style='border-left-color: #{Meteor.user().profile.color}')
 
@@ -56,9 +58,10 @@
                     small.pull-right.muted= moment(contribution.updatedAt()).fromNow()
                     != marked(contribution.markdownProcessed())
             - if (Meteor.userId())
-              form.contribute-form
+              form.contribute-form.edit-section
                 .span5
-                  textarea.contribute-text(id='#{aspect.id()}')
+                  .control-group
+                    textarea.contribute-text(id='#{aspect.id()}')
                   .controls(style='display:none')
                     small.muted.pull-right Markdown enabled
                     button(type='submit' class='btn btn-primary submit-contribution' data-referred-id='#{aspect.id()}') Save
