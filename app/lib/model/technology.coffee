@@ -91,6 +91,12 @@ root.Technology = class Technology
     else
       return new Aspect(null, @)
 
+  findAspectByName: (name) ->
+    if @data and @data.aspects
+      candidates = (aspect for aspect in @data.aspects when aspect.name.toLowerCase() == name.toLowerCase())
+      if (candidates[0])
+        return new Aspect(candidates[0], @)
+
   findContributionById: (contributionId) ->
     for aspect in @aspects()
       contribution = aspect.findContributionById(contributionId)
@@ -115,6 +121,15 @@ root.Technology = class Technology
   setName: (newName) ->
     @data.name = newName
     @save()
+
+  addAspectAndContribution: (aspectName, aspectTextValue) ->
+    aspect = @findAspectByName(aspectName)
+    if not aspect
+      aspectData = createAspect(aspectName)
+      @data.aspects.push(aspectData)
+      aspect = new Aspect(aspectData, @)
+    aspect.addContribution(aspectTextValue)
+
 
 createAspect = (aspectName) ->
   name: aspectName

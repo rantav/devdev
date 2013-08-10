@@ -21,15 +21,14 @@ Meteor.methods
       contributor.addAspectContribution(aspectContribution)
       aspectContribution.data
 
-  # toggleContributingAspect: (technologyId, aspectId) ->
-  #   technology = Technology.findOne(technologyId)
-  #   aspect = technology.findAspectById(aspectId)
-  #   aspect.toggleEditCurrentUser()
-
-  # endContributingAspect: (technologyId, aspectId) ->
-  #   technology = Technology.findOne(technologyId)
-  #   aspect = technology.findAspectById(aspectId)
-  #   aspect.setEditCurrentUser(false)
+  contributeNewAspect: (technologyId, aspectName, aspectTextValue) ->
+    contributor = Contributor.current()
+    if not contributor
+      throw new Meteor.Error 404, 'Please log in'
+    technology = Technology.findOne(technologyId)
+    aspectContribution = technology.addAspectAndContribution(aspectName, aspectTextValue)
+    contributor.addAspectContribution(aspectContribution)
+    aspectContribution.data
 
   deleteAspectContribution: (technologyId, contributionId) ->
     technology = Technology.findOne(technologyId)

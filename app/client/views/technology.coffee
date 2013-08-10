@@ -42,12 +42,12 @@ Template.technology.events
       return
 
     analytics.track('add new aspect', {name: name})
-    # Meteor.call 'createNewAspect', technology.id(), name, value, (err, ret) ->
-    #   if err
-    #     alertify.error err
-    #   else
-    #     $target = $(event.target)
-    #     $target.parents('.edit-section').find('textarea.contribute-text').val('')
+    Meteor.call 'contributeNewAspect', technology.id(), name, value, (err, ret) ->
+      if err
+        alertify.error err
+      else
+        $name.val('')
+        $value.val('')
 
   'keyup #new-aspect-name': ->
     $name = $('#new-aspect-name')
