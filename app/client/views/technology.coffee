@@ -93,6 +93,15 @@ Template.technology.events
     $target = $(event.target)
     $target.parents('.edit-section').find('.controls').show(200)
 
+  'focus #new-aspect-value': ->
+    $name = $('#new-aspect-name')
+    name = $name.val()
+    if name
+      $('#new-aspect-value').attr('placeholder', "Say something about #{name}")
+    else
+      $('#new-aspect-value').attr('placeholder', "<- Type aspect name first")
+
+
   'click .icon-trash': ->
     analytics.track('Delete aspect contribution')
     Meteor.call('deleteAspectContribution', technology.id(), @contributionId())
@@ -160,7 +169,11 @@ Template.technology.rendered = ->
 refreshAspectNameTypeahead = ->
   if technology
     suggestions = technology.suggestAspectNames()
-    $('input#new-aspect-name').typeahead
+    $('input#new-aspect-name').typeahead('destroy')
+    $('input#new-aspect-name').typeahead(
       name: 'aspects',
       limit: suggestions.length
       local: suggestions
+    ).bind('typeahead:selected', (obj, datum) ->
+      $('#new-aspect-value').attr('placeholder', "Say something about #{datum.value}")
+    )
