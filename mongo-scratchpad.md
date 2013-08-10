@@ -49,3 +49,16 @@ db.users.find().forEach(function(u) {
   u.profile.contributionCount = count;
   db.users.save(u);
 })
+
+// Prune unused aspects
+db.technologies.find().forEach(function(t){
+  var newAspects = [];
+  for (var a = 0; a < t.aspects.length; ++a) {
+    var aspect = t.aspects[a];
+    if (aspect.contributions.length > 0) {
+      newAspects.push(aspect);
+    }
+  }
+  t.aspects = newAspects;
+  db.technologies.save(t);
+})
