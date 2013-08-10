@@ -161,6 +161,18 @@ $ ->
 Template.technology.rendered = ->
   $('.contribution[rel=tooltip]').tooltip() # initialize all tooltips in this template
   refreshAspectNameTypeahead()
+  $('input#new-aspect-name').popover
+    title: 'Aspect Name'
+    content: 'For example: <code>Tagline</code>, or <code>Typical Use Cases</code> etc <hr/> Type <code>?</code> for suggestions'
+    html: true
+    trigger: 'hover'
+    container: 'body'
+  $('textarea#new-aspect-value').popover
+    title: 'Aspect Value'
+    content: 'For example: Link to a website, or tell us what you think about this technology'
+    html: true
+    trigger: 'hover'
+
 
   contributeText = $('textarea.contribute-text')
   if Meteor.userId()
