@@ -25,3 +25,6 @@ Text.replaceByPatterns = (markdown, patterns) ->
   for pattern in patterns
     markdown = markdown.replace(pattern[0], pattern[1])
   markdown
+
+Text.tokenize = (str) ->
+  str.split(/[^\w]/)

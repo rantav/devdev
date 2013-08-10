@@ -149,14 +149,18 @@ $ ->
     smartLists: true,
     smartypants: false,
 
-Template.technology.rendered = () ->
+Template.technology.rendered = ->
   $('.contribution[rel=tooltip]').tooltip() # initialize all tooltips in this template
-  if technology
-    $('input#new-aspect-name').typeahead
-      name: 'aspects',
-      limit: 10,
-      local: technology.suggestAspectNames()
+  refreshAspectNameTypeahead()
 
   contributeText = $('textarea.contribute-text')
   if Meteor.userId()
     contributeText.autogrow()
+
+refreshAspectNameTypeahead = ->
+  if technology
+    suggestions = technology.suggestAspectNames()
+    $('input#new-aspect-name').typeahead
+      name: 'aspects',
+      limit: suggestions.length
+      local: suggestions

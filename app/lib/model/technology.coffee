@@ -70,7 +70,8 @@ root.Technology = class Technology
   isCurrentUserOwner: -> Meteor.userId() == @contributorId()
 
   suggestAspectNames: ->
-    _.difference(Technology.allAspectNames(), @aspectNames())
+    ({value: name, tokens: _.union('?', Text.tokenize(name))} for name in Technology.allAspectNames())
+    # Technology.allAspectNames()
 
   aspectNames: ->
     (aspectData.name for aspectData in @data.aspects)
