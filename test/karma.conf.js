@@ -13,6 +13,7 @@ files = [
     // stubs come first so they can be available when all the units need them
     'test/rtd/lib/*-stubs.js',
     'test/rtd/lib/*-stubs.coffee',
+    'test/lib/*.js',
 
     'test/unit/stubs/**/*.js',
 
