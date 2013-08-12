@@ -14,3 +14,12 @@ describe 'Text', ->
       expect(Text.markdownWithSmartLinks('/technology/123\nok')).toBe('[/technology/123](/technology/123)\nok')
     it '/technology/123/456 should become [/technology/123/456](/technology/123/456)', ->
       expect(Text.markdownWithSmartLinks('/technology/123/456')).toBe('[/technology/123/456](/technology/123/456)')
+  describe 'tokenize', ->
+    it 'should not fail on empty string', ->
+      expect(Text.tokenize('')).toEqual([''])
+    it 'should not tokenize 123 as [123]', ->
+      expect(Text.tokenize('123')).toEqual(['123'])
+    it 'should not tokenize 123 45 as [123, 45]', ->
+      expect(Text.tokenize('123 45')).toEqual(['123', '45'])
+    it 'should not tokenize 123 45-67 as [123, 45, 67]', ->
+      expect(Text.tokenize('123 45-67')).toEqual(['123', '45', '67'])
