@@ -23,12 +23,63 @@ root.Technology = class Technology
     @findOne(id)
 
   @allAspectNames: ->
-    ['Tagline', 'Websites', 'Source Code', 'Typical Use Cases',
-      'Sweet Spots', 'Weaknesses', 'Documentation', 'Tutorials', 'StackOverflow',
-      'Mailing Lists', 'IRC', 'Development Status', 'Used By', 'Alternatives',
-      'Complement Technologies', 'Talks, Videos, Slides', 'Cheatsheet / Examples', 'Prerequisites',
-      'Reviews', 'Developers', 'VersionEye', 'Twitter', 'Facebook', 'Google+',
-      'Hello World', 'Comments', 'More']
+    _.map(@aspectDefinitions(), (e, i) -> i)
+
+  @aspectDefinitions: ->
+    'Tagline':
+      type: 'markdown'
+    , 'Websites':
+      type: 'markdown'
+    , 'Source Code':
+      type: 'markdown'
+    , 'Typical Use Cases':
+      type: 'markdown'
+    , 'Sweet Spots':
+      type: 'markdown'
+    , 'Weaknesses':
+      type: 'markdown'
+    , 'Documentation':
+      type: 'markdown'
+    , 'Tutorials':
+      type: 'markdown'
+    , 'StackOverflow':
+      type: 'markdown'
+    , 'Mailing Lists':
+      type: 'markdown'
+    , 'IRC':
+      type: 'markdown'
+    , 'Development Status':
+      type: 'markdown'
+    , 'Used By':
+      type: 'markdown'
+    , 'Alternatives':
+      type: 'markdown'
+    , 'Complement Technologies':
+      type: 'markdown'
+    , 'Talks, Videos, Slides':
+      type: 'markdown'
+    ,'Cheatsheet / Examples':
+      type: 'markdown'
+    , 'Prerequisites':
+      type: 'markdown'
+    , 'Reviews':
+      type: 'markdown'
+    , 'Developers':
+      type: 'markdown'
+    , 'VersionEye':
+      type: 'markdown'
+    , 'Twitter':
+      type: 'markdown'
+    , 'Facebook':
+      type: 'markdown'
+    , 'Google+':
+      type: 'markdown'
+    , 'Hello World':
+      type: 'markdown'
+    , 'Comments':
+      type: 'markdown'
+    , 'More':
+      type: 'markdown'
 
   @create: (name) ->
     aspectNames = @allAspectNames
