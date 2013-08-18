@@ -1,10 +1,13 @@
 window.MarkdownHandler = class MarkdownHandler
   view: (aspectContribution) ->
-    marked(aspectContribution.markdownProcessed())
+    "<div class='markdown-aspect'>
+      #{marked(aspectContribution.markdownProcessed())}
+     </div>"
 
   renderAdder: (aspect) ->
-      "<form class='contribute-form edit-section'>
-         <div class='span5'>
+      "<div class='markdown-aspect'>
+        <div class='span5'>
+          <form class='contribute-form edit-section'>
            <div class='control-group'>
              <textarea class='contribute-text' id='#{aspect.id()}-value' placeholder='#{aspect.placeholderText()}'/>
            </div>
@@ -13,15 +16,16 @@ window.MarkdownHandler = class MarkdownHandler
              <button type='submit' class='btn btn-primary submit-contribution' data-referred-id='#{aspect.id()}-value'>Save</button>
              <button type='button' class='btn cancel-contribution' data-referred-id='#{aspect.id()}-value'>Cancel</button>
            </div>
+          </form>
          </div>
          <div class='span5'>
            <p class='contribute-preview' style='border-left-color: #{Meteor.user().profile.color}'/>
          </div>
-       </form>"
+       </div>"
 
   init: (template) ->
     template.events
-      'click .cancel-contribution': (event)->
+      'click .markdown-aspect.cancel-contribution': (event)->
         analytics.track('Cancel aspect contribution')
         $target = $(event.target)
         $target.parent().hide(200)
@@ -29,7 +33,7 @@ window.MarkdownHandler = class MarkdownHandler
         $target.parents('.edit-section').find('p.contribute-preview').html('')
         $target.parents('.edit-section').find('.control-group').removeClass('error')
 
-      'submit form.contribute-form': (event) ->
+      'submit .markdown-aspect form.contribute-form': (event) ->
         analytics.track('Submit aspect contribution')
         text = $('textarea.contribute-text', event.target).val()
         if text
@@ -43,7 +47,7 @@ window.MarkdownHandler = class MarkdownHandler
         # return false to prevent browser form submission
         false
 
-      'keyup textarea.contribute-text': (event) ->
+      'keyup .markdown-aspect textarea.contribute-text': (event) ->
         $target = $(event.target)
         text = $target.val()
         text = Text.markdownWithSmartLinks(text)
@@ -56,7 +60,7 @@ window.MarkdownHandler = class MarkdownHandler
           $target.parents('.control-group').addClass('error')
 
 
-      'blur textarea.contribute-text': (event) ->
+      'blur .markdown-aspect textarea.contribute-text': (event) ->
         $relatedTarget = $(event.relatedTarget)
         if $relatedTarget.data('referred-id') == event.target.id
           # Don't hide the controls if they have the focus
@@ -65,7 +69,7 @@ window.MarkdownHandler = class MarkdownHandler
         $target.parents('.edit-section').find('.controls').hide(200)
         $target.parents('.edit-section').find('.control-group').removeClass('error')
 
-      'blur .controls button': (event) ->
+      'blur .markdown-aspect .controls button': (event) ->
         $target = $(event.target)
         if event.relatedTarget
           $relatedTarget = $(event.relatedTarget)
@@ -75,7 +79,7 @@ window.MarkdownHandler = class MarkdownHandler
         $target.parent().hide(200)
         $target.parents('.edit-section').find('.control-group').removeClass('error')
 
-      'focus textarea.contribute-text': (event) ->
+      'focus .markdown-aspect textarea.contribute-text': (event) ->
         $target = $(event.target)
         $target.parents('.edit-section').find('.controls').show(200)
 
