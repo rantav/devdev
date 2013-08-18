@@ -19,20 +19,13 @@
     h1.name.span7(contenteditable='#{technology.nameEditableByCurrentUser() ? true : false}')= technology.name()
     table.table
       - if (Meteor.userId())
+        - newAspect = new Aspect({aspectId: 'new-aspect'}, technology)
         tr.aspect
           th
             .control-group
               input#new-aspect-name(type='text' placeholder='Add aspect&hellip; (? for help)')
-          td.edit-section
-            .span5
-              .control-group
-                textarea#new-aspect-value.contribute-text(placeholder='<- Type aspect name first')
-              .controls(style='display:none')
-                small.muted.pull-right Markdown enabled
-                button#new-aspect-submit(type="submit" class="btn btn-primary" data-referred-id='new-aspect-value') Save
-            .span5
-              p.contribute-preview(style='border-left-color: #{Meteor.user().profile.color}')
-
+          td
+            != renderAspectEditor(newAspect)
       foreach technology.aspects() as aspect
         tr.aspect
           th= aspect.name()
@@ -56,18 +49,9 @@
                         i#vote-down-aspect-contribution.icon-thumbs-down.disabled
                   p.contribution
                     small.pull-right.muted= moment(contribution.updatedAt()).fromNow()
-                    != marked(contribution.markdownProcessed())
+                    != renderAspectContribution(contribution)
             - if (Meteor.userId())
-              form.contribute-form.edit-section
-                .span5
-                  .control-group
-                    textarea.contribute-text(id='#{aspect.id()}')
-                  .controls(style='display:none')
-                    small.muted.pull-right Markdown enabled
-                    button(type='submit' class='btn btn-primary submit-contribution' data-referred-id='#{aspect.id()}') Save
-                    <button(type='button' class='btn cancel-contribution' data-referred-id='#{aspect.id()}') Cancel
-                .span5
-                  p.contribute-preview(style='border-left-color: #{Meteor.user().profile.color}')
+              != renderAspectEditor(aspect)
 
     .contributors
       h5 Contributors:

@@ -5,28 +5,6 @@ Template.technology.technology = ->
   window.technology = technology
 
 Template.technology.events
-  'click .cancel-contribution': ->
-    analytics.track('Cancel aspect contribution')
-    $target = $(event.target)
-    $target.parent().hide(200)
-    $target.parents('.edit-section').find('textarea.contribute-text').val('')
-    $target.parents('.edit-section').find('p.contribute-preview').html('')
-    $target.parents('.edit-section').find('.control-group').removeClass('error')
-
-  'submit form.contribute-form': (event) ->
-    analytics.track('Submit aspect contribution')
-    text = $('textarea.contribute-text', event.target).val()
-    if text
-      Meteor.call 'contributeToAspect', technology.id(), @id(), text, (err, ret) ->
-        if err
-          alertify.error err
-        else
-          $target = $(event.target)
-          $target.find('textarea.contribute-text').val('')
-
-    # return false to prevent browser form submission
-    false
-
   'click #new-aspect-submit': ->
     $name = $('#new-aspect-name')
     name = $name.val()
@@ -56,42 +34,6 @@ Template.technology.events
       $name.parents('.control-group').removeClass('error')
     else
       $name.parents('.control-group').addClass('error')
-
-  'keyup textarea.contribute-text': (event) ->
-    $target = $(event.target)
-    text = $target.val()
-    text = Text.markdownWithSmartLinks(text)
-    text = Text.escapeMarkdown(text)
-    html = marked(text)
-    $target.parents('.edit-section').find('.contribute-preview').html(html)
-    if text
-      $target.parents('.control-group').removeClass('error')
-    else
-      $target.parents('.control-group').addClass('error')
-
-
-  'blur textarea.contribute-text': (event) ->
-    $relatedTarget = $(event.relatedTarget)
-    if $relatedTarget.data('referred-id') == event.target.id
-      # Don't hide the controls if they have the focus
-      return
-    $target = $(event.target)
-    $target.parents('.edit-section').find('.controls').hide(200)
-    $target.parents('.edit-section').find('.control-group').removeClass('error')
-
-  'blur .controls button': (event) ->
-    $target = $(event.target)
-    if event.relatedTarget
-      $relatedTarget = $(event.relatedTarget)
-      if $relatedTarget.data('referred-id') == $target.data('referred-id') or event.relatedTarget.id == $target.data('referred-id')
-        # Don't hide the controls if they have the focus
-        return
-    $target.parent().hide(200)
-    $target.parents('.edit-section').find('.control-group').removeClass('error')
-
-  'focus textarea.contribute-text': (event) ->
-    $target = $(event.target)
-    $target.parents('.edit-section').find('.controls').show(200)
 
   'focus #new-aspect-value': ->
     $name = $('#new-aspect-name')
@@ -157,6 +99,7 @@ $ ->
     sanitize: true,
     smartLists: true,
     smartypants: false,
+  markdownHandler.init(Template.technology)
 
 Template.technology.rendered = ->
   $('.contribution[rel=tooltip]').tooltip() # initialize all tooltips in this template
@@ -187,5 +130,6 @@ refreshAspectNameTypeahead = ->
       limit: suggestions.length
       local: suggestions
     ).bind('typeahead:selected', (obj, datum) ->
+      newAspect.type('markdown')
       $('#new-aspect-value').attr('placeholder', "Say something about #{datum.value}")
     )

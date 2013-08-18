@@ -8,6 +8,8 @@ root.Aspect = class Aspect
 
   id: -> @data.aspectId
 
+  type: (t) -> if t then @data.type = t else @data.type
+
   addContribution: (text) ->
     if not @data.contributions
       @data.contributions = []
@@ -43,6 +45,16 @@ root.Aspect = class Aspect
   setEditCurrentUser: (edit) ->
     @data['contributing-' + Meteor.userId()] = edit
     @technologyRef.saveNoTouch()
+
+  placeholderText: ->
+
+    if @id() == 'new-aspect'
+      if @type == 'markdown'
+        return "Say something about #{@name}"
+      else
+        return '<- Type aspect name first'
+    else
+      return ''
 
   save: ->
     @technologyRef.save()
