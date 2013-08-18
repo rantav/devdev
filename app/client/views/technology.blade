@@ -20,12 +20,13 @@
     table.table
       - if (Meteor.userId())
         - newAspect = new Aspect({aspectId: 'new-aspect'}, technology)
-        tr.aspect
-          th
-            .control-group
-              input#new-aspect-name(type='text' placeholder='Add aspect&hellip; (? for help)')
-          td
-            != renderAspectEditor(newAspect)
+        foreach [newAspect] as aspect
+          tr.aspect
+            th
+              .control-group
+                input#new-aspect-name(type='text' placeholder='Add aspect&hellip; (? for help)')
+            td
+              != renderAspectEditor(aspect)
       foreach technology.aspects() as aspect
         tr.aspect
           th= aspect.name()

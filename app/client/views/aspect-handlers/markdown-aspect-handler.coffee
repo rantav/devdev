@@ -23,7 +23,43 @@ window.MarkdownHandler = class MarkdownHandler
          </div>
        </div>"
 
+  handleAspectContribution: (aspect, event) ->
+    analytics.track('Submit aspect contribution')
+    text = $('textarea.contribute-text', event.target).val()
+    if text
+      Meteor.call 'contributeToAspect', technology.id(), aspect.id(), text, (err, ret) ->
+        if err
+          alertify.error err
+        else
+          $target = $(event.target)
+          $target.find('textarea.contribute-text').val('')
+
+  handleNewAspect: (aspect, event) ->
+    $name = $('#new-aspect-name')
+    name = $name.val()
+    if not name
+      $name.parents('.control-group').addClass('error')
+      $name.focus()
+      return
+    $value = $('#new-aspect-value')
+    value = $value.val()
+    if not value
+      $value.parents('.control-group').addClass('error')
+      $value.focus()
+      return
+
+    analytics.track('add new aspect', {name: name})
+    Meteor.call 'contributeNewAspect', technology.id(), name, value, (err, ret) ->
+      if err
+        alertify.error err
+      else
+        $name.val('')
+        $value.val('')
+
+
   init: (template) ->
+    handleNewAspect = @handleNewAspect
+    handleAspectContribution = @handleAspectContribution
     template.events
       'click .markdown-aspect.cancel-contribution': (event)->
         analytics.track('Cancel aspect contribution')
@@ -34,16 +70,10 @@ window.MarkdownHandler = class MarkdownHandler
         $target.parents('.edit-section').find('.control-group').removeClass('error')
 
       'submit .markdown-aspect form.contribute-form': (event) ->
-        analytics.track('Submit aspect contribution')
-        text = $('textarea.contribute-text', event.target).val()
-        if text
-          Meteor.call 'contributeToAspect', technology.id(), @id(), text, (err, ret) ->
-            if err
-              alertify.error err
-            else
-              $target = $(event.target)
-              $target.find('textarea.contribute-text').val('')
-
+        if @id() == 'new-aspect'
+          handleNewAspect(this, event)
+        else
+          handleAspectContribution(this, event)
         # return false to prevent browser form submission
         false
 
@@ -83,3 +113,10 @@ window.MarkdownHandler = class MarkdownHandler
         $target = $(event.target)
         $target.parents('.edit-section').find('.controls').show(200)
 
+      'focus .markdown-aspect #new-aspect-value': ->
+        $name = $('#new-aspect-name')
+        name = $name.val()
+        if name
+          $('#new-aspect-value').attr('placeholder', "Say something about #{name}")
+        else
+          $('#new-aspect-value').attr('placeholder', "<- Type aspect name first")

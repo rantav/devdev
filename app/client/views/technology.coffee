@@ -5,27 +5,27 @@ Template.technology.technology = ->
   window.technology = technology
 
 Template.technology.events
-  'click #new-aspect-submit': ->
-    $name = $('#new-aspect-name')
-    name = $name.val()
-    if not name
-      $name.parents('.control-group').addClass('error')
-      $name.focus()
-      return
-    $value = $('#new-aspect-value')
-    value = $value.val()
-    if not value
-      $value.parents('.control-group').addClass('error')
-      $value.focus()
-      return
+  # 'click #new-aspect-submit': ->
+  #   $name = $('#new-aspect-name')
+  #   name = $name.val()
+  #   if not name
+  #     $name.parents('.control-group').addClass('error')
+  #     $name.focus()
+  #     return
+  #   $value = $('#new-aspect-value')
+  #   value = $value.val()
+  #   if not value
+  #     $value.parents('.control-group').addClass('error')
+  #     $value.focus()
+  #     return
 
-    analytics.track('add new aspect', {name: name})
-    Meteor.call 'contributeNewAspect', technology.id(), name, value, (err, ret) ->
-      if err
-        alertify.error err
-      else
-        $name.val('')
-        $value.val('')
+  #   analytics.track('add new aspect', {name: name})
+  #   Meteor.call 'contributeNewAspect', technology.id(), name, value, (err, ret) ->
+  #     if err
+  #       alertify.error err
+  #     else
+  #       $name.val('')
+  #       $value.val('')
 
   'keyup #new-aspect-name': ->
     $name = $('#new-aspect-name')
@@ -34,15 +34,6 @@ Template.technology.events
       $name.parents('.control-group').removeClass('error')
     else
       $name.parents('.control-group').addClass('error')
-
-  'focus #new-aspect-value': ->
-    $name = $('#new-aspect-name')
-    name = $name.val()
-    if name
-      $('#new-aspect-value').attr('placeholder', "Say something about #{name}")
-    else
-      $('#new-aspect-value').attr('placeholder', "<- Type aspect name first")
-
 
   'click .icon-trash': ->
     analytics.track('Delete aspect contribution')
