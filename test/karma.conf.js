@@ -30,6 +30,7 @@ module.exports = function(config){
             'app/lib/**/*.coffee',
             'app/client/lib/**/*.js',
             'app/client/lib/**/*.coffee',
+            'app/client/views/aspect-handlers/*.coffee',
             'app/server/lib/**/*.js',
             'app/server/lib/**/*.coffee',
 
