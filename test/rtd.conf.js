@@ -25,7 +25,8 @@ module.exports = {
         // if you have client libraries, you'll want to exclude them from test coverage
         instrumentationExcludes: ['**/packages/**', '**/3rd/**', 'fixture.js', 'fixture.coffee'],
         // If your dev environment has a stand-alone mongo service, you should disabled this
-        killMongo: false
+        killMongo: false,
+        runTestsOnStart: true
     },
     selenium: {
         // You can set specific versions of selenium-server / chromedriver to use here
