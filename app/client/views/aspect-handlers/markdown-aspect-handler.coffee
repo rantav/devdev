@@ -28,6 +28,8 @@ window.MarkdownHandler = class MarkdownHandler
        </div>"
     if jqPath
       $(jqPath).html(html)
+      contributeText = $(jqPath).find('textarea.contribute-text')
+      contributeText.autogrow()
     else
       return html
 
@@ -70,6 +72,10 @@ window.MarkdownHandler = class MarkdownHandler
   init: (template) ->
     handleNewAspect = @handleNewAspect
     handleAspectContribution = @handleAspectContribution
+    contributeText = $('textarea.contribute-text')
+    if Meteor.userId()
+      contributeText.autogrow()
+
     template.events
       'click .markdown-aspect.cancel-contribution': (event)->
         analytics.track('Cancel aspect contribution')
