@@ -1,13 +1,17 @@
 window.MarkdownHandler = class MarkdownHandler
+  type: ->
+    'markdown'
+
   view: (aspectContribution) ->
     "<div class='markdown-aspect'>
       #{marked(aspectContribution.markdownProcessed())}
      </div>"
 
-  renderAdder: (aspect) ->
-      "<div class='markdown-aspect'>
+  renderAdder: (aspect, jqPath) ->
+    html =
+      "<div class='markdown-aspect edit-section'>
         <div class='span5'>
-          <form class='contribute-form edit-section'>
+          <form class='contribute-form'>
            <div class='control-group'>
              <textarea class='contribute-text' id='#{aspect.id()}-value' placeholder='#{aspect.placeholderText()}'/>
            </div>
@@ -22,6 +26,12 @@ window.MarkdownHandler = class MarkdownHandler
            <p class='contribute-preview' style='border-left-color: #{Meteor.user().profile.color}'/>
          </div>
        </div>"
+    if jqPath
+      $(jqPath).html(html)
+    else
+      return html
+
+
 
   handleAspectContribution: (aspect, event) ->
     analytics.track('Submit aspect contribution')
@@ -66,7 +76,7 @@ window.MarkdownHandler = class MarkdownHandler
         $target = $(event.target)
         $target.parent().hide(200)
         $target.parents('.edit-section').find('textarea.contribute-text').val('')
-        $target.parents('.edit-section').find('p.contribute-preview').html('')
+        $target.parents('.edit-section').find('.contribute-preview').html('')
         $target.parents('.edit-section').find('.control-group').removeClass('error')
 
       'submit .markdown-aspect form.contribute-form': (event) ->

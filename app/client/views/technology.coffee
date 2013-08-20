@@ -74,7 +74,7 @@ $ ->
     sanitize: true,
     smartLists: true,
     smartypants: false,
-  markdownHandler.init(Template.technology)
+  initHandlers(Template.technology)
 
 Template.technology.rendered = ->
   $('.contribution[rel=tooltip]').tooltip() # initialize all tooltips in this template

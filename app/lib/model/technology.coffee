@@ -32,6 +32,8 @@ root.Technology = class Technology
       type: 'markdown'
     , 'Source Code':
       type: 'markdown'
+    , 'Logo':
+      type: 'image'
     , 'Typical Use Cases':
       type: 'markdown'
     , 'Sweet Spots':
