@@ -4,28 +4,12 @@ Template.technology.technology = ->
     document.title = "#{technology.name()} | devdev.io"
   window.technology = technology
 
-Template.technology.events
-  # 'click #new-aspect-submit': ->
-  #   $name = $('#new-aspect-name')
-  #   name = $name.val()
-  #   if not name
-  #     $name.parents('.control-group').addClass('error')
-  #     $name.focus()
-  #     return
-  #   $value = $('#new-aspect-value')
-  #   value = $value.val()
-  #   if not value
-  #     $value.parents('.control-group').addClass('error')
-  #     $value.focus()
-  #     return
+Template.technology.newAspect = ->
+  if not window._newAspect
+    window._newAspect = new Aspect({aspectId: 'new-aspect'}, technology)
+  window._newAspect
 
-  #   analytics.track('add new aspect', {name: name})
-  #   Meteor.call 'contributeNewAspect', technology.id(), name, value, (err, ret) ->
-  #     if err
-  #       alertify.error err
-  #     else
-  #       $name.val('')
-  #       $value.val('')
+Template.technology.events
 
   'keyup #new-aspect-name': ->
     $name = $('#new-aspect-name')
@@ -121,6 +105,6 @@ refreshAspectNameTypeahead = ->
       limit: suggestions.length
       local: suggestions
     ).bind('typeahead:selected', (obj, datum) ->
-      newAspect.type('markdown')
-      $('#new-aspect-value').attr('placeholder', "Say something about #{datum.value}")
+      window._newAspect.type(datum.type)
+      window._newAspect.name(datum.value)
     )

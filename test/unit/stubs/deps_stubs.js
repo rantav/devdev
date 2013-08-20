@@ -1,0 +1,3 @@
+Deps = {
+  Dependency: function(){}
+};

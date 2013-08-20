@@ -3,12 +3,26 @@ root = exports ? this
 root.Aspect = class Aspect
 
   constructor: (@data, @technologyRef) ->
+    @dep = new Deps.Dependency()
 
-  name: -> @data.name if @data
+  depend: ->
+    @dep.depend()
+
+  name: (n) ->
+    if n
+      @data.name = n
+      @changed()
+    else @data.name
 
   id: -> @data.aspectId
 
-  type: (t) -> if t then @data.type = t else @data.type
+  type: (t) ->
+    if t
+      @data.type = t
+      @changed()
+    else @data.type
+
+  changed: -> @dep.changed()
 
   addContribution: (text) ->
     if not @data.contributions
@@ -47,10 +61,9 @@ root.Aspect = class Aspect
     @technologyRef.saveNoTouch()
 
   placeholderText: ->
-
     if @id() == 'new-aspect'
       if @type == 'markdown'
-        return "Say something about #{@name}"
+        return "Say something about #{@name()}"
       else
         return '<- Type aspect name first'
     else

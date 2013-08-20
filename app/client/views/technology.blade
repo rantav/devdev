@@ -19,7 +19,6 @@
     h1.name.span7(contenteditable='#{technology.nameEditableByCurrentUser() ? true : false}')= technology.name()
     table.table
       - if (Meteor.userId())
-        - newAspect = new Aspect({aspectId: 'new-aspect'}, technology)
         foreach [newAspect] as aspect
           tr.aspect
             th
