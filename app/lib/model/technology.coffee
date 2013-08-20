@@ -26,62 +26,94 @@ root.Technology = class Technology
     _.map(@aspectDefinitions(), (e, i) -> i)
 
   @aspectDefinitions: ->
-    'Tagline':
-      type: 'markdown'
-    , 'Websites':
-      type: 'markdown'
-    , 'Source Code':
-      type: 'markdown'
-    , 'Logo':
-      type: 'image'
-    , 'Typical Use Cases':
-      type: 'markdown'
-    , 'Sweet Spots':
-      type: 'markdown'
-    , 'Weaknesses':
-      type: 'markdown'
-    , 'Documentation':
-      type: 'markdown'
-    , 'Tutorials':
-      type: 'markdown'
-    , 'StackOverflow':
-      type: 'markdown'
-    , 'Mailing Lists':
-      type: 'markdown'
-    , 'IRC':
-      type: 'markdown'
-    , 'Development Status':
-      type: 'markdown'
-    , 'Used By':
-      type: 'markdown'
-    , 'Alternatives':
-      type: 'markdown'
-    , 'Complement Technologies':
-      type: 'markdown'
-    , 'Talks, Videos, Slides':
-      type: 'markdown'
-    ,'Cheatsheet / Examples':
-      type: 'markdown'
-    , 'Prerequisites':
-      type: 'markdown'
-    , 'Reviews':
-      type: 'markdown'
-    , 'Developers':
-      type: 'markdown'
-    , 'VersionEye':
-      type: 'markdown'
-    , 'Twitter':
-      type: 'markdown'
-    , 'Facebook':
-      type: 'markdown'
-    , 'Google+':
-      type: 'markdown'
-    , 'Hello World':
-      type: 'markdown'
-    , 'Comments':
-      type: 'markdown'
-    , 'More':
-      type: 'markdown'
+    'tagline':
+      type: 'markdown',
+      display: 'Tagline'
+    , 'websites':
+      type: 'markdown',
+      display: 'Websites'
+    , 'source code':
+      type: 'markdown',
+      display: 'Source Code'
+    , 'logo':
+      type: 'image',
+      display: 'Logo'
+    , 'typical use cases':
+      type: 'markdown',
+      display: 'Typical Use Cases'
+    , 'sweet spots':
+      type: 'markdown',
+      display: 'Sweet Spots'
+    , 'weaknesses':
+      type: 'markdown',
+      display: 'Weaknesses'
+    , 'documentation':
+      type: 'markdown',
+      display: 'Documentation'
+    , 'tutorials':
+      type: 'markdown',
+      display: 'Tutorials'
+    , 'stackoverflow':
+      type: 'markdown',
+      display: 'StackOverflow'
+    , 'mailing lists':
+      type: 'markdown',
+      display: 'Mailing Lists'
+    , 'irc':
+      type: 'markdown',
+      display: 'IRC'
+    , 'development status':
+      type: 'markdown',
+      display: 'Development Status'
+    , 'used by':
+      type: 'markdown',
+      display: 'Used By'
+    , 'alternatives':
+      type: 'markdown',
+      display: 'Alternatives'
+    , 'complement technologies':
+      type: 'markdown',
+      display: 'Complement Technologies'
+    , 'talks, videos, slides':
+      type: 'markdown',
+      display: 'Talks, Videos, Slides'
+    ,'cheatsheet / examples':
+      type: 'markdown',
+      display: 'Cheatsheet / Examples'
+    , 'prerequisites':
+      type: 'markdown',
+      display: 'Prerequisites'
+    , 'reviews':
+      type: 'markdown',
+      display: 'Reviews'
+    , 'developers':
+      type: 'markdown',
+      display: 'Developers'
+    , 'versioneye':
+      type: 'markdown',
+      display: 'VersionEye'
+    , 'twitter':
+      type: 'markdown',
+      display: 'Twitter'
+    , 'facebook':
+      type: 'markdown',
+      display: 'Facebook'
+    , 'google+':
+      type: 'markdown',
+      display: 'Google+'
+    , 'hello world':
+      type: 'markdown',
+      display: 'Hello World'
+    , 'comments':
+      type: 'markdown',
+      display: 'Comments'
+    , 'more':
+      type: 'markdown',
+      display: 'More'
+
+  @typeForName: (name) ->
+    def = Technology.aspectDefinitions()[name.toLowerCase()]
+    if def then def.type else 'markdown'
 
   @create: (name) ->
     aspectNames = @allAspectNames
@@ -123,7 +155,7 @@ root.Technology = class Technology
   isCurrentUserOwner: -> Meteor.userId() == @contributorId()
 
   suggestAspectNames: ->
-    ({value: name, tokens: _.union('?', Text.tokenize(name)), type: def.type} for name, def of Technology.aspectDefinitions())
+    ({value: def.display, tokens: _.union('?', Text.tokenize(def.display)), type: def.type} for key, def of Technology.aspectDefinitions())
 
   aspectNames: ->
     (aspectData.name for aspectData in @data.aspects)

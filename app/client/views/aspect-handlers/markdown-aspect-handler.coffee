@@ -123,10 +123,3 @@ window.MarkdownHandler = class MarkdownHandler
         $target = $(event.target)
         $target.parents('.edit-section').find('.controls').show(200)
 
-      'focus .markdown-aspect #new-aspect-value': ->
-        $name = $('#new-aspect-name')
-        name = $name.val()
-        if name
-          $('#new-aspect-value').attr('placeholder', "Say something about #{name}")
-        else
-          $('#new-aspect-value').attr('placeholder', "<- Type aspect name first")

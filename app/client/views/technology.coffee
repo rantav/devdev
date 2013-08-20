@@ -59,6 +59,11 @@ Template.technology.events
         else
           alertify.success "OK, renamed to #{name}"
           Meteor.Router.to technology.route()
+  'blur #new-aspect-name': ->
+    $name = $('#new-aspect-name')
+    name = $name.val()
+    window._newAspect.type(Technology.typeForName(name))
+    window._newAspect.name(name)
 
   'click .not-implemented': (event) ->
     alertify.log '<strong>Coming soonish...</strong> <i class="icon-cogs pull-right"> </i>'
