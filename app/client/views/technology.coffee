@@ -96,11 +96,6 @@ Template.technology.rendered = ->
     html: true
     trigger: 'hover'
 
-
-  contributeText = $('textarea.contribute-text')
-  if Meteor.userId()
-    contributeText.autogrow()
-
 refreshAspectNameTypeahead = ->
   if technology
     suggestions = technology.suggestAspectNames()

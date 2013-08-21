@@ -28,6 +28,7 @@ window.MarkdownHandler = class MarkdownHandler
        </div>"
     if jqPath
       $(jqPath).html(html)
+      # Fix autogrow
       contributeText = $(jqPath).find('textarea.contribute-text')
       contributeText.autogrow()
     else
