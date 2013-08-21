@@ -40,12 +40,14 @@ window.MarkdownHandler = class MarkdownHandler
     analytics.track('Submit aspect contribution')
     text = $('textarea.contribute-text', event.target).val()
     if text
+      NProgress.start()
       Meteor.call 'contributeToAspect', technology.id(), aspect.id(), text, (err, ret) ->
         if err
           alertify.error err
         else
           $target = $(event.target)
           $target.find('textarea.contribute-text').val('')
+          NProgress.done()
 
   handleNewAspect: (aspect, event) ->
     $name = $('#new-aspect-name')
@@ -62,12 +64,15 @@ window.MarkdownHandler = class MarkdownHandler
       return
 
     analytics.track('add new aspect', {name: name})
+    NProgress.start()
     Meteor.call 'contributeNewAspect', technology.id(), name, value, (err, ret) ->
       if err
         alertify.error err
+        NProgress.done()
       else
         $name.val('')
         $value.val('')
+        NProgress.done()
 
 
   init: (template) ->
