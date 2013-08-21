@@ -1,9 +1,13 @@
-Meteor.subscribe 'technologies',
-  onReady: -> logger.log('technologies ready')
-  onError: -> logger.error('technologies error')
+window.devdevFullySynched = false
+subscriptions = ['technologies', 'technologies-deleted', 'users']
+success = 0
+for s in subscriptions
+  Meteor.subscribe s,
+  onReady: ->
+    logger.log('OK: ' + s)
+    success++
+    if success == subscriptions.length
+      window.devdevFullySynched = true
+      NProgress.done()
 
-Meteor.subscribe 'technologies-deleted'
-
-Meteor.subscribe 'users',
-  onReady: -> logger.log('users ready')
-  onError: -> logger.error('users error')
+  onError: -> logger.error('ERROR: ' + s)
