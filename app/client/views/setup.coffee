@@ -1,12 +1,13 @@
 Template.setup.rendered = ->
   setupSegmentIo()
   analytics.pageview(document.location.pathname)
-  # setupGa()
-  # ga('send', 'pageview',
-  #   'page': document.location.pathname,
-  #   'location': document.location.href)
   setupNavigation()
   setupDropdowns()
+  showSpinner()
+
+showSpinner = ->
+  if not window.devdevFullySynched
+    NProgress.start()
 
 setupSegmentIo = ->
   if !window.analytics?
