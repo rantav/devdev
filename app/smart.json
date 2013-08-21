@@ -2,13 +2,17 @@
   "packages": {
     "router": {},
     "blade": {},
-    "marked": {},
+    "marked": {
+      "git": "https://github.com/rantav/meteor-marked",
+      "version": "v0.2.9"
+    },
     "font-awesome": {},
     "momentjs": {},
     "accounts-ui-bootstrap-dropdown": {
       "git": "https://github.com/rantav/meteor-accounts-ui-bootstrap-dropdown"
     },
     "bootstrap-themes": {},
-    "typeahead-js": {}
+    "typeahead-js": {},
+    "filepicker": {}
   }
 }
