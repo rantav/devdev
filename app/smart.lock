@@ -14,8 +14,7 @@
         "branch": "master"
       },
       "bootstrap-themes": {},
-      "typeahead-js": {},
-      "filepicker": {}
+      "typeahead-js": {}
     },
     "packages": {
       "router": {
@@ -52,11 +51,6 @@
         "git": "https://github.com/olragon/meteor-typeahead-js.git",
         "tag": "v0.9.3",
         "commit": "9241c6c68f39cf37699b5de7b03d60a5434a5d21"
-      },
-      "filepicker": {
-        "git": "https://github.com/Filepicker/meteor.git",
-        "tag": "v0.3.0",
-        "commit": "dcb6f3779e5fc105520ba06b0392e3a79c73a7e6"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

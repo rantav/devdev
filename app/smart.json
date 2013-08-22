@@ -12,7 +12,6 @@
       "git": "https://github.com/rantav/meteor-accounts-ui-bootstrap-dropdown"
     },
     "bootstrap-themes": {},
-    "typeahead-js": {},
-    "filepicker": {}
+    "typeahead-js": {}
   }
 }

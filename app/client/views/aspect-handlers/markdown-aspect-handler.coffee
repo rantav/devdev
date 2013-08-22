@@ -84,7 +84,6 @@ window.MarkdownHandler = class MarkdownHandler
 
     template.events
       'click .markdown-aspect.cancel-contribution': (event)->
-        analytics.track('Cancel aspect contribution')
         $target = $(event.target)
         $target.parent().hide(200)
         $target.parents('.edit-section').find('textarea.contribute-text').val('')
