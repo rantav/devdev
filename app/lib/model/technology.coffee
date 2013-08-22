@@ -215,6 +215,22 @@ root.Technology = class Technology
       aspect = new Aspect(aspectData, @)
     aspect.addContribution(aspectTextValue)
 
+  logoHtml: ->
+    logo = @findLogo()
+    if logo
+      cdned = Cdn.cdnify(logo)
+      "<div class='img-logo-aspect'>
+        <img src='#{cdned}' class='img-polaroid'></img>
+       </div>"
+
+  findLogo: ->
+    for aspect in @data.aspects
+      if aspect.name == 'Logo' and aspect.contributions.length
+        for contribution in aspect.contributions
+          if not contribution.deletedAt
+            return contribution.markdown
+
+
 
 createAspect = (aspectName, type) ->
   name: aspectName
