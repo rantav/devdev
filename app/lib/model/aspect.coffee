@@ -71,3 +71,6 @@ root.Aspect = class Aspect
 
   save: ->
     @technologyRef.save()
+
+  storePath: ->
+    if @type() == 'image' and @name() == 'Logo' then 'logos/'

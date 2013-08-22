@@ -14,6 +14,9 @@ window.ImageHandler = class ImageHandler
                    data-fp-container='modal'
                    data-fp-button-class='btn'
                    data-fp-multiple='false'
+                   data-fp-store-location='S3'
+                   data-fp-store-path='#{aspect.storePath()}'
+                   data-fp-store-access='public'
                    data-fp-services='COMPUTER,IMAGE_SEARCH,URL'></input>
             <input type='hidden' id='new-aspect-value'/>
            </div>
@@ -39,10 +42,12 @@ window.ImageHandler = class ImageHandler
   onPickFile: (event) ->
     fpfile = event.fpfile
     $target = $(event.target)
-    html = "<img src='#{fpfile.url}' class='img-polaroid'></img>"
+    url = fpfile.url
+    cdned = Cdn.cdnify(url)
+    html = "<img src='#{cdned}' class='img-polaroid'></img>"
     $target.parents('.edit-section').find('.contribute-preview').html(html)
     $target.parents('.edit-section').find('.controls').show(200)
-    $target.parents('.edit-section').find('input[type=hidden]').val(fpfile.url)
+    $target.parents('.edit-section').find('input[type=hidden]').val(url)
 
   handleNewAspect: (aspect, event) ->
     $name = $('#new-aspect-name')
