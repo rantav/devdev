@@ -5,20 +5,24 @@
 h2 Technologies
 
 table.table
-  foreach technologies as technology
-    tr
-      th
-        a(href='#{technology.route()}')= technology.name()
-      td
-        | Started by
-        <a(href='#{technology.creator().route()}')= technology.creator().name()
-        |,
-        |
-        = moment(technology.createdAt()).fromNow()
-        <small.muted (Last modified #{moment(technology.updatedAt()).fromNow()})
-      td
-        - if (Meteor.userId() === technology.contributorId())
-          .pull-right
-            a.action(href='javascript:void(0)' title='Delete #{technology.name()}')
-              i.icon-trash
+  tbody
+    foreach technologies as technology
+      tr
+        th
+          a(href='#{technology.route()}')
+            = technology.name()
+            .technology-logo-small.pull-left
+              != technology.logoHtml()
+        td
+          | Started by
+          <a(href='#{technology.creator().route()}')= technology.creator().name()
+          |,
+          |
+          = moment(technology.createdAt()).fromNow()
+          <small.muted (Last modified #{moment(technology.updatedAt()).fromNow()})
+        td
+          - if (Meteor.userId() === technology.contributorId())
+            .pull-right
+              a.action(href='javascript:void(0)' title='Delete #{technology.name()}')
+                i.icon-trash
 

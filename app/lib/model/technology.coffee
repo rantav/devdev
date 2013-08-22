@@ -220,9 +220,7 @@ root.Technology = class Technology
     if not logo then return ''
     if logo
       cdned = Cdn.cdnify(logo)
-      "<div class='img-logo-aspect'>
-        <img src='#{cdned}' class='img-polaroid'></img>
-       </div>"
+      "<img src='#{cdned}' class='img-polaroid'></img>"
 
   # Just picks up the first logo that it's able to find.
   findLogo: ->
