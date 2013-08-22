@@ -207,17 +207,18 @@ root.Technology = class Technology
     @data.name = newName
     @save()
 
-  addAspectAndContribution: (aspectName, aspectTextValue) ->
+  addAspectAndContribution: (aspectName, aspectTextValue, type) ->
     aspect = @findAspectByName(aspectName)
     if not aspect
-      aspectData = createAspect(aspectName)
+      aspectData = createAspect(aspectName, type)
       @data.aspects.push(aspectData)
       aspect = new Aspect(aspectData, @)
     aspect.addContribution(aspectTextValue)
 
 
-createAspect = (aspectName) ->
+createAspect = (aspectName, type) ->
   name: aspectName
+  type: type
   contributions: []
   aspectId: Meteor.uuid()
 

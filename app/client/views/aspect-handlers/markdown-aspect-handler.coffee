@@ -34,8 +34,6 @@ window.MarkdownHandler = class MarkdownHandler
     else
       return html
 
-
-
   handleAspectContribution: (aspect, event) ->
     analytics.track('Submit aspect contribution')
     text = $('textarea.contribute-text', event.target).val()
@@ -65,7 +63,7 @@ window.MarkdownHandler = class MarkdownHandler
 
     analytics.track('add new aspect', {name: name})
     NProgress.start()
-    Meteor.call 'contributeNewAspect', technology.id(), name, value, (err, ret) ->
+    Meteor.call 'contributeNewAspect', technology.id(), name, value, @type(), (err, ret) ->
       if err
         alertify.error err
         NProgress.done()

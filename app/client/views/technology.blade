@@ -24,7 +24,7 @@
             th
               .control-group
                 input#new-aspect-name(type='text' placeholder='Add aspect&hellip; (? for help)')
-            td
+            td.aspect-data
               #new-aspect-adder
                 != renderAspectEditor(aspect, '#new-aspect-adder')
       foreach technology.aspects() as aspect

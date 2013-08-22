@@ -2,6 +2,13 @@ window.ImageHandler = class ImageHandler
   type: ->
     'image'
 
+  view: (aspectContribution) ->
+    url = aspectContribution.content()
+    cdned = Cdn.cdnify(url)
+    "<div class='img-logo-aspect'>
+      <img src='#{cdned}' class='img-polaroid'></img>
+     </div>"
+
   renderAdder: (aspect, jqPath) ->
     html =
       "<div class='image-aspect edit-section'>
@@ -31,7 +38,7 @@ window.ImageHandler = class ImageHandler
          </div>
        </div>"
 
-    if not jqPath then return html
+    if not jqPath then return ''
 
     $(jqPath).html(html)
     element = $(jqPath).find('.filepicker-dragdrop')[0]
@@ -49,7 +56,7 @@ window.ImageHandler = class ImageHandler
     $target.parents('.edit-section').find('.controls').show(200)
     $target.parents('.edit-section').find('input[type=hidden]').val(url)
 
-  handleNewAspect: (aspect, event) ->
+  handleNewAspect: (aspect, event) =>
     $name = $('#new-aspect-name')
     name = $name.val()
     if not name
@@ -64,7 +71,7 @@ window.ImageHandler = class ImageHandler
 
     analytics.track('add new aspect', {name: name})
     NProgress.start()
-    Meteor.call 'contributeNewAspect', technology.id(), name, value, (err, ret) ->
+    Meteor.call 'contributeNewAspect', technology.id(), name, value, @type(), (err, ret) ->
       if err
         alertify.error err
         NProgress.done()

@@ -10,6 +10,9 @@ root.AspectContribution = class AspectContribution
 
   deletedAt: -> @data.deletedAt if @data
 
+  content: -> @markdown()
+
+  #TODO: Rename markdown to content. b/c not everything is markdown today...
   markdown: -> if @data then @data.markdown else ""
 
   markdownProcessed: ->

@@ -21,12 +21,12 @@ Meteor.methods
       contributor.addAspectContribution(aspectContribution)
       aspectContribution.data
 
-  contributeNewAspect: (technologyId, aspectName, aspectTextValue) ->
+  contributeNewAspect: (technologyId, aspectName, aspectTextValue, type) ->
     contributor = Contributor.current()
     if not contributor
       throw new Meteor.Error 404, 'Please log in'
     technology = Technology.findOne(technologyId)
-    aspectContribution = technology.addAspectAndContribution(aspectName, aspectTextValue)
+    aspectContribution = technology.addAspectAndContribution(aspectName, aspectTextValue, type)
     contributor.addAspectContribution(aspectContribution)
     aspectContribution.data
 
