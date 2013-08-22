@@ -47,7 +47,7 @@ window.MarkdownHandler = class MarkdownHandler
           $target.find('textarea.contribute-text').val('')
           NProgress.done()
 
-  handleNewAspect: (aspect, event) ->
+  handleNewAspect: (aspect, event) =>
     $name = $('#new-aspect-name')
     name = $name.val()
     if not name
