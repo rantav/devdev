@@ -4,9 +4,31 @@ Template.setup.rendered = ->
   setupNavigation()
   setupDropdowns()
   showSpinner()
+  $('.spin').each (i, e) ->
+    spin(e)
+
+spin = (target) ->
+  opts =
+    lines: 9,
+    length: 10,
+    width: 5,
+    radius: 8,
+    corners: 1,
+    rotate: 0,
+    direction: 1,
+    color: '#000',
+    speed: 1,
+    trail: 60,
+    shadow: false,
+    hwaccel: false,
+    className: 'spinner',
+    zIndex: 2e9,
+    top: 'auto',
+    left: 'auto'
+  spinner = new Spinner(opts).spin(target);
 
 showSpinner = ->
-  if not window.devdevFullySynched
+  if not Session.get('devdevFullySynched')
     NProgress.start()
 
 setupSegmentIo = ->

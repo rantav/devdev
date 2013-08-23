@@ -1,6 +1,10 @@
 - if (!technology)
-  h2 #{Session.get('technologyId')} had not been created.
-  button#add-technology.btn.btn-primary(class='#{Meteor.userId() ? "" : "disabled"}') Create #{Session.get('technologyId')}
+  - if (Session.get('devdevFullySynched'))
+    h2 #{Session.get('technologyId')} had not been created.
+    button#add-technology.btn.btn-primary(class='#{Meteor.userId() ? "" : "disabled"}') Create #{Session.get('technologyId')}
+  - else
+    h2.center Loading...
+    .spin
 - else
   - if (technology.deletedAt())
     .hero-unit
