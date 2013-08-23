@@ -9,6 +9,9 @@ Template.technology.newAspect = ->
     window._newAspect = new Aspect({aspectId: 'new-aspect'}, technology)
   window._newAspect
 
+Template.technology.shareText = ->
+  "Check out #{technology.name()} on devdev.io, with #{technology.numContributions()} contributions alrady!"
+
 Template.technology.events
 
   'keyup #new-aspect-name': ->

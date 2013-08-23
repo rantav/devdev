@@ -14,7 +14,9 @@
   - else
     .span4.technology-page-actions.pull-right
       <button#follow-technology.btn.disabled.not-implemented Follow #{technology.name()}
-      <button#share-technology.btn.disabled.not-implemented Share #{technology.name()}
+      <a#share.btn(href="https://twitter.com/share?url=#{encodeURIComponent(document.location.href)}&text=#{encodeURIComponent(shareText)}&via=devdev_io" target="_blank")
+        i.icon-twitter
+        |  Share #{technology.name()}
 
     .technology-logo.pull-left
       a(href='#{technology.route()}')!= technology.logoHtml()

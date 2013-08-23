@@ -215,6 +215,14 @@ root.Technology = class Technology
       aspect = new Aspect(aspectData, @)
     aspect.addContribution(aspectTextValue)
 
+  numContributions: ->
+    num = 0
+    for aspect in @data.aspects
+      for contribution in aspect.contributions
+        if not contribution.deletedAt
+          num++
+    num
+
   logoHtml: ->
     logo = @findLogo()
     if not logo then return ''
