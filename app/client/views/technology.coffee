@@ -89,11 +89,13 @@ Template.technology.rendered = ->
     content: 'For example: <code>Tagline</code>, or <code>Typical Use Cases</code> etc <hr/> Type <code>?</code> for suggestions'
     html: true
     trigger: 'hover'
+    delay: 200
     container: 'body'
   $('textarea#new-aspect-value').popover
     title: 'Aspect Value'
     content: 'For example: Link to a website, or tell us what you think about this technology'
     html: true
+    delay: 200
     trigger: 'hover'
 
 refreshAspectNameTypeahead = ->
