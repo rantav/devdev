@@ -78,6 +78,8 @@ window.ImageHandler = class ImageHandler
       else
         $name.val('')
         $value.val('')
+        window._newAspect.setType(undefined)
+        window._newAspect.setName(undefined)
         NProgress.done()
 
   init: (template) ->

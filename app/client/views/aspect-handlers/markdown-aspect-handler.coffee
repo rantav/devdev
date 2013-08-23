@@ -70,6 +70,8 @@ window.MarkdownHandler = class MarkdownHandler
       else
         $name.val('')
         $value.val('')
+        window._newAspect.setType(undefined)
+        window._newAspect.setName(undefined)
         NProgress.done()
 
 

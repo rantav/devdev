@@ -10,17 +10,23 @@ root.Aspect = class Aspect
 
   name: (n) ->
     if n
-      @data.name = n
-      @changed()
+      @setName(n)
     else @data.name
+
+  setName: (n) ->
+    @data.name = n
+    @changed()
 
   id: -> @data.aspectId
 
   type: (t) ->
     if t
-      @data.type = t
-      @changed()
+      @setType(t)
     else @data.type
+
+  setType: (t) ->
+    @data.type = t
+    @changed()
 
   changed: -> @dep.changed()
 
