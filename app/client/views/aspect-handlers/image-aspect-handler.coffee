@@ -4,10 +4,10 @@ window.ImageHandler = class ImageHandler
 
   view: (aspectContribution) ->
     url = aspectContribution.content()
-    url = aspectContribution.imageUrl(50, 50)
+    url = aspectContribution.imageUrl({h: 30})
     cdned = Cdn.cdnify(url)
     "<div class='img-logo-aspect'>
-      #{Html.imgPolaroid(url)}
+      <img src='#{cdned}' class='img'></img>
      </div>"
 
   renderAdder: (aspect, jqPath) ->

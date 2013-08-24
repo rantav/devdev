@@ -19,7 +19,7 @@
         |  Share #{technology.name()}
 
     .technology-logo.pull-left
-      a(href='#{technology.route()}')!= Html.imgPolaroid(technology.logoUrl(50, 50))
+      a(href='#{technology.route()}')!= Html.imgPolaroid(technology.logoUrl({h: 50}))
     h1.name.span7(contenteditable='#{technology.nameEditableByCurrentUser() ? true : false}')= technology.name()
     table.table
       - if (Meteor.userId())
