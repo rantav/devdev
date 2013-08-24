@@ -8,11 +8,10 @@ table.table
   tbody
     foreach technologies as technology
       tr
+        td.technology-logo-small
+          a(href='#{technology.route()}')!= Html.imgPolaroid(technology.logoUrl(30, 30))
         th
-          a(href='#{technology.route()}')
-            = technology.name()
-            .technology-logo-small.pull-left
-              != technology.logoHtml()
+          a(href='#{technology.route()}')= technology.name()
         td
           | Started by
           <a(href='#{technology.creator().route()}')= technology.creator().name()

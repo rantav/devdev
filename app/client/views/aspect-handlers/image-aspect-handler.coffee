@@ -4,9 +4,10 @@ window.ImageHandler = class ImageHandler
 
   view: (aspectContribution) ->
     url = aspectContribution.content()
+    url = aspectContribution.imageUrl(50, 50)
     cdned = Cdn.cdnify(url)
     "<div class='img-logo-aspect'>
-      <img src='#{cdned}' class='img-polaroid'></img>
+      #{Html.imgPolaroid(url)}
      </div>"
 
   renderAdder: (aspect, jqPath) ->
@@ -50,8 +51,7 @@ window.ImageHandler = class ImageHandler
     fpfile = event.fpfile
     $target = $(event.target)
     url = fpfile.url
-    cdned = Cdn.cdnify(url)
-    html = "<img src='#{cdned}' class='img-polaroid'></img>"
+    html = "<img src='#{url}' class='img-polaroid'></img>"
     $target.parents('.edit-section').find('.contribute-preview').html(html)
     $target.parents('.edit-section').find('.controls').show(200)
     $target.parents('.edit-section').find('input[type=hidden]').val(url)

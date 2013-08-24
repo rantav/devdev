@@ -38,3 +38,9 @@ root.AspectContribution = class AspectContribution
 
   save: ->
     @aspectRef.save()
+
+  imageUrl: (w, h) ->
+    url = @content()
+    if not url.indexOf('http') == 0 then return null
+    url = "#{url}/convert?w=#{w}&h=#{h}&fit=clip&cache=true"
+    cdned = Cdn.cdnify(url)

@@ -223,20 +223,18 @@ root.Technology = class Technology
           num++
     num
 
-  logoHtml: ->
-    logo = @findLogo()
-    if not logo then return ''
-    if logo
-      cdned = Cdn.cdnify(logo)
-      "<img src='#{cdned}' class='img-polaroid'></img>"
+  logoUrl: (w, h) ->
+    logo = @findLogoContribution()
+    if not logo then return null
+    logo.imageUrl(w, h)
 
   # Just picks up the first logo that it's able to find.
-  findLogo: ->
+  findLogoContribution: ->
     for aspect in @data.aspects
       if aspect.name == 'Logo' and aspect.contributions.length
         for contribution in aspect.contributions
           if not contribution.deletedAt
-            return contribution.markdown
+            return new AspectContribution(contribution, new Aspect(aspect), @)
 
 createAspect = (aspectName, type) ->
   name: aspectName
