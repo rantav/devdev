@@ -8,6 +8,7 @@ Cdn.cdnify = (url) ->
   if not url then return ''
   l = getLocation(url)
   l.hostname = CDN_ROOT
+  l.search = 'cache=true'
   l.toString()
 
 
