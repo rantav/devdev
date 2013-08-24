@@ -51,7 +51,8 @@ window.ImageHandler = class ImageHandler
     fpfile = event.fpfile
     $target = $(event.target)
     url = fpfile.url
-    html = "<img src='#{url}' class='img-polaroid'></img>"
+    resized = url + "/convert?h=30"
+    html = "<img src='#{resized}' class='img-polaroid'></img>"
     $target.parents('.edit-section').find('.contribute-preview').html(html)
     $target.parents('.edit-section').find('.controls').show(200)
     $target.parents('.edit-section').find('input[type=hidden]').val(url)
