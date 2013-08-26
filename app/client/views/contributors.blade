@@ -8,3 +8,7 @@ table.table
           != contributor.photoHtml('img')
           |= contributor.name()
       td #{contributor.contributionCount()} contributions
+      td
+        foreach contributor.usedTechnologies() as technology
+          a.technology-logo-small(href='#{technology.route()}' title='#{technology.name()}' rel='tooltip')!= Html.imgPolaroid(technology.logoUrl({h: 15}))
+

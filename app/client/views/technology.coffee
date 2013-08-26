@@ -115,6 +115,10 @@ Template.technology.rendered = ->
     delay: 200
     trigger: 'hover'
 
+Template.technology.destroyed = ->
+  $('.contribution[rel=tooltip]').tooltip('hide')
+  $('.contributor-dense[rel=tooltip]').tooltip('hide')
+
 refreshAspectNameTypeahead = ->
   if technology
     suggestions = technology.suggestAspectNames()

@@ -46,3 +46,6 @@ Template.technologies.events
 
 Template.technologies.rendered = ->
   $('.contributor-xsmall[rel=tooltip]').tooltip()
+
+Template.technologies.destroyed = ->
+  $('.contributor-xsmall[rel=tooltip]').tooltip('hide')

@@ -87,6 +87,11 @@ root.Contributor = class Contributor
   isUsingTechnology: (technology) ->
     @data.profile.usingTechnology and @data.profile.usingTechnology[technology.id()]
 
+  usedTechnologies: ->
+    if not @data.profile.usingTechnology or not Session.get('devdevFullySynched')
+      return []
+    (Technology.findOne(techId) for techId, using of @data.profile.usingTechnology when using)
+
   save: ->
     Meteor.users.update(@data._id, @data)
 
