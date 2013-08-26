@@ -11,3 +11,8 @@ Template.contributor.events
     alertify.log '<strong>Coming soonish...</strong> <i class="icon-cogs pull-right"> </i>'
     analytics.track('Clicked disabled', {id: event.srcElement.id})
 
+Template.contributor.rendered = ->
+  $('.technology-logo-small[rel=tooltip]').tooltip()
+
+Template.contributor.destroyed = ->
+  $('.technology-logo-small[rel=tooltip]').tooltip('hide')
