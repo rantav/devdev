@@ -1,3 +1,4 @@
+- currentContributor = Contributor.current()
 - if (!technology)
   - if (Session.get('devdevFullySynched'))
     h2 #{Session.get('technologyId')} had not been created.
@@ -13,6 +14,9 @@
 
   - else
     .technology-page-actions.pull-right
+      button.btn.i-use-it(class='#{Meteor.userId() ? "" : "disabled"} #{technology.isUsedBy(currentContributor) ? "btn-success" : ""}')
+        i.icon-white.icon-thumbs-up
+        |  I Use It
       <button#follow-technology.btn.disabled.not-implemented Follow #{technology.name()}
       <a#share.btn(href="https://twitter.com/share?url=#{encodeURIComponent(document.location.href)}&text=#{encodeURIComponent(shareText)}&via=devdev_io" target="_blank")
         i.icon-twitter
@@ -23,41 +27,55 @@
       .pull-left(contenteditable='#{technology.nameEditableByCurrentUser() ? true : false}')= technology.name()
     .clearfix(style='margin:5px')
     table.table
-      - if (Meteor.userId())
-        foreach [newAspect] as aspect
+      tbody
+        - if (Meteor.userId())
+          foreach [newAspect] as aspect
+            tr.aspect
+              th
+                .control-group
+                  input#new-aspect-name(type='text' placeholder='Add aspect&hellip; (? for help)')
+              td.aspect-data
+                #new-aspect-adder
+                  != renderAspectEditor(aspect, '#new-aspect-adder')
+
+        tr.used-by
+          th Used By
+          td
+            foreach technology.usedBy() as user
+              a.contributor-dense.pull-left(href='#{user.route()}' rel='tooltip' title='Used by #{user.name()}')
+                != user.photoHtml()
+            else
+              button.btn.i-use-it(class='#{Meteor.userId() ? "" : "disabled"} #{technology.isUsedBy(currentContributor) ? "btn-success" : ""}')
+                i.icon-white.icon-thumbs-up
+                |  Be the first to use it
+
+
+        foreach technology.aspects() as aspect
           tr.aspect
-            th
-              .control-group
-                input#new-aspect-name(type='text' placeholder='Add aspect&hellip; (? for help)')
+            th= aspect.name()
             td.aspect-data
-              #new-aspect-adder
-                != renderAspectEditor(aspect, '#new-aspect-adder')
-      foreach technology.aspects() as aspect
-        tr.aspect
-          th= aspect.name()
-          td.aspect-data
-            foreach aspect.contributions() as contribution
-              - if (!contribution.deletedAt())
-                .contribution(style='border-left-color: #{contribution.contributor().color()}'
-                    rel='tooltip'
-                    data-placement='left'
-                    title='#{contribution.contributor().name()}')
-                  .contribution-actions.pull-right
-                    - if (contribution.isCurrentUserOwner())
-                      <a.action.not-implemented(href='javascript:void(0)' title='Edit your contribution')
-                        i#edit-aspect-contribution.icon-edit.disabled
-                      <a.action(href='javascript:void(0)' title='Delete your contribution')
-                        i.icon-trash
-                    - else
-                      <a.not-implemented.action(href='javascript:void(0)' title='Vote up')
-                        i#vote-up-aspect-contribution.icon-thumbs-up.disabled
-                      <a.not-implemented.action(href='javascript:void(0)' title='Vote down')
-                        i#vote-down-aspect-contribution.icon-thumbs-down.disabled
-                  p.contribution
-                    small.pull-right.muted= moment(contribution.updatedAt()).fromNow()
-                    != renderAspectContribution(contribution)
-            - if (Meteor.userId())
-              != renderAspectEditor(aspect)
+              foreach aspect.contributions() as contribution
+                - if (!contribution.deletedAt())
+                  .contribution(style='border-left-color: #{contribution.contributor().color()}'
+                      rel='tooltip'
+                      data-placement='left'
+                      title='#{contribution.contributor().name()}')
+                    .contribution-actions.pull-right
+                      - if (contribution.isCurrentUserOwner())
+                        <a.action.not-implemented(href='javascript:void(0)' title='Edit your contribution')
+                          i#edit-aspect-contribution.icon-edit.disabled
+                        <a.action(href='javascript:void(0)' title='Delete your contribution')
+                          i.icon-trash
+                      - else
+                        <a.not-implemented.action(href='javascript:void(0)' title='Vote up')
+                          i#vote-up-aspect-contribution.icon-thumbs-up.disabled
+                        <a.not-implemented.action(href='javascript:void(0)' title='Vote down')
+                          i#vote-down-aspect-contribution.icon-thumbs-down.disabled
+                    p.contribution
+                      small.pull-right.muted= moment(contribution.updatedAt()).fromNow()
+                      != renderAspectContribution(contribution)
+              - if (Meteor.userId())
+                != renderAspectEditor(aspect)
 
     .contributors
       h5 Contributors:

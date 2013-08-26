@@ -68,6 +68,17 @@ Template.technology.events
     window._newAspect.type(Technology.typeForName(name))
     window._newAspect.name(name)
 
+  'click .i-use-it': ->
+    analytics.track('I use it', {loggedIn: !!Meteor.userId()})
+    if not Meteor.userId()
+      alertify.alert('<i class="icon-user icon-4x"> </i> <h2>Please log in</h2>')
+      return
+    current = Contributor.current()
+    used = current.isUsingTechnology(technology)
+    Meteor.call 'iUseIt', technology.id(), not used, (err, ret) ->
+      if err
+        alertify.error err
+
   'click .not-implemented': (event) ->
     alertify.log '<strong>Coming soonish...</strong> <i class="icon-cogs pull-right"> </i>'
     analytics.track('Clicked disabled', {id: event.srcElement.id})
@@ -85,7 +96,10 @@ $ ->
   initHandlers(Template.technology)
 
 Template.technology.rendered = ->
-  $('.contribution[rel=tooltip]').tooltip() # initialize all tooltips in this template
+  # initialize all tooltips in this template
+  $('.contribution[rel=tooltip]').tooltip()
+  $('.contributor-dense[rel=tooltip]').tooltip()
+
   refreshAspectNameTypeahead()
   $('input#new-aspect-name').popover
     title: 'Aspect Name'
