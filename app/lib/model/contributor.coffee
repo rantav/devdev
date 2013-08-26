@@ -79,6 +79,14 @@ root.Contributor = class Contributor
     @data.profile.contributionCount++;
     @save(aspectContribution.updatedAt())
 
+  setUsingTechnology: (technology, using) ->
+    if not @data.profile.usingTechnology then @data.profile.usingTechnology = {}
+    @data.profile.usingTechnology[technology.id()] = using
+    @save()
+
+  isUsingTechnology: (technology) ->
+    @data.profile.usingTechnology and @data.profile.usingTechnology[technology.id()]
+
   save: ->
     Meteor.users.update(@data._id, @data)
 

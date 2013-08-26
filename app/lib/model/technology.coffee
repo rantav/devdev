@@ -207,6 +207,14 @@ root.Technology = class Technology
     @data.name = newName
     @save()
 
+  setUsedBy: (contributor, used) ->
+    if not @data.usedBy then @data.usedBy = {}
+    @data.usedBy[contributor.id()] = used
+    @save(@updatedAt())
+
+  isUsedBy: (contributor) ->
+    @data.usedBy and @data.usedBy[contributor.id()]
+
   addAspectAndContribution: (aspectName, aspectTextValue, type) ->
     aspect = @findAspectByName(aspectName)
     if not aspect
