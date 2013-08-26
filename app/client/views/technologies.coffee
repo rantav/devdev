@@ -43,3 +43,6 @@ Template.technologies.events
     Meteor.call 'iUseIt', @id(), not used, (err, ret) ->
       if err
         alertify.error err
+
+Template.technologies.rendered = ->
+  $('.contributor-xsmall[rel=tooltip]').tooltip()

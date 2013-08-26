@@ -213,7 +213,11 @@ root.Technology = class Technology
     @save(@updatedAt())
 
   isUsedBy: (contributor) ->
-    @data.usedBy and @data.usedBy[contributor.id()]
+    contributor and @data.usedBy and @data.usedBy[contributor.id()]
+
+  # Returns the list of users that use this technology
+  usedBy: ->
+    (Contributor.findOne(id) for id, used of @data.usedBy when used) if @data.usedBy
 
   addAspectAndContribution: (aspectName, aspectTextValue, type) ->
     aspect = @findAspectByName(aspectName)
