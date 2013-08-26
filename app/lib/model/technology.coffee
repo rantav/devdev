@@ -235,10 +235,10 @@ root.Technology = class Technology
           num++
     num
 
-  logoUrl: (w, h) ->
+  logoUrl: (options) ->
     logo = @findLogoContribution()
-    if not logo then return null
-    logo.imageUrl(w, h)
+    if not logo then return options.default
+    logo.imageUrl(options)
 
   # Just picks up the first logo that it's able to find.
   findLogoContribution: ->
