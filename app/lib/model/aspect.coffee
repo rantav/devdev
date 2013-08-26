@@ -11,7 +11,7 @@ root.Aspect = class Aspect
   name: (n) ->
     if n
       @setName(n)
-    else @data.name
+    else @data.name if @data
 
   setName: (n) ->
     @data.name = n
@@ -22,7 +22,7 @@ root.Aspect = class Aspect
   type: (t) ->
     if t
       @setType(t)
-    else @data.type
+    else @data.type if @data
 
   setType: (t) ->
     @data.type = t

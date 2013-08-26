@@ -5,7 +5,8 @@
       "router": {},
       "blade": {},
       "marked": {
-        "git": "https://github.com/rantav/meteor-marked"
+        "git": "https://github.com/rantav/meteor-marked",
+        "branch": "master"
       },
       "font-awesome": {},
       "momentjs": {},
@@ -27,10 +28,15 @@
         "tag": "v3.2.6meteor2",
         "commit": "28a9f9bf121c3410ab70138ba39862468bfe836b"
       },
+      "marked": {
+        "git": "https://github.com/rantav/meteor-marked",
+        "branch": "master",
+        "commit": "34f07881dd902ad8e24fcd5672da8245b8d0889e"
+      },
       "font-awesome": {
         "git": "https://github.com/nate-strauser/meteor-font-awesome.git",
-        "tag": "v3.2.0",
-        "commit": "2cba6f907a2579cae2d399b522f9544c13d5e091"
+        "tag": "v3.2.1",
+        "commit": "38bdfff72dfb8857b272f9a9b056045d6a015489"
       },
       "momentjs": {
         "git": "https://github.com/crapthings/meteor-momentjs.git",
