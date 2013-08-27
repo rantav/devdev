@@ -2,7 +2,7 @@ describe 'Template.contributors', ->
   describe '.contributors', ->
     beforeEach ->
       Contributors.find = sinon.stub()
-      Contributors.find.withArgs({'profile.contributionCount' : {$gt: 0}},
+      Contributors.find.withArgs({},
         {sort: {'profile.contributionCount': -1}}).returns
           fetch: ->
             [{_id: '1'}, {_id: '2'}]
