@@ -9,7 +9,7 @@ table.table
     foreach technologies as technology
       tr
         td.technology-logo-small
-          a(href='#{technology.route()}')!= Html.imgPolaroid(technology.logoUrl({h: 15}))
+          a(href='#{technology.route()}')!= Html.imgPolaroid(technology.logoUrl({h: 15, default: '/img/cogs-17x15.png'}))
         th
           a(href='#{technology.route()}')= technology.name()
         td
