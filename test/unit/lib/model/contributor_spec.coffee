@@ -63,7 +63,9 @@ describe 'Contributor', ->
         expect(c.contributionCount()).toEqual(0)
         expect(c.contributions()).toEqual([])
         c.addTechnologyContribution(t)
-        Technology.findOne = (technologyId) -> if technologyId == '1' then t
+        sinon.stub(Technology, 'findOne', (technologyId) -> if technologyId == '1' then t)
+      afterEach ->
+        Technology.findOne.restore()
       it 'should count exactly 1 contribution', ->
         expect(c.contributionCount()).toEqual(1)
       it 'should have the exact same contribution that we added', ->

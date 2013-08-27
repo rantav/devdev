@@ -32,6 +32,16 @@ root.Technology = class Technology
     , 'websites':
       type: 'markdown',
       display: 'Websites'
+    , 'vertical':
+      type: 'tags',
+      pinned: true,
+      datasource: 'verticals',
+      display: 'Vertical'
+    , 'stack':
+      type: 'tags',
+      pinned: true,
+      datasource: 'stacks',
+      display: 'Stack'
     , 'source code':
       type: 'markdown',
       display: 'Source Code'
@@ -116,16 +126,18 @@ root.Technology = class Technology
     if def then def.type else 'markdown'
 
   @create: (name) ->
-    aspectNames = @allAspectNames
-
     now = new Date()
     tech =
       name: name
       contributorId: Meteor.userId()
-      aspects: (createAspect(a) for a in aspectNames)
+      aspects: (createAspect(a.display, a.type) for a in @pinnedAspectDefs())
       createdAt: now
       updatedAt: now
     Technology.add(tech)
+
+  # Gets all the pinned aspect definitions
+  @pinnedAspectDefs: ->
+    (def for k, def of @aspectDefinitions() when def.pinned)
 
   constructor: (@data) ->
 
