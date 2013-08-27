@@ -118,6 +118,8 @@ Template.technology.rendered = ->
 Template.technology.destroyed = ->
   $('.contribution[rel=tooltip]').tooltip('hide')
   $('.contributor-dense[rel=tooltip]').tooltip('hide')
+  $('input#new-aspect-name').popover('hide')
+  $('input#new-aspect-value').popover('hide')
 
 refreshAspectNameTypeahead = ->
   if technology
