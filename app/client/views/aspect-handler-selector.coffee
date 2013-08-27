@@ -21,12 +21,13 @@ window.initHandlers = (template) ->
 
 markdownHandler = new MarkdownHandler()
 imageHandler = new ImageHandler()
+tagsHandler = new TagsHandler()
+
+handlers = [markdownHandler, imageHandler, tagsHandler]
 
 selectHandler = (aspect) ->
-  if aspect.type() == imageHandler.type()
-    return imageHandler
-  if aspect.type() == markdownHandler.type()
-    return markdownHandler
+  for handler in handlers
+    return handler if handler.type() == aspect.type()
 
   # default
   return markdownHandler

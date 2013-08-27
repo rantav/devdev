@@ -1,7 +1,3 @@
-// *********************************************************************************************************************
-// IF YOU WANT TO CUSTOMIZE ANYTHING HERE, COPY THIS FILE TO YOUR /test DIRECTORY AND RTD WILL USE THAT FILE INSTEAD
-// *********************************************************************************************************************
-
 module.exports = function(config){
     config.set({
         // base path, that will be used to resolve files and exclude
@@ -48,7 +44,8 @@ module.exports = function(config){
             'app/.meteor/local',
             'app/server/fixture.js',
             'app/server/fixture.coffee',
-            'app/packages/**/*'
+            'app/packages/**/*',
+            'app/client/lib/bootstrap-tagsinput.js',
         ],
 
         preprocessors : {
