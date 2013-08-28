@@ -10,7 +10,7 @@ Template.technology.newAspect = ->
   window._newAspect
 
 Template.technology.shareText = ->
-  "Check out #{technology.name()} on devdev.io, with #{technology.numContributions()} contributions alrady!"
+  "Check out #{technology.name()} on devdev.io, with #{technology.numContributions()} contributions already!"
 
 Template.technology.events
 
