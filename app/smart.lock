@@ -8,7 +8,6 @@
         "git": "https://github.com/rantav/meteor-marked",
         "branch": "master"
       },
-      "font-awesome": {},
       "momentjs": {},
       "accounts-ui-bootstrap-dropdown": {
         "git": "https://github.com/rantav/meteor-accounts-ui-bootstrap-dropdown",
@@ -31,11 +30,6 @@
         "git": "https://github.com/rantav/meteor-marked",
         "branch": "master",
         "commit": "34f07881dd902ad8e24fcd5672da8245b8d0889e"
-      },
-      "font-awesome": {
-        "git": "https://github.com/nate-strauser/meteor-font-awesome.git",
-        "tag": "v3.2.1",
-        "commit": "38bdfff72dfb8857b272f9a9b056045d6a015489"
       },
       "momentjs": {
         "git": "https://github.com/crapthings/meteor-momentjs.git",
