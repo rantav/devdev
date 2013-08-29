@@ -10,7 +10,7 @@ Template.technology.newAspect = ->
   window._newAspect
 
 Template.technology.shareText = ->
-  "Check out #{technology.name()} on devdev.io, with #{technology.numContributions()} contributions alrady!"
+  "Check out #{technology.name()} on devdev.io, with #{technology.numContributions()} contributions already!"
 
 Template.technology.events
 
@@ -118,6 +118,8 @@ Template.technology.rendered = ->
 Template.technology.destroyed = ->
   $('.contribution[rel=tooltip]').tooltip('hide')
   $('.contributor-dense[rel=tooltip]').tooltip('hide')
+  $('input#new-aspect-name').popover('hide')
+  $('input#new-aspect-value').popover('hide')
 
 refreshAspectNameTypeahead = ->
   if technology
@@ -125,7 +127,7 @@ refreshAspectNameTypeahead = ->
     $('input#new-aspect-name').typeahead('destroy')
     $('input#new-aspect-name').typeahead(
       name: 'aspects',
-      limit: suggestions.length
+      limit: suggestions.length,
       local: suggestions
     ).bind('typeahead:selected', (obj, datum) ->
       window._newAspect.type(datum.type)

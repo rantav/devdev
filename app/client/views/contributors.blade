@@ -5,10 +5,11 @@ table.table
     tr
       th
         a.contributor-small(href='#{contributor.route()}' style='border-left-color: #{contributor.color()}')
-          != contributor.photoHtml('img')
+          img.img(src='#{contributor.photoUrl(20)}')
           |= contributor.name()
       td #{contributor.contributionCount()} contributions
       td
         foreach contributor.usedTechnologies() as technology
-          a.technology-logo-small(href='#{technology.route()}' title='#{contributor.name()} uses #{technology.name()}' rel='tooltip')!= Html.imgPolaroid(technology.logoUrl({h: 15, default: '/img/cogs-17x15.png'}))
+          a.technology-logo-small(href='#{technology.route()}' title='#{contributor.name()} uses #{technology.name()}' rel='tooltip')
+            != Html.imgPolaroid(technology.logoUrl({h: 15, default: Cdn.cdnify('/img/cogs-17x15.png')}))
 

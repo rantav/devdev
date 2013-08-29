@@ -11,12 +11,8 @@ accounts-github
 email
 accounts-ui-bootstrap-dropdown
 blade
-bootstrap-themes
-font-awesome
 HTML5-History-API
 marked
-meteor-tomarkdown
 momentjs
 page-js-ie-support
 router
-typeahead-js

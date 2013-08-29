@@ -46,6 +46,9 @@ module.exports = function(config){
             'app/server/fixture.coffee',
             'app/packages/**/*',
             'app/client/lib/bootstrap-tagsinput.js',
+            'app/client/lib/bootstrap.js',
+            'app/client/lib/typeahead.js',
+            'app/packages/**/*'
         ],
 
         preprocessors : {
