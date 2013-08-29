@@ -5,7 +5,7 @@ table.table
     tr
       th
         a.contributor-small(href='#{contributor.route()}' style='border-left-color: #{contributor.color()}')
-          != contributor.photoHtml('img')
+          img.img(src='#{contributor.photoUrl(20)}')
           |= contributor.name()
       td #{contributor.contributionCount()} contributions
       td

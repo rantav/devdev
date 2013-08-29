@@ -48,6 +48,8 @@ module.exports = function(config){
             'app/.meteor/local',
             'app/server/fixture.js',
             'app/server/fixture.coffee',
+            'app/client/lib/bootstrap.js',
+            'app/client/lib/typeahead.js',
             'app/packages/**/*'
         ],
 
