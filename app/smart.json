@@ -9,7 +9,6 @@
     "momentjs": {},
     "accounts-ui-bootstrap-dropdown": {
       "git": "https://github.com/rantav/meteor-accounts-ui-bootstrap-dropdown"
-    },
-    "typeahead-js": {}
+    }
   }
 }
