@@ -96,9 +96,14 @@ describe 'Contributor', ->
           expect(c.photoUrl()).toEqual("hello")
         it 'should display a resized picture when asked for', ->
           expect(c.photoUrl(40)).toEqual("hello?sz=40")
-      it 'should display a generic picture when the user doesnt have a picture', ->
-        c = new Contributor({services: {google: {}}})
-        expect(c.photoUrl()).toEqual("/img/user.png")
+      describe 'when a user does not have a picture', ->
+        c = null
+        beforeEach ->
+          c = new Contributor({services: {google: {}}})
+        it 'should display a generic picture', ->
+          expect(c.photoUrl()).toEqual("http://d16azfexq1dof6.cloudfront.net/img/user.png")
+        it 'should display a generic picture, resized, when asked for', ->
+          expect(c.photoUrl(40)).toEqual("http://d16azfexq1dof6.cloudfront.net/img/user-40x40.png")
     describe 'for github user', ->
       it 'should display the picture when the user has one', ->
         c = new Contributor({services: {github: {picture: 'hello'}}})

@@ -48,9 +48,9 @@ root.Contributor = class Contributor
           picture = "#{picture}&s=#{height}"
     if not picture
       if height
-        picture = "/img/user-#{height}x#{height}.png"
+        picture = Cdn.cdnify("/img/user-#{height}x#{height}.png")
       else
-        picture = '/img/user.png'
+        picture = Cdn.cdnify('/img/user.png')
     picture
 
 
