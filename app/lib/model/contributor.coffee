@@ -36,16 +36,23 @@ root.Contributor = class Contributor
 
   route: -> routes.contributor(@)
 
-  photoHtml: (imgClass) ->
+  photoUrl: (height) ->
     if @data.services
       if @data.services.google
         picture = @data.services.google.picture
+        if picture and height
+          picture = "#{picture}?sz=#{height}"
       else if @data.services.github
         picture = @data.services.github.picture
+        if picture and height
+          picture = "#{picture}&s=#{height}"
+    if not picture
+      if height
+        picture = Cdn.cdnify("/img/user-#{height}x#{height}.png")
+      else
+        picture = Cdn.cdnify('/img/user.png')
+    picture
 
-    if not imgClass then imgClass = 'img-polaroid'
-    if not picture then picture = '/img/user.png'
-    "<img src='#{picture}' class='#{imgClass}'/>"
 
   # Gets all undeleted contributions from the contributor
   contributions: ->

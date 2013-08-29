@@ -8,6 +8,7 @@ Cdn.cdnify = (url) ->
   if not url then return ''
   l = getLocation(url)
   l.hostname = CDN_ROOT
+  l.port = if l.protocol == 'https:' then 443 else 80
   l.toString()
 
 

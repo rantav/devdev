@@ -43,7 +43,7 @@
           td
             foreach technology.usedBy() as user
               a.contributor-dense.pull-left(href='#{user.route()}' rel='tooltip' title='Used by #{user.name()}')
-                != user.photoHtml()
+                img.img-polaroid(src='#{user.photoUrl(40)}')
             else
               button.btn.i-use-it(class='#{Meteor.userId() ? "" : "disabled"} #{technology.isUsedBy(currentContributor) ? "btn-success" : ""}')
                 i.icon-white.icon-thumbs-up
@@ -81,5 +81,5 @@
       h5 Contributors:
       foreach technology.contributors() as contributor
         div(class="contributor pull-left" style='border-left-color: #{contributor.color()}')
-          != contributor.photoHtml()
+          img.img-polaroid(src='#{contributor.photoUrl(40)}')
           <a(href='#{contributor.route()}')= contributor.name()

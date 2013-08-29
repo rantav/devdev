@@ -127,7 +127,7 @@ refreshAspectNameTypeahead = ->
     $('input#new-aspect-name').typeahead('destroy')
     $('input#new-aspect-name').typeahead(
       name: 'aspects',
-      limit: suggestions.length
+      limit: suggestions.length,
       local: suggestions
     ).bind('typeahead:selected', (obj, datum) ->
       window._newAspect.type(datum.type)
