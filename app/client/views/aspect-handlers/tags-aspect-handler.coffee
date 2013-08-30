@@ -16,7 +16,7 @@ window.TagsHandler = class TagsHandler
         <div class='span5'>
           <form class='contribute-form'>
            <div class='control-group'>
-            <input value='bla,bla, blah' data-role='tagsinput' class='tagsinput'></input>
+            <input value='bla,bla, blah' data-role='tagsinput' class='tagsinput' id='new-aspect-value'></input>
            </div>
            <div class='controls' style='display:none'>
              <button type='submit' class='btn btn-primary submit-contribution' data-referred-id='#{aspect.id()}-value'>Save</button>
@@ -31,7 +31,8 @@ window.TagsHandler = class TagsHandler
     $(jqPath).html(html)
     $(jqPath).find('.tagsinput').tagsinput({
       typeahead: {
-        local: ['Amsterdam', 'Washington', 'Sydney', 'Beijing', 'Cairo']
+        local: ['Amsterdam', 'Washington', 'Sydney', 'Beijing', 'Cairo'],
+        freeInput: true
       }
     })
 
