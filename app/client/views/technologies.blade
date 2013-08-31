@@ -23,7 +23,7 @@ table.table
         td.used-by
           foreach technology.usedBy() as user
             a.contributor-xsmall.pull-left(href='#{user.route()}' rel='tooltip' title='Used by #{user.name()}')
-            img.img-polaroid(src='#{user.photoUrl(20)}')
+              img.img-polaroid(src='#{user.photoUrl(20)}')
         td
           button.btn.btn-small.i-use-it(class='#{Meteor.userId() ? "" : "disabled"} #{technology.isUsedBy(currentContributor) ? "btn-success" : ""}')
             i.icon-white.icon-thumbs-up
