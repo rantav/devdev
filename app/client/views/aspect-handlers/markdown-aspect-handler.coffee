@@ -2,7 +2,7 @@ window.MarkdownHandler = class MarkdownHandler
   type: ->
     'markdown'
 
-  view: (aspectContribution, jqPath) ->
+  view: (aspectContribution, jqPath, readonly) ->
     "<div class='markdown-aspect'>
       #{marked(aspectContribution.markdownProcessed())}
      </div>"

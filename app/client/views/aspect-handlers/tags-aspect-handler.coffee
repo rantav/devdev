@@ -2,9 +2,9 @@ window.TagsHandler = class TagsHandler
   type: ->
     'tags'
 
-  view: (aspectContribution, jqPath) ->
+  view: (aspectContribution, jqPath, readonly) ->
     tags = aspectContribution.content() || ''
-    if aspectContribution.contributorId() == Meteor.userId()
+    if aspectContribution.contributorId() == Meteor.userId() and not readonly
       return @renderEditor(aspectContribution.aspect(), jqPath, tags)
     else
       return @renderView(tags)

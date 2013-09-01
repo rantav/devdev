@@ -1,7 +1,7 @@
 
-window.renderAspectContribution = (aspectContribution, jqPath) ->
+window.renderAspectContribution = (aspectContribution, jqPath, readonly) ->
   handler = selectHandler(aspectContribution.aspect())
-  handler.view(aspectContribution, jqPath)
+  handler.view(aspectContribution, jqPath, readonly)
 
 
 window.renderAspectEditor = (aspect, jqPath) ->

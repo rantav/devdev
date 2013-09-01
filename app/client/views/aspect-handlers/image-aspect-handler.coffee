@@ -2,7 +2,7 @@ window.ImageHandler = class ImageHandler
   type: ->
     'image'
 
-  view: (aspectContribution, jqPath) ->
+  view: (aspectContribution, jqPath, readonly) ->
     url = aspectContribution.content()
     url = aspectContribution.imageUrl({h: 30})
     cdned = Cdn.cdnify(url)
