@@ -14,11 +14,12 @@ table.table
         th
           a(href='#{technology.route()}')= technology.name()
         td.tags
-          foreach technology.getTagsForAspectDefId('stack') as tag
-            span.label.label-stack= tag
-          br
-          foreach technology.getTagsForAspectDefId('vertical') as tag
-            span.label.label-vertical= tag
+          div
+            foreach technology.getTagsForAspectDefId('stack') as tag
+              span.label.label-stack= tag
+          div
+            foreach technology.getTagsForAspectDefId('vertical') as tag
+              span.label.label-vertical= tag
         td
           | Started by
           <a(href='#{technology.creator().route()}')= technology.creator().name()
