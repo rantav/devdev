@@ -90,7 +90,10 @@ window.TagsHandler = class TagsHandler
         $target.parents('.edit-section').find('.controls').hide(200)
 
       'submit .tags-aspect form.contribute-form': (event) ->
+        text = $(event.target).find('input.tt-query').val()
+        text = (t.trim() for t in text.split(','))
         tags = $(event.target).find(".tagsinput").tagsinput('items')
+        tags = _.union(tags, text)
         if @id() == 'new-aspect'
           handleNewAspect(this, event)
         else
