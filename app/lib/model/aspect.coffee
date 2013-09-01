@@ -90,7 +90,7 @@ root.Aspect = class Aspect
       else
         return '<- Type aspect name first'
     else
-      return ''
+      return 'Add...'
 
   save: ->
     @technologyRef.save()

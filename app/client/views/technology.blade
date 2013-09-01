@@ -53,7 +53,7 @@
         foreach technology.aspects() as aspect
           tr.aspect
             th= aspect.name()
-            td.aspect-data
+            td.aspect-data.existing-data
               foreach aspect.contributions() as contribution
                 - if (!contribution.deletedAt())
                   .contribution(style='border-left-color: #{contribution.contributor().color()}'
