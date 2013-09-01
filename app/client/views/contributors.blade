@@ -3,7 +3,7 @@ h2 Contributors
 table.table
   foreach contributors as contributor
     tr
-      th
+      th.contributor-line
         a.contributor-small(href='#{contributor.route()}' style='border-left-color: #{contributor.color()}')
           img.img(src='#{contributor.photoUrl(20)}')
           |= contributor.name()
