@@ -25,6 +25,9 @@ describe 'Technology', ->
       pinned = Technology.createPinnedAspects()
     it 'should return 2 pinned aspect definitions', ->
       expect(pinned.length).toEqual(2)
+  describe '@pinnedAspectDefIds', ->
+    it 'should return the pinned aspect definitions', ->
+      expect(Technology.pinnedAspectDefIds()).toEqual(['vertical', 'stack'])
   describe '@create', ->
     t = null
     tdata = null
