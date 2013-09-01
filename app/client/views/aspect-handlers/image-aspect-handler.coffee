@@ -42,10 +42,13 @@ window.ImageHandler = class ImageHandler
     if not jqPath then return ''
 
     $(jqPath).html(html)
-    element = $(jqPath).find('.filepicker-dragdrop')[0]
-    element.onchange = (event) =>
-      @onPickFile(event)
-    filepicker.constructWidget(element);
+    jqBind = ->
+      element = $(jqPath).find('.filepicker-dragdrop')[0]
+      element.onchange = (event) =>
+        @onPickFile(event)
+      filepicker.constructWidget(element);
+    Meteor.setTimeout(jqBind, 100)
+    return ''
 
   onPickFile: (event) ->
     fpfile = event.fpfile

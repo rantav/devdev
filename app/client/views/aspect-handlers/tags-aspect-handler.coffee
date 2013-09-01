@@ -25,7 +25,7 @@ window.TagsHandler = class TagsHandler
     html = @editHtml(tagString)
 
     $(jqPath).html(html)
-    renderTagsInput = ->
+    jqBind = ->
       # BUG: When sepecting Vertical, then selecting Stack, the suggstion list doen't
       # get updated. The typeahead value isn't correct...
       $(jqPath).find('.tagsinput').tagsinput({
@@ -34,7 +34,7 @@ window.TagsHandler = class TagsHandler
           freeInput: true
         }
       })
-    Meteor.setTimeout(renderTagsInput, 100)
+    Meteor.setTimeout(jqBind, 100)
     return html
 
   renderAdder: (aspect, jqPath) ->
