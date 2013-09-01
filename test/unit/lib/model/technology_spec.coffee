@@ -26,11 +26,11 @@ describe 'Technology', ->
       Meteor.uuid = -> 'uuid'
       pinned = Technology.createPinnedAspects()
     it 'should return 2 pinned aspect definitions', ->
-      expect(pinned.length).toEqual(2)
+      expect(pinned.length).toEqual(4)
 
   describe '@pinnedAspectDefIds', ->
     it 'should return the pinned aspect definitions', ->
-      expect(Technology.pinnedAspectDefIds()).toEqual(['vertical', 'stack'])
+      expect(Technology.pinnedAspectDefIds()).toEqual(['tagline', 'website', 'vertical', 'stack'])
 
   describe '@create', ->
     t = null
@@ -56,7 +56,7 @@ describe 'Technology', ->
     it 'the creator of the technology should be the current user', ->
       expect(t.creator().id()).toBe('1')
     it 'should have pinned aspects', ->
-      expect(t.aspects().length).toBe(2)
+      expect(t.aspects().length).toBe(4)
     it 'should be created just now', ->
       expect(t.createdAt()).not.toBeLessThan(now)
     it 'should be updated just now', ->

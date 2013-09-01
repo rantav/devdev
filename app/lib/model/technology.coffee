@@ -28,9 +28,11 @@ root.Technology = class Technology
   @aspectDefinitions: ->
     'tagline':
       type: 'markdown',
+      pinned: true,
       display: 'Tagline'
     , 'website':
       type: 'markdown',
+      pinned: true,
       display: 'Website'
     , 'vertical':
       type: 'tags',
