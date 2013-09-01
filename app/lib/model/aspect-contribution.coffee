@@ -12,6 +12,9 @@ root.AspectContribution = class AspectContribution
 
   content: -> @markdown()
 
+  setContent: (content) ->
+    @data.markdown = content
+
   #TODO: Rename markdown to content. b/c not everything is markdown today...
   markdown: -> if @data then @data.markdown else ""
 
@@ -22,6 +25,8 @@ root.AspectContribution = class AspectContribution
     text
 
   contributor: -> Contributor.findOne(@data.contributorId)
+
+  contributorId: -> @data.contributorId
 
   contributionId: -> @data.contributionId
 

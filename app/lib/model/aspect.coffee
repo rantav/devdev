@@ -19,6 +19,9 @@ root.Aspect = class Aspect
 
   id: -> @data.aspectId
 
+  defId: -> @data.defId if @data
+  setDefId: (defId) -> @data.defId = defId
+
   type: (t) ->
     if t
       @setType(t)
@@ -27,6 +30,24 @@ root.Aspect = class Aspect
   setType: (t) ->
     @data.type = t
     @changed()
+
+  hasContributionsFromUser: (contributorId) ->
+    return false if not @data.contributions
+    for contribution in @data.contributions
+      if contribution.contributorId == contributorId
+        return true
+    return false
+
+  getContributionForUser: (contributorId) ->
+    return null if not @data.contributions
+    for contribution in @data.contributions
+      if contribution.contributorId == contributorId
+        return new AspectContribution(contribution, @)
+    return null
+
+  isSingleDataPerContributor: ->
+    def = Technology.aspectDefinitions()[@defId()]
+    def.multiplicity == 'single-per-user'
 
   changed: -> @dep.changed()
 
@@ -57,14 +78,6 @@ root.Aspect = class Aspect
     for contribution in @data.contributions
       if contribution.contributionId == contributionId
         return new AspectContribution(contribution, @)
-
-  toggleEditCurrentUser: ->
-    @data['contributing-' + Meteor.userId()] = !@data['contributing-' + Meteor.userId()]
-    @technologyRef.saveNoTouch()
-
-  setEditCurrentUser: (edit) ->
-    @data['contributing-' + Meteor.userId()] = edit
-    @technologyRef.saveNoTouch()
 
   placeholderText: ->
     if @id() == 'new-aspect'

@@ -2,91 +2,119 @@ window.TagsHandler = class TagsHandler
   type: ->
     'tags'
 
-  view: (aspectContribution) ->
-    url = aspectContribution.content()
-    url = aspectContribution.imageUrl({h: 30})
-    cdned = Cdn.cdnify(url)
-    "<div class='tags-aspect'>
-      TODO: TAGS...
-     </div>"
+  view: (aspectContribution, jqPath) ->
+    tags = aspectContribution.content() || ''
+    if aspectContribution.contributorId() == Meteor.userId()
+      return @renderEditor(aspectContribution.aspect(), jqPath, tags)
+    else
+      return @renderView(tags)
 
-  renderAdder: (aspect, jqPath) ->
-    html =
-      "<div class='tags-aspect edit-section'>
-        <div class='span5'>
-          <form class='contribute-form'>
-           <div class='control-group'>
-            <input value='bla,bla, blah' data-role='tagsinput' class='tagsinput' id='new-aspect-value'></input>
-           </div>
-           <div class='controls' style='display:none'>
-             <button type='submit' class='btn btn-primary submit-contribution' data-referred-id='#{aspect.id()}-value'>Save</button>
-             <button type='button' class='btn cancel-contribution' data-referred-id='#{aspect.id()}-value'>Cancel</button>
-           </div>
-          </form>
-         </div>
-       </div>"
+  renderView: (tagString) ->
+    if not tagString then tagString = ''
+    tags = tagString.split(',')
+    html = ["<div class='tags-aspect'>"]
+    for t in tags
+      html.push "<span class='label label-info'>#{t}</span>"
+    html.push "</div>"
+    html.join('')
 
-    if not jqPath then return ''
+  renderEditor: (aspect, jqPath, tagString) ->
+    if aspect.defId()
+      def = Technology.aspectDefinitions()[aspect.defId()]
+      datasource = def.datasource
+    html = @editHtml(tagString)
 
     $(jqPath).html(html)
-    $(jqPath).find('.tagsinput').tagsinput({
-      typeahead: {
-        local: ['Amsterdam', 'Washington', 'Sydney', 'Beijing', 'Cairo'],
-        freeInput: true
-      }
-    })
+    renderTagsInput = ->
+      # BUG: When sepecting Vertical, then selecting Stack, the suggstion list doen't
+      # get updated. The typeahead value isn't correct...
+      $(jqPath).find('.tagsinput').tagsinput({
+        typeahead: {
+          local: aspect.technology()[datasource](),
+          freeInput: true
+        }
+      })
+    Meteor.setTimeout(renderTagsInput, 100)
+    return html
 
-  onPickFile: (event) ->
-    fpfile = event.fpfile
-    $target = $(event.target)
-    url = fpfile.url
-    resized = url + "/convert?h=30"
-    html = "<img src='#{resized}' class='img-polaroid'></img>"
-    $target.parents('.edit-section').find('.contribute-preview').html(html)
-    $target.parents('.edit-section').find('.controls').show(200)
-    $target.parents('.edit-section').find('input[type=hidden]').val(url)
+  renderAdder: (aspect, jqPath) ->
+    if aspect.hasContributionsFromUser(Meteor.userId())
+      return ''
+    @renderEditor(aspect, jqPath, '')
 
-  handleNewAspect: (aspect, event) =>
-    $name = $('#new-aspect-name')
-    name = $name.val()
-    if not name
-      $name.parents('.control-group').addClass('error')
-      $name.focus()
-      return
-    $value = $('#new-aspect-value')
-    value = $value.val()
-    if not value
-      alertify.error('Please senect an image')
-      return
+  handleAspectContribution: (aspect, tags) ->
+    analytics.track('Submit aspect contribution')
+    text = tags.join(',')
+    if text
+      NProgress.start()
+      Meteor.call 'contributeToAspect', technology.id(), aspect.id(), text, (err, ret) ->
+        if err
+          alertify.error err
+        else
+          NProgress.done()
 
-    analytics.track('add new aspect', {name: name})
-    NProgress.start()
-    Meteor.call 'contributeNewAspect', technology.id(), name, value, @type(), (err, ret) ->
-      if err
-        alertify.error err
-        NProgress.done()
-      else
-        $name.val('')
-        $value.val('')
-        window._newAspect.setType(undefined)
-        window._newAspect.setName(undefined)
-        NProgress.done()
+  # handleNewAspect: (aspect, event) =>
+  #   $name = $('#new-aspect-name')
+  #   name = $name.val()
+  #   if not name
+  #     $name.parents('.control-group').addClass('error')
+  #     $name.focus()
+  #     return
+  #   $value = $('#new-aspect-value')
+  #   value = $value.val()
+  #   if not value
+  #     $value.parents('.control-group').addClass('error')
+  #     $value.focus()
+  #     return
+
+  #   analytics.track('add new aspect', {name: name})
+  #   NProgress.start()
+  #   Meteor.call 'contributeNewAspect', technology.id(), name, value, @type(), (err, ret) ->
+  #     if err
+  #       alertify.error err
+  #       NProgress.done()
+  #     else
+  #       $name.val('')
+  #       $value.val('')
+  #       window._newAspect.setType(undefined)
+  #       window._newAspect.setName(undefined)
+  #       NProgress.done()
+
 
   init: (template) ->
     handleNewAspect = @handleNewAspect
     handleAspectContribution = @handleAspectContribution
     template.events
-      'click .image-aspect .cancel-contribution': (event) ->
-        console.log(event)
+      'blur .tags-aspect input': (event) ->
         $target = $(event.target)
-        $target.parent().hide(200)
-        $target.parents('.edit-section').find('textarea.contribute-text').val('')
-        $target.parents('.edit-section').find('.contribute-preview').html('')
+        $target.parents('.edit-section').find('.controls').hide(200)
 
-      'submit .image-aspect form.contribute-form': (event) ->
+      'submit .tags-aspect form.contribute-form': (event) ->
+        tags = $(event.target).find(".tagsinput").tagsinput('items')
         if @id() == 'new-aspect'
           handleNewAspect(this, event)
         else
-          handleAspectContribution(this, event)
+          handleAspectContribution(this.aspect(), tags)
         # return false to prevent browser form submission
         false
+
+      'focus .tags-aspect input': (event) ->
+        $target = $(event.target)
+        $target.parents('.edit-section').find('.controls').show(200)
+
+  editHtml: (tagString) ->
+    "<div class='tags-aspect edit-section'>
+      <div class='span5'>
+        <form class='contribute-form'>
+         <div class='control-group'>
+          <input value='#{tagString}' data-role='tagsinput' class='tagsinput'></input>
+         </div>
+         <div class='controls' style='display:none'>
+           <small class='muted pull-right'>Enter tags</small>
+           <button type='submit' class='btn btn-primary submit-contribution'>Save</button>
+           <button type='button' class='btn cancel-contribution'>Cancel</button>
+         </div>
+        </form>
+       </div>
+     </div>"
+

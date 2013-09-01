@@ -2,7 +2,7 @@ window.ImageHandler = class ImageHandler
   type: ->
     'image'
 
-  view: (aspectContribution) ->
+  view: (aspectContribution, jqPath) ->
     url = aspectContribution.content()
     url = aspectContribution.imageUrl({h: 30})
     cdned = Cdn.cdnify(url)
@@ -88,7 +88,6 @@ window.ImageHandler = class ImageHandler
     handleAspectContribution = @handleAspectContribution
     template.events
       'click .image-aspect .cancel-contribution': (event) ->
-        console.log(event)
         $target = $(event.target)
         $target.parent().hide(200)
         $target.parents('.edit-section').find('textarea.contribute-text').val('')

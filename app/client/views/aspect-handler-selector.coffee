@@ -1,7 +1,7 @@
 
-window.renderAspectContribution = (aspectContribution) ->
+window.renderAspectContribution = (aspectContribution, jqPath) ->
   handler = selectHandler(aspectContribution.aspect())
-  handler.view(aspectContribution)
+  handler.view(aspectContribution, jqPath)
 
 
 window.renderAspectEditor = (aspect, jqPath) ->
@@ -13,21 +13,17 @@ window.renderAspectEditor = (aspect, jqPath) ->
       handler.renderAdder(aspect, jqPath)
     $('#new-aspect-value').attr('placeholder', "Say something about #{aspect.name()}")
 
-  handler.renderAdder(aspect)
+  handler.renderAdder(aspect, jqPath)
+
+handlers = [new MarkdownHandler(), new ImageHandler(), new TagsHandler()]
 
 window.initHandlers = (template) ->
-  markdownHandler.init(template)
-  imageHandler.init(template)
-
-markdownHandler = new MarkdownHandler()
-imageHandler = new ImageHandler()
-tagsHandler = new TagsHandler()
-
-handlers = [markdownHandler, imageHandler, tagsHandler]
+  for handler in handlers
+    handler.init(template)
 
 selectHandler = (aspect) ->
   for handler in handlers
     return handler if handler.type() == aspect.type()
 
   # default
-  return markdownHandler
+  return handlers[0]

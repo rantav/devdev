@@ -2,7 +2,7 @@ window.MarkdownHandler = class MarkdownHandler
   type: ->
     'markdown'
 
-  view: (aspectContribution) ->
+  view: (aspectContribution, jqPath) ->
     "<div class='markdown-aspect'>
       #{marked(aspectContribution.markdownProcessed())}
      </div>"
@@ -31,8 +31,7 @@ window.MarkdownHandler = class MarkdownHandler
       # Fix autogrow
       contributeText = $(jqPath).find('textarea.contribute-text')
       contributeText.autogrow()
-    else
-      return html
+    return html
 
   handleAspectContribution: (aspect, event) ->
     analytics.track('Submit aspect contribution')

@@ -35,12 +35,14 @@ root.Technology = class Technology
     , 'vertical':
       type: 'tags',
       pinned: true,
-      datasource: 'verticals',
+      datasource: 'suggestVerticals',
+      multiplicity: 'single-per-user',
       display: 'Vertical'
     , 'stack':
       type: 'tags',
       pinned: true,
-      datasource: 'stacks',
+      datasource: 'suggestStacks',
+      multiplicity: 'single-per-user',
       display: 'Stack'
     , 'source code':
       type: 'markdown',
@@ -130,14 +132,18 @@ root.Technology = class Technology
     tech =
       name: name
       contributorId: Meteor.userId()
-      aspects: (createAspect(a.display, a.type) for a in @pinnedAspectDefs())
+      aspects: @createPinnedAspects()
       createdAt: now
       updatedAt: now
     Technology.add(tech)
 
+  @createPinnedAspects: ->
+    defs = @aspectDefinitions()
+    (createAspect(defs[k].display, defs[k].type, k) for k in @pinnedAspectDefIds())
+
   # Gets all the pinned aspect definitions
-  @pinnedAspectDefs: ->
-    (def for k, def of @aspectDefinitions() when def.pinned)
+  @pinnedAspectDefIds: ->
+    (k for k, def of @aspectDefinitions() when def.pinned)
 
   constructor: (@data) ->
 
@@ -159,6 +165,9 @@ root.Technology = class Technology
 
   route: -> routes.technology(@) if @data
 
+  suggestVerticals: -> ['1', '2', '3']
+  suggestStacks: -> ['a', 'b', 'c']
+
   aspects: ->
     (new Aspect(aspectData, @) for aspectData in @data.aspects) if @data
 
@@ -167,7 +176,7 @@ root.Technology = class Technology
   isCurrentUserOwner: -> Meteor.userId() == @contributorId()
 
   suggestAspectNames: ->
-    ({value: def.display, tokens: _.union('?', Text.tokenize(def.display)), type: def.type} for key, def of Technology.aspectDefinitions())
+    {value: def.display, tokens: _.union('?', Text.tokenize(def.display)), type: def.type, defId: key} for key, def of Technology.aspectDefinitions()
 
   aspectNames: ->
     (aspectData.name for aspectData in @data.aspects)
@@ -260,11 +269,12 @@ root.Technology = class Technology
           if not contribution.deletedAt
             return new AspectContribution(contribution, new Aspect(aspect), @)
 
-createAspect = (aspectName, type) ->
+createAspect = (aspectName, type, aspectDefId) ->
   name: aspectName
   type: type
   contributions: []
   aspectId: Meteor.uuid()
+  defId: aspectDefId
 
 
 root.Technologies = new Meteor.Collection "technologies"

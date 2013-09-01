@@ -19,8 +19,13 @@ Meteor.methods
       if not technology
         throw new Meteor.Error 401, "Technology #{technologyId} was not found"
       aspect = technology.findAspectById(aspectId)
-      aspectContribution = aspect.addContribution(contributionText)
-      contributor.addAspectContribution(aspectContribution)
+      if aspect.isSingleDataPerContributor() and aspect.hasContributionsFromUser(contributor.id())
+        aspectContribution = aspect.getContributionForUser(contributor.id())
+        aspectContribution.setContent(contributionText)
+        aspectContribution.save()
+      else
+        aspectContribution = aspect.addContribution(contributionText)
+        contributor.addAspectContribution(aspectContribution)
       aspectContribution.data
 
   contributeNewAspect: (technologyId, aspectName, aspectTextValue, type) ->

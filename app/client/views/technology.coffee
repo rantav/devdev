@@ -132,4 +132,5 @@ refreshAspectNameTypeahead = ->
     ).bind('typeahead:selected', (obj, datum) ->
       window._newAspect.type(datum.type)
       window._newAspect.name(datum.value)
+      window._newAspect.setDefId(datum.defId)
     )

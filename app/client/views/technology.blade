@@ -73,9 +73,11 @@
                           i#vote-down-aspect-contribution.icon-thumbs-down.disabled
                     p.contribution
                       small.pull-right.muted= moment(contribution.updatedAt()).fromNow()
-                      != renderAspectContribution(contribution)
+                      div(id='aspect-view-#{aspect.id()}')
+                        != renderAspectContribution(contribution, '#aspect-view-' + aspect.id())
               - if (Meteor.userId())
-                != renderAspectEditor(aspect)
+                div(id='aspect-edit-#{aspect.id()}')
+                  != renderAspectEditor(aspect, '#aspect-edit-' + aspect.id())
 
     .contributors
       h5 Contributors:
