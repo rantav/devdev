@@ -97,7 +97,8 @@ window.TagsHandler = class TagsHandler
         if @id() == 'new-aspect'
           handleNewAspect(this, event)
         else
-          handleAspectContribution(this.aspect(), tags)
+          aspect = if this instanceof AspectContribution then this.aspect() else this
+          handleAspectContribution(aspect, tags)
         # return false to prevent browser form submission
         false
 

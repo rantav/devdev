@@ -51,6 +51,10 @@ root.Aspect = class Aspect
 
   changed: -> @dep.changed()
 
+  removeContribution: (aspectContribution) ->
+    contributionId = aspectContribution.id()
+    @data.contributions = (c for c in @data.contributions when not c.contributionId == contributionId)
+
   addContribution: (text) ->
     if not @data.contributions
       @data.contributions = []

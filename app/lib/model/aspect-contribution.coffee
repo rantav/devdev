@@ -13,7 +13,10 @@ root.AspectContribution = class AspectContribution
   content: -> @markdown()
 
   setContent: (content) ->
-    @data.markdown = content
+    if content
+      @data.markdown = content
+    else
+      @remove()
 
   #TODO: Rename markdown to content. b/c not everything is markdown today...
   markdown: -> if @data then @data.markdown else ""
@@ -36,6 +39,9 @@ root.AspectContribution = class AspectContribution
   aspect: -> @aspectRef
 
   id: -> @data.contributionId
+
+  remove: ->
+    @aspect().removeContribution(@)
 
   delete: ->
     @data.deletedAt = new Date()
