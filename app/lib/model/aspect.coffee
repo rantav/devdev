@@ -55,20 +55,25 @@ root.Aspect = class Aspect
     contributionId = aspectContribution.id()
     @data.contributions = (c for c in @data.contributions when not c.contributionId == contributionId)
 
-  addContribution: (text) ->
+  addContribution: (text, contributor) ->
     if not @data.contributions
       @data.contributions = []
-    now = new Date()
-    aspectContributionData =
-      contributorId: Meteor.userId()
-      markdown: text
-      contributionId: Meteor.uuid()
-      createdAt: now
-      updatedAt: now
 
-    @data.contributions.push(aspectContributionData)
-    @technologyRef.save(now)
-    new AspectContribution(aspectContributionData, @)
+    now = new Date()
+    if @isSingleDataPerContributor() and @hasContributionsFromUser(contributor.id())
+      aspectContribution = @getContributionForUser(contributor.id())
+      aspectContribution.setContent(text)
+    else
+      aspectContributionData =
+        contributorId: Meteor.userId()
+        markdown: text
+        contributionId: Meteor.uuid()
+        createdAt: now
+        updatedAt: now
+      @data.contributions.push(aspectContributionData)
+      aspectContribution = new AspectContribution(aspectContributionData, @)
+    @save(now)
+    aspectContribution
 
   contributions: ->
     (new AspectContribution(aspectContributionData, @) for aspectContributionData in @data.contributions) if @data
@@ -92,8 +97,8 @@ root.Aspect = class Aspect
     else
       return 'Add...'
 
-  save: ->
-    @technologyRef.save()
+  save: (modificationTime)->
+    @technologyRef.save(modificationTime)
 
   storePath: ->
     if @type() == 'image' and @name() == 'Logo' then 'logos/'

@@ -53,32 +53,28 @@ window.TagsHandler = class TagsHandler
         else
           NProgress.done()
 
-  # handleNewAspect: (aspect, event) =>
-  #   $name = $('#new-aspect-name')
-  #   name = $name.val()
-  #   if not name
-  #     $name.parents('.control-group').addClass('error')
-  #     $name.focus()
-  #     return
-  #   $value = $('#new-aspect-value')
-  #   value = $value.val()
-  #   if not value
-  #     $value.parents('.control-group').addClass('error')
-  #     $value.focus()
-  #     return
-
-  #   analytics.track('add new aspect', {name: name})
-  #   NProgress.start()
-  #   Meteor.call 'contributeNewAspect', technology.id(), name, value, @type(), (err, ret) ->
-  #     if err
-  #       alertify.error err
-  #       NProgress.done()
-  #     else
-  #       $name.val('')
-  #       $value.val('')
-  #       window._newAspect.setType(undefined)
-  #       window._newAspect.setName(undefined)
-  #       NProgress.done()
+  handleNewAspect: (aspect, tags) =>
+    $name = $('#new-aspect-name')
+    name = $name.val()
+    if not name
+      $name.parents('.control-group').addClass('error')
+      $name.focus()
+      return
+    text = tags.join(',')
+    if not text then return
+    def = window._newAspect.defId()
+    analytics.track('add new aspect', {name: name})
+    NProgress.start()
+    Meteor.call 'contributeNewAspect', technology.id(), name, text, def, (err, ret) ->
+      if err
+        alertify.error err
+        NProgress.done()
+      else
+        $name.val('')
+        window._newAspect.setType(undefined)
+        window._newAspect.setName(undefined)
+        window._newAspect.setDefId(undefined)
+        NProgress.done()
 
 
   init: (template) ->
@@ -95,7 +91,7 @@ window.TagsHandler = class TagsHandler
         tags = $(event.target).find(".tagsinput").tagsinput('items')
         tags = _.union(tags, text)
         if @id() == 'new-aspect'
-          handleNewAspect(this, event)
+          handleNewAspect(this, tags)
         else
           aspect = if this instanceof AspectContribution then this.aspect() else this
           handleAspectContribution(aspect, tags)

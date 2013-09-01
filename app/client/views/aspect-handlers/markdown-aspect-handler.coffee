@@ -60,9 +60,10 @@ window.MarkdownHandler = class MarkdownHandler
       $value.focus()
       return
 
+    def = window._newAspect.defId()
     analytics.track('add new aspect', {name: name})
     NProgress.start()
-    Meteor.call 'contributeNewAspect', technology.id(), name, value, @type(), (err, ret) ->
+    Meteor.call 'contributeNewAspect', technology.id(), name, value, def, (err, ret) ->
       if err
         alertify.error err
         NProgress.done()

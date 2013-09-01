@@ -29,9 +29,9 @@ root.Technology = class Technology
     'tagline':
       type: 'markdown',
       display: 'Tagline'
-    , 'websites':
+    , 'website':
       type: 'markdown',
-      display: 'Websites'
+      display: 'Website'
     , 'vertical':
       type: 'tags',
       pinned: true,
@@ -89,9 +89,9 @@ root.Technology = class Technology
     , 'talks, videos, slides':
       type: 'markdown',
       display: 'Talks, Videos, Slides'
-    ,'cheatsheet / examples':
+    ,'cheatsheet / example / demo':
       type: 'markdown',
-      display: 'Cheatsheet / Examples'
+      display: 'Cheatsheet / Examples / Demo'
     , 'prerequisites':
       type: 'markdown',
       display: 'Prerequisites'
@@ -144,6 +144,9 @@ root.Technology = class Technology
   # Gets all the pinned aspect definitions
   @pinnedAspectDefIds: ->
     (k for k, def of @aspectDefinitions() when def.pinned)
+
+  @getAspectDef: (aspectDefId) ->
+    @aspectDefinitions()[aspectDefId] || {type: 'markdown'}
 
   constructor: (@data) ->
 
@@ -240,13 +243,14 @@ root.Technology = class Technology
   usedBy: ->
     (Contributor.findOne(id) for id, used of @data.usedBy when used) if @data.usedBy
 
-  addAspectAndContribution: (aspectName, aspectTextValue, type) ->
+  addAspectAndContribution: (aspectName, aspectTextValue, aspectDefId, contributor) ->
     aspect = @findAspectByName(aspectName)
     if not aspect
-      aspectData = createAspect(aspectName, type)
+      type = Technology.getAspectDef(aspectDefId).type
+      aspectData = createAspect(aspectName, type, aspectDefId)
       @data.aspects.push(aspectData)
       aspect = new Aspect(aspectData, @)
-    aspect.addContribution(aspectTextValue)
+    aspect.addContribution(aspectTextValue, contributor)
 
   numContributions: ->
     num = 0
