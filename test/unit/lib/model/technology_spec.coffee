@@ -18,11 +18,13 @@ describe 'Technology', ->
         expect(Technology.all().length).toEqual(1)
       it 'should return a technology with the ID 1', ->
         expect(Technology.all()[0].id()).toEqual('1')
-  describe '@pinnedAspectDefs', ->
-    it 'should return the pinned aspect definitions', ->
-      expect(Technology.pinnedAspectDefs()).toEqual([
-        {type : 'tags', pinned : true, datasource : 'verticals', display : 'Vertical' },
-        { type : 'tags', pinned : true, datasource : 'stacks', display : 'Stack' }])
+  describe '@createPinnedAspects', ->
+    pinned = null
+    beforeEach ->
+      Meteor.uuid = -> 'uuid'
+      pinned = Technology.createPinnedAspects()
+    it 'should return 2 pinned aspect definitions', ->
+      expect(pinned.length).toEqual(2)
   describe '@create', ->
     t = null
     tdata = null
