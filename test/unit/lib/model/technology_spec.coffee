@@ -1,4 +1,5 @@
 describe 'Technology', ->
+
   describe '@all', ->
     describe 'when there are no technologies', ->
       beforeEach -> Technologies.find = -> {fetch: -> []}
@@ -18,6 +19,7 @@ describe 'Technology', ->
         expect(Technology.all().length).toEqual(1)
       it 'should return a technology with the ID 1', ->
         expect(Technology.all()[0].id()).toEqual('1')
+
   describe '@createPinnedAspects', ->
     pinned = null
     beforeEach ->
@@ -25,9 +27,11 @@ describe 'Technology', ->
       pinned = Technology.createPinnedAspects()
     it 'should return 2 pinned aspect definitions', ->
       expect(pinned.length).toEqual(2)
+
   describe '@pinnedAspectDefIds', ->
     it 'should return the pinned aspect definitions', ->
       expect(Technology.pinnedAspectDefIds()).toEqual(['vertical', 'stack'])
+
   describe '@create', ->
     t = null
     tdata = null
@@ -57,3 +61,24 @@ describe 'Technology', ->
       expect(t.createdAt()).not.toBeLessThan(now)
     it 'should be updated just now', ->
       expect(t.updatedAt()).not.toBeLessThan(now)
+
+  describe 'getTagsForAspectDefId', ->
+    c = t = tdata = null
+    beforeEach ->
+      Meteor.userId = -> '1'
+      Meteor.uuid = -> 'uuid'
+      sinon.stub(Technologies, 'insert', (data) ->
+        tdata = data
+        tdata.id = 'tid')
+      sinon.stub(Technologies, 'findOne', (id) ->
+        if id == tdata.id then return tdata)
+      t = Technology.create('x')
+      c = new Contributor({_id: '1', profile: {contributions: []}})
+    afterEach ->
+      Technologies.insert.restore()
+      Technologies.findOne.restore()
+    it 'Should return zero tags on a fresh object', ->
+      expect(t.getTagsForAspectDefId('stack')).toEqual([])
+    it 'Should return zero tags on a fresh object', ->
+      t.findAspectByName('Vertical').addContribution('1,2,3', c)
+      expect(t.getTagsForAspectDefId('vertical')).toEqual(['1', '2', '3'])

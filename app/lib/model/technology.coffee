@@ -171,6 +171,20 @@ root.Technology = class Technology
   suggestVerticals: -> [] # Not implemented yet...
   suggestStacks: -> [] # Not implemented yet...
 
+  # Gets all the tags for the stack
+  getTagsForAspectDefId: (aspectDefId)->
+    tags = []
+    for aspect in @data.aspects
+      if aspect.defId == aspectDefId
+        aspectObj = new Aspect(aspect)
+        for contribution in aspect.contributions
+          if not contribution.deletedAt
+            aspectContribution = new AspectContribution(contribution, aspectObj, @)
+            newTags = aspectContribution.getTags()
+            if newTags
+              tags = _.union(tags, newTags)
+    tags
+
   aspects: ->
     (new Aspect(aspectData, @) for aspectData in @data.aspects) if @data
 
@@ -183,7 +197,6 @@ root.Technology = class Technology
 
   aspectNames: ->
     (aspectData.name for aspectData in @data.aspects)
-
 
   contributors: ->
     if @data

@@ -50,6 +50,11 @@ root.AspectContribution = class AspectContribution
   save: ->
     @aspectRef.save()
 
+  # Assumes the data stored is tags and gets an array of them
+  getTags: ->
+    tags = @content()
+    return tags.split(',')
+
   # provide options as {w: 5, h: 6}
   imageUrl: (options) ->
     url = @content()

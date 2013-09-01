@@ -13,6 +13,12 @@ table.table
             != Html.imgPolaroid(technology.logoUrl({h: 15, default: Cdn.cdnify('/img/cogs-17x15.png')}))
         th
           a(href='#{technology.route()}')= technology.name()
+        td.tags
+          foreach technology.getTagsForAspectDefId('stack') as tag
+            span.label.label-stack= tag
+          br
+          foreach technology.getTagsForAspectDefId('vertical') as tag
+            span.label.label-vertical= tag
         td
           | Started by
           <a(href='#{technology.creator().route()}')= technology.creator().name()
