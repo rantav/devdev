@@ -168,8 +168,8 @@ root.Technology = class Technology
 
   route: -> routes.technology(@) if @data
 
-  suggestVerticals: -> ['1', '2', '3']
-  suggestStacks: -> ['a', 'b', 'c']
+  suggestVerticals: -> [] # Not implemented yet...
+  suggestStacks: -> [] # Not implemented yet...
 
   aspects: ->
     (new Aspect(aspectData, @) for aspectData in @data.aspects) if @data
