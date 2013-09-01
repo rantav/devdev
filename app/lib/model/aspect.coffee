@@ -47,7 +47,7 @@ root.Aspect = class Aspect
 
   isSingleDataPerContributor: ->
     def = Technology.aspectDefinitions()[@defId()]
-    def.multiplicity == 'single-per-user'
+    return def and def.multiplicity == 'single-per-user'
 
   changed: -> @dep.changed()
 
