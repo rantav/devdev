@@ -21,6 +21,10 @@
       <a#share.btn(href="https://twitter.com/share?url=#{encodeURIComponent(document.location.href)}&text=#{encodeURIComponent(shareText)}&via=devdev_io" target="_blank")
         i.icon-twitter
         |  Share #{technology.name()}
+      - if (currentContributor.isAdmin())
+        <button#index-technology.btn
+          i.icon-cog
+          |  Index
 
     h1.name
       a.pull-left.technology-logo(href='#{technology.route()}')!= Html.imgPolaroid(technology.logoUrl({h: 40}))

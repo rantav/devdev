@@ -79,6 +79,13 @@ Template.technology.events
       if err
         alertify.error err
 
+  'click #index-technology': ->
+    Meteor.call 'indexTechnology', technology.id(), (err, ret) ->
+      if err
+        alertify.error err
+      else
+        console.log('indexed. ' + ret)
+
   'click .not-implemented': (event) ->
     alertify.log '<strong>Coming soonish...</strong> <i class="icon-cogs pull-right"> </i>'
     analytics.track('Clicked disabled', {id: event.srcElement.id})

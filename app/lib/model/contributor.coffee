@@ -36,6 +36,8 @@ root.Contributor = class Contributor
 
   route: -> routes.contributor(@)
 
+  isAdmin: -> @name() == "Ran Tavory" # Hah!
+
   photoUrl: (height) ->
     if @data.services
       if @data.services.google
