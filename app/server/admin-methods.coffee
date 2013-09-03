@@ -1,27 +1,24 @@
 elasticsearch = Meteor.require('elasticsearch')
 
-config =
-  _index: 'kittehs'
-
-es = elasticsearch(config)
-
-# console.log('===== BEFORE')
-# Meteor.sync((done) ->
-#   es.search(
-#     query:
-#       field:
-#         animal: 'kitteh'
-#     , (err, data) ->
-#       console.error(err)
-#       console.log(data)
-#       done()
-#   )
-# )
-
-# console.log('==== AFTER')
+technologies = elasticsearch
+  _index: 'technologies'
+  _type: 'technology'
 
 Meteor.methods
   indexTechnology: (technologyId) ->
     technology = Technology.findOne(technologyId)
-    console.log(technology)
-    technology
+    ret = null
+    error = null
+    Meteor.sync((done) ->
+      technologies.index({_id: technology.id()}, technology.data, (err, data) ->
+        if err
+          console.error(err)
+          error = err
+        else
+          ret = data
+          console.log("Index success. " + data)
+        done()
+      )
+    )
+    if error then throw new Meteor.Error 500, JSON.stringify(error)
+    ret

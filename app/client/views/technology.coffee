@@ -84,7 +84,7 @@ Template.technology.events
       if err
         alertify.error err
       else
-        console.log('indexed. ' + ret)
+        console.log('indexed. ' + JSON.stringify(ret))
 
   'click .not-implemented': (event) ->
     alertify.log '<strong>Coming soonish...</strong> <i class="icon-cogs pull-right"> </i>'
