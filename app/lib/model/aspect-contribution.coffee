@@ -10,19 +10,16 @@ root.AspectContribution = class AspectContribution
 
   deletedAt: -> @data.deletedAt if @data
 
-  content: -> @markdown()
+  content: -> if @data then @data.content else ""
 
   setContent: (content) ->
     if content
-      @data.markdown = content
+      @data.content = content
     else
       @remove()
 
-  #TODO: Rename markdown to content. b/c not everything is markdown today...
-  markdown: -> if @data then @data.markdown else ""
-
   markdownProcessed: ->
-    text = @markdown()
+    text = @content()
     text = Text.escapeMarkdown(text)
     text = Text.markdownWithSmartLinks(text)
     text

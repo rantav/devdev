@@ -66,7 +66,7 @@ root.Aspect = class Aspect
     else
       aspectContributionData =
         contributorId: Meteor.userId()
-        markdown: text
+        content: text
         contributionId: Meteor.uuid()
         createdAt: now
         updatedAt: now
