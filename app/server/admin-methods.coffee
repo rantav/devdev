@@ -1,8 +1,4 @@
-elasticsearch = Meteor.require('elasticsearch')
-
-technologies = elasticsearch
-  _index: 'technologies'
-  _type: 'technology'
+indexer = new Indexer()
 
 Meteor.methods
   indexTechnology: (technologyId) ->
@@ -10,15 +6,17 @@ Meteor.methods
     if not user.isAdmin()
       throw new Meteor.Error 401, "Sorry, only admins can do that..."
     technology = Technology.findOne(technologyId)
-    response = Meteor.sync((done) ->
-      technologies.index({_id: technology.id()}, technology.data, (err, data) ->
-        if err
-          console.error(err)
-          done(err)
-        else
-          console.log("Index success. " + data)
-          done(null, data)
-      )
-    )
+    response = indexer.indexTechnology(technology.data)
     if response.error then throw new Meteor.Error 500, JSON.stringify(response.error)
     response.result
+
+  indexAllTechnologies: ->
+    user = Contributor.current()
+    if not user.isAdmin()
+      throw new Meteor.Error 401, "Sorry, only admins can do that..."
+    results = []
+    for technology in Technologies.find({deletedAt: {$exists: false}}).fetch()
+      response = indexer.indexTechnology(technology)
+      if response.error then throw new Meteor.Error 500, JSON.stringify(response.error)
+      results.push(response.result)
+    results

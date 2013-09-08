@@ -44,6 +44,13 @@ Template.technologies.events
       if err
         alertify.error err
 
+  'click #index-all-technologies': ->
+    Meteor.call 'indexAllTechnologies', (err, ret) ->
+      if err
+        alertify.error err
+      else
+        console.log('indexed. ' + JSON.stringify(ret))
+
 Template.technologies.rendered = ->
   $('.contributor-xsmall[rel=tooltip]').tooltip()
 

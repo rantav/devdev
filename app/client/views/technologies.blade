@@ -4,6 +4,11 @@
 
 h2 Technologies
 - currentContributor = Contributor.current()
+- if (currentContributor.isAdmin())
+  .admin.pull-right
+    <button#index-all-technologies.btn
+      i.icon-cog
+      |  Index All
 table.table
   tbody
     foreach technologies as technology
