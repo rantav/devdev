@@ -4,6 +4,7 @@ Template.setup.rendered = ->
   setupNavigation()
   setupDropdowns()
   showSpinners()
+  window.scrollTo(0, 0)
 
 spin = (target) ->
   opts =
