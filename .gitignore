@@ -13,3 +13,5 @@ results
 
 npm-debug.log
 /build
+app/settings.dev.json
+app/settings.prod.json

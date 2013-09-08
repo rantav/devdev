@@ -1,5 +1,5 @@
 run:
-	pushd app && mrt ; popd
+	pushd app && mrt --settings settings.dev.json ; popd
 
 deploy:
 	bash deploy.sh

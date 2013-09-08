@@ -1,0 +1,16 @@
+{
+  "elastic-search":
+  {
+    "host": "api.searchbox.io",
+    "port": "80",
+    "auth": "site:xxxxxxxx",
+    "index": "devdev"
+  },
+  "public":
+  {
+    "elastic-search":
+    {
+      "access-key": "xxxxxxxxxx"
+    }
+  }
+}
