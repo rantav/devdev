@@ -49,8 +49,11 @@ root.AspectContribution = class AspectContribution
 
   # Assumes the data stored is tags and gets an array of them
   getTags: ->
-    tags = @content()
-    return tags.split(',')
+    return @data.tags
+
+  setTags: (text) ->
+    @data.tags = (tag.trim() for tag in text.split(',') when tag.trim())
+    @data.content = text
 
   # provide options as {w: 5, h: 6}
   imageUrl: (options) ->

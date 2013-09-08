@@ -72,6 +72,8 @@ root.Aspect = class Aspect
         updatedAt: now
       @data.contributions.push(aspectContributionData)
       aspectContribution = new AspectContribution(aspectContributionData, @)
+    if @type() == 'tags'
+      aspectContribution.setTags(text)
     @save(now)
     aspectContribution
 

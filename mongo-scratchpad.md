@@ -79,3 +79,19 @@ db.technologies.find().forEach(function(t){
   db.technologies.save(t);
 })
 
+// Convert content to tags
+db.technologies.find().forEach(function(t){
+  for (var a = 0; a < t.aspects.length; ++a) {
+    var aspect = t.aspects[a];
+    if (aspect.type == 'tags') {
+      for (var c = 0; c < aspect.contributions.length; ++c) {
+        contribution = aspect.contributions[c];
+        contribution.tags = contribution.content.split(',')
+        for (var ta = 0; ta < contribution.tags.length; ++ta) {
+          contribution.tags[ta] = contribution.tags[ta].trim();
+        }
+      }
+    }
+  }
+  db.technologies.save(t);
+})
