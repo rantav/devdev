@@ -62,3 +62,20 @@ db.technologies.find().forEach(function(t){
   t.aspects = newAspects;
   db.technologies.save(t);
 })
+
+
+// Convert mardown to content:
+db.technologies.find().forEach(function(t){
+  for (var a = 0; a < t.aspects.length; ++a) {
+    var aspect = t.aspects[a];
+    for (var c = 0; c < aspect.contributions.length; ++c) {
+      contribution = aspect.contributions[c];
+      if (!contribution.content) {
+        contribution.content = contribution.markdown;
+        delete contribution.markdown;
+      }
+    }
+  }
+  db.technologies.save(t);
+})
+
