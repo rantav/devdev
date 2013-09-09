@@ -3,7 +3,8 @@ root = exports ? this
 root.Indexer = class Indexer
 
   elasticsearch = Meteor.require('elasticsearch')
-  settings = Meteor.settings['elastic-search']
+  settings = Meteor.settings.public['elastic-search']
+  priv = Meteor.settings['elastic-search']
   if settings
     console.log('Will connect to ES at ' + settings.host + ':' + settings.port + '  Using index: ' + settings.index)
     conf =
@@ -12,7 +13,7 @@ root.Indexer = class Indexer
       server:
         host: settings.host
         port: settings.port
-    if settings.auth then conf.server.auth = settings.auth
+    if priv.auth then conf.server.auth = priv.auth
     technologies = elasticsearch(conf)
 
   # Readonly URLs are something like this: https://api.searchbox.io/api-key/vvuzat0lcbcoq4ltmdzqixhfoeesfj8b/dev_devdev/technology/zwWmbAh44fjvAaNBy

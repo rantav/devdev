@@ -1,8 +1,15 @@
 {
   "elastic-search":
   {
-    "host": "localhost",
-    "port": "9200",
-    "index": "dev_devdev"
+  },
+  "public":
+  {
+    "elastic-search":
+    {
+      "access-key": "",
+      "host": "localhost",
+      "port": "9200",
+      "index": "dev_devdev"
+    }
   }
 }

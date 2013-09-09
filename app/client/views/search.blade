@@ -1,0 +1,29 @@
+h1 Search #{Session.get('search')}
+
+table.table
+  tbody
+    foreach technologies as technology
+      tr
+        td.technology-logo-small
+          a(href='#{technology.route()}')
+            != Html.imgPolaroid(technology.logoUrl({h: 15, default: Cdn.cdnify('/img/cogs-17x15.png')}))
+        th
+          a(href='#{technology.route()}')= technology.name()
+        td.tags
+          div
+            foreach technology.getTagsForAspectDefId('stack') as tag
+              span.label.label-stack= tag
+          div
+            foreach technology.getTagsForAspectDefId('vertical') as tag
+              span.label.label-vertical= tag
+        td
+          | Started by
+          <a(href='#{technology.creator().route()}')= technology.creator().name()
+          |,
+          |
+          = moment(technology.createdAt()).fromNow()
+          <small.muted (Last modified #{moment(technology.updatedAt()).fromNow()})
+        td.used-by
+          foreach technology.usedBy() as user
+            a.contributor-xsmall.pull-left(href='#{user.route()}' rel='tooltip' title='Used by #{user.name()}')
+              img.img-polaroid(src='#{user.photoUrl(20)}')
