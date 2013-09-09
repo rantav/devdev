@@ -1,5 +1,3 @@
-indexer = new Indexer()
-
 Meteor.methods
   indexTechnology: (technologyId) ->
     user = Contributor.current()

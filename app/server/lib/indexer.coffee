@@ -28,3 +28,17 @@ root.Indexer = class Indexer
           done(null, data)
       )
     )
+
+  removeTechnology: (techId) ->
+    Meteor.sync((done) ->
+      technologies.delete({_id: techId}, (err, data) ->
+        if err
+          console.error(err)
+          done(err)
+        else
+          console.log("Delete success. " + data)
+          done(null, data)
+      )
+    )
+
+root.indexer = new Indexer()
