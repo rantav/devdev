@@ -1,0 +1,8 @@
+{
+  "elastic-search":
+  {
+    "host": "localhost",
+    "port": "9200",
+    "index": "dev_devdev"
+  }
+}
