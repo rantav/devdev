@@ -21,7 +21,7 @@
       <a#share.btn(href="https://twitter.com/share?url=#{encodeURIComponent(document.location.href)}&text=#{encodeURIComponent(shareText)}&via=devdev_io" target="_blank")
         i.icon-twitter
         |  Share #{technology.name()}
-      - if (currentContributor.isAdmin())
+      - if (currentContributor && currentContributor.isAdmin())
         <button#index-technology.btn
           i.icon-cog
           |  Index

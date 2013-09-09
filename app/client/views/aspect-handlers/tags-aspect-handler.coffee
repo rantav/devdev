@@ -14,7 +14,7 @@ window.TagsHandler = class TagsHandler
     tags = tagString.split(',')
     html = ["<div class='tags-aspect'>"]
     for t in tags
-      html.push "<span class='label label-info'>#{t}</span>"
+      html.push "<a href='#{Url.tagLink(t)}' class='label label-info'>#{t}</a>"
     html.push "</div>"
     html.join('')
 

@@ -12,10 +12,10 @@ table.table
         td.tags
           div
             foreach technology.getTagsForAspectDefId('stack') as tag
-              span.label.label-stack= tag
+              a.label.label-stack(href='#{Url.tagLink(tag)}')= tag
           div
             foreach technology.getTagsForAspectDefId('vertical') as tag
-              span.label.label-vertical= tag
+              a.label.label-vertical(href='#{Url.tagLink(tag)}')= tag
         td
           | Started by
           <a(href='#{technology.creator().route()}')= technology.creator().name()

@@ -16,19 +16,20 @@ window.esCallback = (data) ->
 
 
 Template.search.created = ->
-  search = Session.get('search')
-  q = Url.getParameterByName('q', search)
-  q = q.replace('tags', 'aspects.contributions.tags')
-  type = Url.getParameterByName('type', search)
-  apiKey = if esKey then "api-key/#{esKey}/" else ""
-  url = "http://#{esHost}:#{esPort}/#{apiKey}#{esIndex}/#{type}/_search?q=#{q}&fields=_id&callback=esCallback"
-  $.getScript(url)
-  .done((script, textStatus) ->
-    console.log('Elastic Search: ' + textStatus)
-  )
-  .fail((jqxhr, settings, exception) ->
-    console.error(exception)
-  )
+  Deps.autorun ->
+    search = Session.get('search')
+    q = Url.getParameterByName('q', search)
+    q = q.replace('tags', 'aspects.contributions.tags')
+    type = Url.getParameterByName('type', search)
+    apiKey = if esKey then "api-key/#{esKey}/" else ""
+    url = "http://#{esHost}:#{esPort}/#{apiKey}#{esIndex}/#{type}/_search?q=#{q}&fields=_id&callback=esCallback"
+    $.getScript(url)
+    .done((script, textStatus) ->
+      # yay!
+    )
+    .fail((jqxhr, settings, exception) ->
+      console.error(exception)
+    )
 
 
 Template.search.technologies = ->

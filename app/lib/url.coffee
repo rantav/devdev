@@ -7,3 +7,6 @@ Url.getParameterByName = (name, search) ->
   regex = new RegExp("[\\?&]?" + name + "=([^&#]*)")
   results = regex.exec(search)
   (if not results? then "" else decodeURIComponent(results[1].replace(/\+/g, " ")))
+
+Url.tagLink = (tag) ->
+  "/search?type=technology&q=tags:#{tag}"
