@@ -4,7 +4,6 @@ Meteor.Router.add
   '/technology': 'technologies'
   '/technologies': 'technologies'
   "/search":  ->
-    console.log(@querystring)
     Session.set "search", @querystring
     "search"
   "/technology/:id": (id) ->

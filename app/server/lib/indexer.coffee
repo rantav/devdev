@@ -16,8 +16,6 @@ root.Indexer = class Indexer
     if priv.auth then conf.server.auth = priv.auth
     technologies = elasticsearch(conf)
 
-  # Readonly URLs are something like this: https://api.searchbox.io/api-key/vvuzat0lcbcoq4ltmdzqixhfoeesfj8b/dev_devdev/technology/zwWmbAh44fjvAaNBy
-  # Where vvuzat0lcbcoq4ltmdzqixhfoeesfj8b is at Meteor.settings.public['elastic-search']['access-key']
   indexTechnology: (techData) ->
     Meteor.sync((done) ->
       technologies.index({_id: techData._id}, techData, (err, data) ->
