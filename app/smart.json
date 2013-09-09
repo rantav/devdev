@@ -10,6 +10,9 @@
     "accounts-ui-bootstrap-dropdown": {
       "git": "https://github.com/rantav/meteor-accounts-ui-bootstrap-dropdown"
     },
-    "npm": {}
+    "npm": {},
+    "collection-hooks": {
+      "version": "0.3.2"
+    }
   }
 }
