@@ -17,22 +17,27 @@ window.esCallback = (data) ->
 
 Template.search.created = ->
   Deps.autorun ->
+    technologies = []
     search = Session.get('search')
     q = Url.getParameterByName('q', search)
-    type = Url.getParameterByName('type', search)
-    apiKey = if esKey then "api-key/#{esKey}/" else ""
-    url = "http://#{esHost}:#{esPort}/#{apiKey}#{esIndex}/#{type}/_search?q=#{q}&fields=_id&callback=esCallback"
-    $.getScript(url)
-    .done((script, textStatus) ->
-      # yay!
-    )
-    .fail((jqxhr, settings, exception) ->
-      console.error(exception)
-    )
+    if q
+      type = Url.getParameterByName('type', search)
+      apiKey = if esKey then "api-key/#{esKey}/" else ""
+      url = "http://#{esHost}:#{esPort}/#{apiKey}#{esIndex}/#{type}/_search?q=#{q}&fields=_id&callback=esCallback"
+      $.getScript(url)
+      .done((script, textStatus) ->
+        # yay!
+      )
+      .fail((jqxhr, settings, exception) ->
+        console.error(exception)
+      )
 
+Template.search.rendered = ->
+  search = Session.get('search')
+  q = Url.getParameterByName('q', search)
+  $('#navbar-search').val(q)
 
 Template.search.technologies = ->
   technologiesDep.depend()
   document.title = "#{technologies.length} technologies | devdev.io"
   technologies
-
