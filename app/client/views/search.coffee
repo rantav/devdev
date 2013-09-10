@@ -19,7 +19,6 @@ Template.search.created = ->
   Deps.autorun ->
     search = Session.get('search')
     q = Url.getParameterByName('q', search)
-    q = q.replace('tags', 'aspects.contributions.tags')
     type = Url.getParameterByName('type', search)
     apiKey = if esKey then "api-key/#{esKey}/" else ""
     url = "http://#{esHost}:#{esPort}/#{apiKey}#{esIndex}/#{type}/_search?q=#{q}&fields=_id&callback=esCallback"

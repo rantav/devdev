@@ -9,4 +9,5 @@ Url.getParameterByName = (name, search) ->
   (if not results? then "" else decodeURIComponent(results[1].replace(/\+/g, " ")))
 
 Url.tagLink = (tag) ->
+  tag = '"' + tag + '"'
   "/search?type=technology&q=tags:#{tag}"
