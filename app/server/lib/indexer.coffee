@@ -55,6 +55,7 @@ root.Indexer = class Indexer
           for tag in contribution.tags
             tags.push("#{aspect.defId}:#{tag}")
     if tags
+      tags = _.uniq(tags)
       techData = _.extend({}, techData)
       techData.tags = tags
     techData
