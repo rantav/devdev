@@ -1,4 +1,4 @@
-h1 Search #{Session.get('search')}
+h1 Search
 
 table.table
   tbody
@@ -12,10 +12,10 @@ table.table
         td.tags
           div
             foreach technology.getTagsForAspectDefId('stack') as tag
-              a.label.label-stack(href='#{Url.tagLink(tag)}')= tag
+              a.label.label-stack(href='#{Url.tagLink("stack:" + tag)}')= tag
           div
             foreach technology.getTagsForAspectDefId('vertical') as tag
-              a.label.label-vertical(href='#{Url.tagLink(tag)}')= tag
+              a.label.label-vertical(href='#{Url.tagLink("vertical:" + tag)}')= tag
         td
           | Started by
           <a(href='#{technology.creator().route()}')= technology.creator().name()

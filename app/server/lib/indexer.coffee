@@ -17,6 +17,7 @@ root.Indexer = class Indexer
     technologies = elasticsearch(conf)
 
   indexTechnology: (techData) ->
+    techData = @prepare(techData)
     Meteor.sync((done) ->
       technologies.index({_id: techData._id}, techData, (err, data) ->
         if err
@@ -39,5 +40,25 @@ root.Indexer = class Indexer
           done(null, data)
       )
     )
+
+  # Prepares the document for indexing
+  prepare: (techData) ->
+    @extractTags(techData)
+
+  # digs into the techData and pulls the tags up so they are easily indexed
+  # and more naturally used while searching
+  extractTags: (techData) ->
+    tags = []
+    for aspect in techData.aspects
+      if aspect.defId == 'vertical' or aspect.defId == 'stack'
+        for contribution in aspect.contributions
+          for tag in contribution.tags
+            tags.push("#{aspect.defId}:#{tag}")
+    if tags
+      tags = _.uniq(tags)
+      techData = _.extend({}, techData)
+      techData.tags = tags
+    techData
+
 
 root.indexer = new Indexer()
