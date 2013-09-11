@@ -7,14 +7,15 @@ window.TagsHandler = class TagsHandler
     if aspectContribution.contributorId() == Meteor.userId() and not readonly
       return @renderEditor(aspectContribution.aspect(), jqPath, tags)
     else
-      return @renderView(tags)
+      return @renderView(aspectContribution)
 
-  renderView: (tagString) ->
-    if not tagString then tagString = ''
-    tags = tagString.split(',')
+  renderView: (aspectContribution) ->
+    tags = aspectContribution.getTags()
+    prefix = aspectContribution.aspect().defId() # vertical / stack
     html = ["<div class='tags-aspect'>"]
     for t in tags
-      html.push "<a href='#{Url.tagLink(t)}' class='label label-info'>#{t}</a>"
+      link = "#{prefix}:#{t}"
+      html.push "<a href='#{Url.tagLink(link)}' class='label label-info'>#{t}</a>"
     html.push "</div>"
     html.join('')
 
