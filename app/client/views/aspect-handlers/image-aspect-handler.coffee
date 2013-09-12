@@ -42,7 +42,7 @@ window.ImageHandler = class ImageHandler
     if not jqPath then return ''
 
     $(jqPath).html(html)
-    jqBind = ->
+    jqBind = =>
       element = $(jqPath).find('.filepicker-dragdrop')[0]
       element.onchange = (event) =>
         @onPickFile(event)
