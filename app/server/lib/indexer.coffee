@@ -23,17 +23,64 @@ class Indexer
 
   # Initializes the technology document mapping
   mapTechnologies: ->
-    return unless suggestEnabled
     options = {}
-    mapping = technology:
+    mapping =
+      technology:
+        properties:
+          aspects:
+            properties:
+              aspectId:
+                type: "string"
+              contributions:
                 properties:
-                  tags_suggest:
-                    type: "object"
-                    properties:
-                      vertical:
-                        type: "completion"
-                      stack:
-                        type: "completion"
+                  content:
+                    type: "string"
+                  contributionId:
+                    type: "string"
+                  contributorId:
+                    type: "string"
+                  createdAt:
+                    type: "date",
+                    format: "dateOptionalTime"
+                  deletedAt:
+                    type: "date",
+                    format: "dateOptionalTime"
+                  updatedAt:
+                    type: "date",
+                    format: "dateOptionalTime"
+              defId:
+                type: "string"
+              name:
+                type: "string"
+              type:
+                type: "string"
+          contributorId:
+            type: "string"
+          createdAt:
+            type: "date",
+            format: "dateOptionalTime"
+          name:
+            type: "string"
+          tags:
+            properties:
+              stack:
+                type: "string"
+              vertical:
+                type: "string"
+          updatedAt:
+            type: "date",
+            format: "dateOptionalTime"
+          usedBy:
+            type: "string"
+
+    if suggestEnabled
+      mapping.technology.properties.tags_suggest =
+        type: "object"
+        properties:
+          vertical:
+            type: "completion"
+          stack:
+            type: "completion"
 
     Meteor.sync((done) ->
       technologies.indices.putMapping(options, mapping, (err, data) ->
@@ -81,7 +128,7 @@ class Indexer
 
   # Refactors the usedBy map {userId: boolean} into an array [userId1, userId2]
   refactorUsedBy: (doc) ->
-    # TODO
+    doc.usedBy = (userId for userId, used of doc.usedBy when used)
     doc
 
   # digs into the techData and pulls the tags up so they are easily indexed
