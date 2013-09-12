@@ -8,6 +8,8 @@ Url.getParameterByName = (name, search) ->
   results = regex.exec(search)
   (if not results? then "" else decodeURIComponent(results[1].replace(/\+/g, " ")))
 
-Url.tagLink = (tag) ->
+# @param tag the tag string
+# @param category e.g. stack or vertical
+Url.tagLink = (tag, category) ->
   tag = '"' + tag + '"'
-  "/search?type=technology&q=tags:#{tag}"
+  "/search?type=technology&q=tags.#{category}:#{tag}"

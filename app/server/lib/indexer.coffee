@@ -48,16 +48,21 @@ root.Indexer = class Indexer
   # digs into the techData and pulls the tags up so they are easily indexed
   # and more naturally used while searching
   extractTags: (techData) ->
-    tags = []
+    tags = {}
+    defs = ['vertical', 'stack']
+    for d in defs
+      tags[d] = []
+    techData = _.extend({}, techData)
     for aspect in techData.aspects
-      if aspect.defId == 'vertical' or aspect.defId == 'stack'
+      if aspect.defId in defs
         for contribution in aspect.contributions
           for tag in contribution.tags
-            tags.push("#{aspect.defId}:#{tag}")
-    if tags
-      tags = _.uniq(tags)
-      techData = _.extend({}, techData)
-      techData.tags = tags
+            if tag
+              tags[aspect.defId].push(tag)
+          delete contribution.tags
+    for d in defs
+      tags[d] = _.uniq(tags[d])
+    techData.tags = tags
     techData
 
 

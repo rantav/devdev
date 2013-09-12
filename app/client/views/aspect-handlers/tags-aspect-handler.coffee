@@ -11,11 +11,10 @@ window.TagsHandler = class TagsHandler
 
   renderView: (aspectContribution) ->
     tags = aspectContribution.getTags()
-    prefix = aspectContribution.aspect().defId() # vertical / stack
+    category = aspectContribution.aspect().defId() # vertical / stack
     html = ["<div class='tags-aspect'>"]
     for t in tags
-      link = "#{prefix}:#{t}"
-      html.push "<a href='#{Url.tagLink(link)}' class='label label-info'>#{t}</a>"
+      html.push "<a href='#{Url.tagLink(t, category)}' class='label label-info'>#{t}</a>"
     html.push "</div>"
     html.join('')
 
