@@ -11,7 +11,7 @@ class Searcher
   suggestEnabled = esSettings['suggest-enabled']
   callbackIndex = 0
 
-  search: (query, type, callback) ->
+  search: (query, type, callbackName) ->
     if callbackName
       url = "#{baseUrl}/#{type}/_search?q=#{query}&fields=_id&callback=#{callbackName}"
       $.getScript(url).done((script, textStatus) ->
