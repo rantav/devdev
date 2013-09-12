@@ -173,8 +173,22 @@ root.Technology = class Technology
 
   route: -> routes.technology(@) if @data
 
-  suggestVerticals: -> [] # Not implemented yet...
-  suggestStacks: -> [] # Not implemented yet...
+  suggestVerticals: ->
+    @suggestByDefId('vertical')
+
+  suggestStacks: ->
+    @suggestByDefId('stack')
+
+  suggestByDefId: (defId) ->
+    # This is a temporary solution until we get the tags component to work
+    # well with elastic search...
+    suggestions = []
+    for technology in Technologies.find({deletedAt: {$exists: false}}).fetch()
+      for aspect in technology.aspects
+        if aspect.defId == defId
+          for contribution in aspect.contributions
+            suggestions = suggestions.concat(contribution.tags)
+    suggestions = _.uniq(suggestions)
 
   # Gets all the tags for the stack
   getTagsForAspectDefId: (aspectDefId)->
