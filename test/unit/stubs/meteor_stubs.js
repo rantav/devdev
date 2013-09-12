@@ -4,4 +4,3 @@ Meteor.require = function(){
   };
 };
 
-Meteor.settings = {};

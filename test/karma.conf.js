@@ -48,6 +48,7 @@ module.exports = function(config){
             'app/client/lib/bootstrap-tagsinput.js',
             'app/client/lib/bootstrap.js',
             'app/client/lib/typeahead.js',
+            'app/server/db-hooks.coffee',
             'app/packages/**/*'
         ],
 
