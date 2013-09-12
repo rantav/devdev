@@ -16,6 +16,34 @@ root.Indexer = class Indexer
     if priv.auth then conf.server.auth = priv.auth
     technologies = elasticsearch(conf)
 
+
+  init: ->
+    @mapTechnologies()
+
+  # Initializes the technology document mapping
+  mapTechnologies: ->
+    options = {}
+    mapping = technology:
+                properties:
+                  tags_suggest:
+                    type: "object"
+                    properties:
+                      vertical:
+                        type: "completion"
+                      stack:
+                        type: "completion"
+
+    Meteor.sync((done) ->
+      technologies.indices.putMapping(options, mapping, (err, data) ->
+        if err
+          console.log(err)
+          done(err)
+        else
+          console.log('Mapping success. ' + data)
+          done(null, data)
+      )
+    )
+
   indexTechnology: (techData) ->
     techData = @prepare(techData)
     Meteor.sync((done) ->
@@ -42,18 +70,25 @@ root.Indexer = class Indexer
     )
 
   # Prepares the document for indexing
-  prepare: (techData) ->
-    @extractTags(techData)
+  prepare: (doc) ->
+    doc = _.extend({}, doc)
+    doc = @extractTags(doc)
+    doc = @extractSuggestionTags(doc)
+    doc = @refactorUsedBy(doc)
+
+  # Refactors the usedBy map {userId: boolean} into an array [userId1, userId2]
+  refactorUsedBy: (doc) ->
+    # TODO
+    doc
 
   # digs into the techData and pulls the tags up so they are easily indexed
   # and more naturally used while searching
-  extractTags: (techData) ->
+  extractTags: (doc) ->
     tags = {}
     defs = ['vertical', 'stack']
     for d in defs
       tags[d] = []
-    techData = _.extend({}, techData)
-    for aspect in techData.aspects
+    for aspect in doc.aspects
       if aspect.defId in defs
         for contribution in aspect.contributions
           for tag in contribution.tags
@@ -62,8 +97,12 @@ root.Indexer = class Indexer
           delete contribution.tags
     for d in defs
       tags[d] = _.uniq(tags[d])
-    techData.tags = tags
-    techData
+    doc.tags = tags
+    doc
 
+  extractSuggestionTags: (doc) ->
+    doc.tags_suggest = _.extend({}, doc.tags)
+    doc
 
 root.indexer = new Indexer()
+root.indexer.init()
