@@ -121,15 +121,31 @@ class Indexer
   # Prepares the document for indexing
   prepare: (doc) ->
     doc = _.extend({}, doc)
-    doc = @extractTags(doc)
+    @removeDeleted(doc)
+    @extractTags(doc)
     if suggestEnabled
-      doc = @extractSuggestionTags(doc)
-    doc = @refactorUsedBy(doc)
+      @extractSuggestionTags(doc)
+    @refactorUsedBy(doc)
+    doc
+
+  # Removes aspects marked as deletedAt (or entire documents marked as so)
+  removeDeleted: (doc) ->
+    if doc.deletedAt
+      delete doc.name
+      delete doc.aspects
+      delete doc.contributorId
+      delete doc.usedBy
+      return
+    for aspect in doc.aspects
+      newContributions = []
+      for contribution in aspect.contributions
+        if not contribution.deletedAt
+          newContributions.push contribution
+      aspect.contributions = newContributions
 
   # Refactors the usedBy map {userId: boolean} into an array [userId1, userId2]
   refactorUsedBy: (doc) ->
     doc.usedBy = (userId for userId, used of doc.usedBy when used)
-    doc
 
   # digs into the techData and pulls the tags up so they are easily indexed
   # and more naturally used while searching
@@ -148,11 +164,9 @@ class Indexer
     for d in defs
       tags[d] = _.uniq(tags[d])
     doc.tags = tags
-    doc
 
   extractSuggestionTags: (doc) ->
     doc.tags_suggest = _.extend({}, doc.tags)
-    doc
 
 root.indexer = new Indexer()
 root.indexer.init()
