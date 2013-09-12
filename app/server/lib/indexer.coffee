@@ -1,6 +1,6 @@
 root = exports ? this
 
-root.Indexer = class Indexer
+class Indexer
 
   elasticsearch = Meteor.require('elasticsearch')
   settings = Meteor.settings.public['elastic-search']

@@ -1,12 +1,6 @@
 technologies = []
 window.technologiesDep = new Deps.Dependency()
 
-esSettings = Meteor.settings.public['elastic-search']
-esHost = esSettings.host
-esPort = esSettings.port
-esIndex = esSettings.index
-esKey = esSettings['access-key']
-
 window.esCallback = (data) ->
   technologies = []
   for hit in data.hits.hits
@@ -22,15 +16,7 @@ Template.search.created = ->
     q = Url.getParameterByName('q', search)
     if q
       type = Url.getParameterByName('type', search)
-      apiKey = if esKey then "api-key/#{esKey}/" else ""
-      url = "http://#{esHost}:#{esPort}/#{apiKey}#{esIndex}/#{type}/_search?q=#{q}&fields=_id&callback=esCallback"
-      $.getScript(url)
-      .done((script, textStatus) ->
-        # yay!
-      )
-      .fail((jqxhr, settings, exception) ->
-        console.error(exception)
-      )
+      searcher.search(q, type, 'esCallback')
 
 Template.search.rendered = ->
   search = Session.get('search')
