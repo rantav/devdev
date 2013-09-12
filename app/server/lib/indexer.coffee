@@ -106,6 +106,39 @@ class Indexer
       )
     )
 
+  bulkIndexTechnologies: (techDatas) ->
+    techDatas = (@prepare(t) for t in techDatas)
+    options = {}
+    Meteor.sync((done) =>
+      @bulkIndex(technologies, options, techDatas, (err, data) ->
+        if err
+          console.error(err)
+          done(err)
+        else
+          console.log("Index success. " + data)
+          done(null, data)
+      )
+    )
+
+  # Creating my own version of bulkIndex since the one implemented here
+  # doesn't play nice with document's _id's
+  bulkIndex: (index, options, documents, callback) ->
+    if not callback and typeof documents is "function"
+      callback = documents
+      documents = options
+      options = {}
+    return callback(new Error("documents provided must be in array format")) unless Array.isArray(documents)
+    commands = []
+    documents.forEach (doc) ->
+      docConfig = index:
+        _index: conf._index
+        _type: conf._type
+      if doc._id then docConfig.index._id = doc._id
+      commands.push(docConfig)
+      commands.push(doc)
+
+    index.bulk(options, commands, callback)
+
   removeTechnology: (techId) ->
     Meteor.sync((done) ->
       technologies.delete({_id: techId}, (err, data) ->
