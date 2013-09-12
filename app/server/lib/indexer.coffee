@@ -88,7 +88,7 @@ class Indexer
           console.log(err)
           done(err)
         else
-          console.log('Mapping success. ' + data)
+          console.log('ES Mapping success.')
           done(null, data)
       )
     )
@@ -101,7 +101,7 @@ class Indexer
           console.error(err)
           done(err)
         else
-          console.log("Index success. " + data)
+          console.log("ES Index success.")
           done(null, data)
       )
     )
@@ -115,7 +115,7 @@ class Indexer
           console.error(err)
           done(err)
         else
-          console.log("Index success. " + data)
+          console.log("ES Index success.")
           done(null, data)
       )
     )
