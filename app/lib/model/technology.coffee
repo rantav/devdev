@@ -39,18 +39,21 @@ root.Technology = class Technology
       pinned: true,
       datasource: 'suggestVerticals',
       multiplicity: 'single-per-user',
+      noindex: true,
       display: 'Vertical'
     , 'stack':
       type: 'tags',
       pinned: true,
       datasource: 'suggestStacks',
       multiplicity: 'single-per-user',
+      noindex: true,
       display: 'Stack'
     , 'source code':
       type: 'markdown',
       display: 'Source Code'
     , 'logo':
       type: 'image',
+      noindex: true,
       display: 'Logo'
     , 'typical use cases':
       type: 'markdown',

@@ -122,13 +122,14 @@ class Indexer
   prepare: (doc) ->
     doc = _.extend({}, doc)
     @removeDeleted(doc)
+    @removeNoIndex(doc)
     @extractTags(doc)
     if suggestEnabled
       @extractSuggestionTags(doc)
     @refactorUsedBy(doc)
     doc
 
-  # Removes aspects marked as deletedAt (or entire documents marked as so)
+  # Removes contributions marked as deletedAt (or entire documents marked as so)
   removeDeleted: (doc) ->
     if doc.deletedAt
       delete doc.name
@@ -142,6 +143,17 @@ class Indexer
         if not contribution.deletedAt
           newContributions.push contribution
       aspect.contributions = newContributions
+
+  # Removes aspects marked as noindex
+  removeNoIndex: (doc) ->
+    defs = Technology.aspectDefinitions()
+    newAspects = []
+    for aspect in doc.aspects
+      if aspect.defId and defs[aspect.defId] and defs[aspect.defId].noindes
+        #remove
+      else
+        newAspects.push(aspect)
+    doc.aspects = newAspects
 
   # Refactors the usedBy map {userId: boolean} into an array [userId1, userId2]
   refactorUsedBy: (doc) ->
