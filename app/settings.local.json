@@ -1,6 +1,7 @@
 {
   "elastic-search":
   {
+
   },
   "public":
   {
@@ -9,7 +10,8 @@
       "access-key": "",
       "host": "localhost",
       "port": "9200",
-      "index": "dev_devdev"
+      "index": "dev_devdev",
+      "suggest-enabled": true
     }
   }
 }

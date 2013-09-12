@@ -5,6 +5,7 @@ root.Indexer = class Indexer
   elasticsearch = Meteor.require('elasticsearch')
   settings = Meteor.settings.public['elastic-search']
   priv = Meteor.settings['elastic-search']
+  suggestEnabled = settings['suggest-enabled']
   if settings
     console.log('Will connect to ES at ' + settings.host + ':' + settings.port + '  Using index: ' + settings.index)
     conf =
@@ -22,6 +23,7 @@ root.Indexer = class Indexer
 
   # Initializes the technology document mapping
   mapTechnologies: ->
+    return unless suggestEnabled
     options = {}
     mapping = technology:
                 properties:
@@ -73,7 +75,8 @@ root.Indexer = class Indexer
   prepare: (doc) ->
     doc = _.extend({}, doc)
     doc = @extractTags(doc)
-    doc = @extractSuggestionTags(doc)
+    if suggestEnabled
+      doc = @extractSuggestionTags(doc)
     doc = @refactorUsedBy(doc)
 
   # Refactors the usedBy map {userId: boolean} into an array [userId1, userId2]
