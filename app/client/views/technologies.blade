@@ -39,7 +39,8 @@ table.table
         td
           button.btn.btn-small.i-use-it(class='#{Meteor.userId() ? "" : "disabled"} #{technology.isUsedBy(currentContributor) ? "btn-success" : ""}')
             i.icon-white.icon-thumbs-up
-            |  I Use It
+            |&nbsp;I&nbsp;Use&nbsp;It
+        td
           - if (Meteor.userId() === technology.contributorId())
             .pull-right
               a.action(href='javascript:void(0)' title='Delete #{technology.name()}')
