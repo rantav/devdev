@@ -122,6 +122,12 @@ Template.technology.rendered = ->
     html: true
     delay: 200
     trigger: 'hover'
+  if technology and technology.isUsedBy(Contributor.current())
+    $('.i-use-it').hover(->
+      $(@).removeClass('btn-success').addClass('btn-danger').find('.text').html(' Unuse It')
+    , ->
+      $(@).removeClass('btn-danger').addClass('btn-success').find('.text').html(' I Use It')
+    )
 
 Template.technology.destroyed = ->
   $('.contribution[rel=tooltip]').tooltip('hide')

@@ -16,7 +16,7 @@
     .technology-page-actions.pull-right
       button.btn.i-use-it(class='#{Meteor.userId() ? "" : "disabled"} #{technology.isUsedBy(currentContributor) ? "btn-success" : ""}')
         i.icon-white.icon-thumbs-up
-        |  I Use It
+        span.text  I Use It
       <button#follow-technology.btn.disabled.not-implemented Follow #{technology.name()}
       <a#share.btn(href="https://twitter.com/share?url=#{encodeURIComponent(document.location.href)}&text=#{encodeURIComponent(shareText)}&via=devdev_io" target="_blank")
         i.icon-twitter
