@@ -101,7 +101,8 @@ db.technologies.find().forEach(function(t){
   for (var a = 0; a < t.aspects.length; ++a) {
     var aspect = t.aspects[a];
     if (aspect.name == 'Websites') {
-      aspect.name = 'Website'
+      aspect.name = 'Website';
+      print(t.name);
     }
   }
   db.technologies.save(t);
@@ -114,6 +115,7 @@ db.technologies.find().forEach(function(t){
     var aspect = t.aspects[a];
     if (!aspect.defId) {
       aspect.defId = aspect.name.toLowerCase();
+      print(t.name + ': ' + aspect.name);
     }
   }
   db.technologies.save(t);
