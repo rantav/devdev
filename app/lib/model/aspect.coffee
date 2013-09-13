@@ -32,7 +32,7 @@ root.Aspect = class Aspect
     @changed()
 
   helpText: ->
-    if @defId then aspectDefinitions[@defId()].help else undefined
+    if @defId and aspectDefinitions[@defId()] then aspectDefinitions[@defId()].help else undefined
 
   hasContributionsFromUser: (contributorId) ->
     return false if not @data.contributions
