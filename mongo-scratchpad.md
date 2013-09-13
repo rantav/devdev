@@ -95,3 +95,27 @@ db.technologies.find().forEach(function(t){
   }
   db.technologies.save(t);
 })
+
+// Change Websites to Website
+db.technologies.find().forEach(function(t){
+  for (var a = 0; a < t.aspects.length; ++a) {
+    var aspect = t.aspects[a];
+    if (aspect.name == 'Websites') {
+      aspect.name = 'Website'
+    }
+  }
+  db.technologies.save(t);
+})
+
+
+// Add defId to aspects
+db.technologies.find().forEach(function(t){
+  for (var a = 0; a < t.aspects.length; ++a) {
+    var aspect = t.aspects[a];
+    if (!aspect.defId) {
+      aspect.defId = aspect.name.toLowerCase();
+    }
+  }
+  db.technologies.save(t);
+})
+
