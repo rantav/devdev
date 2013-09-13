@@ -121,3 +121,17 @@ db.technologies.find().forEach(function(t){
   db.technologies.save(t);
 })
 
+// Delete contributing-xxx
+db.technologies.find().forEach(function(t){
+  for (var a = 0; a < t.aspects.length; ++a) {
+    var aspect = t.aspects[a];
+    for (var i in aspect) {
+      if (i.indexOf('contributing-') == 0) {
+        print(i);
+        delete aspect[i]
+      }
+    }
+  }
+  db.technologies.save(t);
+})
+
