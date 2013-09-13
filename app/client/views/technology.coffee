@@ -106,6 +106,7 @@ Template.technology.rendered = ->
   # initialize all tooltips in this template
   $('.contribution[rel=tooltip]').tooltip()
   $('.contributor-dense[rel=tooltip]').tooltip()
+  $('.aspect-name[rel=tooltip]').tooltip({container: 'body', placement: 'right'})
 
   refreshAspectNameTypeahead()
   $('input#new-aspect-name').popover
@@ -125,6 +126,7 @@ Template.technology.rendered = ->
 Template.technology.destroyed = ->
   $('.contribution[rel=tooltip]').tooltip('hide')
   $('.contributor-dense[rel=tooltip]').tooltip('hide')
+  $('.aspect-name[rel=tooltip]').tooltip('hide')
   $('input#new-aspect-name').popover('hide')
   $('input#new-aspect-value').popover('hide')
 
@@ -140,4 +142,7 @@ refreshAspectNameTypeahead = ->
       window._newAspect.type(datum.type)
       window._newAspect.name(datum.value)
       window._newAspect.setDefId(datum.defId)
+      help = if datum.defId and aspectDefinitions[datum.defId] and aspectDefinitions[datum.defId].help then aspectDefinitions[datum.defId].help else ''
+      $('#new-aspect-help').html(help)
+
     )

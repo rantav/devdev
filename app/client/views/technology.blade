@@ -38,6 +38,8 @@
               th
                 .control-group
                   input#new-aspect-name(type='text' placeholder='Add aspect&hellip; (? for help)')
+                  div
+                    small.help#new-aspect-help
               td.aspect-data
                 #new-aspect-adder
                   != renderAspectEditor(aspect, '#new-aspect-adder')
@@ -56,7 +58,8 @@
 
         foreach technology.aspects() as aspect
           tr.aspect
-            th= aspect.name()
+            th
+              span.aspect-name(rel='tooltip' title='#{aspect.helpText()}')= aspect.name()
             td.aspect-data.existing-data
               foreach aspect.contributions() as contribution
                 - if (!contribution.deletedAt())

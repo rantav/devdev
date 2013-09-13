@@ -31,6 +31,9 @@ root.Aspect = class Aspect
     @data.type = t
     @changed()
 
+  helpText: ->
+    if @defId then aspectDefinitions[@defId()].help else undefined
+
   hasContributionsFromUser: (contributorId) ->
     return false if not @data.contributions
     for contribution in @data.contributions
