@@ -30,6 +30,7 @@ root.aspectDefinitions =
   'source code':
     type: 'markdown',
     display: 'Source Code'
+    help: 'Provide a link to the source code, if available. GitHub links, Google code, apache etc'
   'logo':
     type: 'image',
     noindex: true,
@@ -38,73 +39,90 @@ root.aspectDefinitions =
   'typical use cases':
     type: 'markdown',
     display: 'Typical Use Cases'
-    help: 'Explain what are the typical use cases for this technology, where does it shine? You may link to blog post, stackoverflow or just type right here'
+    help: 'What are the typical use cases for this technology?  Where does it shine? You may link to blog post, stackoverflow or just type right here'
   'sweet spots':
     type: 'markdown',
     display: 'Sweet Spots'
+    help: 'What are the sweet spots of this technology? This is similar to Typical Use Cases, but short and consice, no external links, like a tagline.'
   'weaknesses':
     type: 'markdown',
     display: 'Weaknesses'
+    help: 'What are the weaknesses if this technology? In other words - When or in what cases should one not use it or take special care?'
   'documentation':
     type: 'markdown',
     display: 'Documentation'
+    help: 'Provide a link to teh documentation site'
   'tutorials':
-    type: 'markdown',
+    type: 'markdown'
     display: 'Tutorials'
+    help: 'Provide links to good tutorials that you\'d found or that you wrote'
   'stackoverflow':
-    type: 'markdown',
+    type: 'markdown'
     display: 'StackOverflow'
+    help: 'Provide a link the relevant stackoverflow tags'
   'mailing lists':
-    type: 'markdown',
+    type: 'markdown'
     display: 'Mailing Lists'
+    help: 'Provide link to the mailing list (or lists)'
   'irc':
-    type: 'markdown',
+    type: 'markdown'
     display: 'IRC'
+    help: 'Provide a link to the IRC chanel, if exists'
   'development status':
-    type: 'markdown',
+    type: 'markdown'
     display: 'Development Status'
-  'used by':
-    type: 'markdown',
-    display: 'Used By'
+    help: 'What\'s the development status is? Is it stable? v2? Preview?...'
   'alternatives':
-    type: 'markdown',
+    type: 'markdown'
     display: 'Alternatives'
+    help: 'What are some alternative solutions to this technology? In other words, what are the competitor technologies in the same Vertical? Technologies that propose a different solotion to the same problem. For example an alternative to Solr is ElasticSearch'
   'complement technologies':
-    type: 'markdown',
+    type: 'markdown'
     display: 'Complement Technologies'
+    help: 'What are the complement technologies to this one? In other words, If you like this technology you\'d also be interested in x, y, z'
    'talks, videos, slides':
-    type: 'markdown',
+    type: 'markdown'
     display: 'Talks, Videos, Slides'
   'cheatsheet / example / demo':
-    type: 'markdown',
+    type: 'markdown'
     display: 'Cheatsheet / Examples / Demo'
    'prerequisites':
-    type: 'markdown',
+    type: 'markdown'
     display: 'Prerequisites'
+    help: 'Are there any prerequisites to using this technology? This is similar to Stack, but goes to grater detail such as specific compatible versions of jQuery etc.'
    'reviews':
-    type: 'markdown',
+    type: 'markdown'
     display: 'Reviews'
+    help: 'Did you find a review of this technology online? That\'s great, we want to know about this. Did you publish your review? That\'s great for us and for you, link it here!'
    'developers':
-    type: 'markdown',
+    type: 'markdown'
     display: 'Developers'
+    help: 'Who\'s behind this? List names or companies. GitHub handles are greate.'
    'versioneye':
-    type: 'markdown',
+    type: 'markdown'
     display: 'VersionEye'
+    help: 'Link to the VersionEye page, for example: https://www.versioneye.com/ruby/jquery-rails/'
    'twitter':
-    type: 'markdown',
+    type: 'markdown'
     display: 'Twitter'
+    help: 'Link to the Twitter handle, if such exists'
    'facebook':
-    type: 'markdown',
+    type: 'markdown'
     display: 'Facebook'
+    help: 'Link to the Facebook page, if such exists'
    'google+':
-    type: 'markdown',
+    type: 'markdown'
     display: 'Google+'
+    help: 'Link to the Google+ handle, if such exists'
    'hello world':
-    type: 'markdown',
+    type: 'markdown'
     display: 'Hello World'
+    help: 'Type a Hello World program here'
    'comments':
-    type: 'markdown',
+    type: 'markdown'
     display: 'Comments'
+    help: 'Any more comments please?...'
    'more':
-    type: 'markdown',
+    type: 'markdown'
     display: 'More'
+    help: 'Anythin more to add?...'
