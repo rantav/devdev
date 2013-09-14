@@ -29,7 +29,7 @@ Template.technology.events
   'click #add-technology': (event) ->
     analytics.track('Add technology - technology page', {loggedIn: !!Meteor.userId()})
     if not Meteor.userId()
-      alertify.alert('<i class="icon-user icon-4x"> </i> <h2>Please log in</h2>')
+      alertify.alert(Html.pleasLoginAlertifyHtml())
       return
     name = if technology then technology.name() else Session.get('technologyId')
     console.log(name)
@@ -71,7 +71,7 @@ Template.technology.events
   'click .i-use-it': ->
     analytics.track('I use it', {loggedIn: !!Meteor.userId()})
     if not Meteor.userId()
-      alertify.alert('<i class="icon-user icon-4x"> </i> <h2>Please log in</h2>')
+      alertify.alert(Html.pleasLoginAlertifyHtml())
       return
     current = Contributor.current()
     used = current.isUsingTechnology(technology)
