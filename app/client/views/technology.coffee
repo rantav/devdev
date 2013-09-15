@@ -40,19 +40,19 @@ Template.technology.events
       Meteor.Router.to routes.technology(Technology.findOne(ret))
       alertify.success "Great, now add some smarts to #{name}"
 
-  'keyup .name': (event) ->
+  'keyup #technology-name': (event) ->
     esc = event.which == 27
     if esc
       document.execCommand('undo')
       $(event.target).blur()
 
-  'keydown .name': (event) ->
+  'keydown #technology-name': (event) ->
     enter = event.which == 13
     if enter
       $(event.target).blur()
       false
 
-  'blur .name': (event, element)->
+  'blur #technology-name': (event, element)->
     name = event.srcElement.innerText
     if name != technology.name()
       analytics.track('Rename technology')
@@ -62,6 +62,7 @@ Template.technology.events
         else
           alertify.success "OK, renamed to #{name}"
           Meteor.Router.to technology.route()
+
   'blur #new-aspect-name': ->
     $name = $('#new-aspect-name')
     name = $name.val()

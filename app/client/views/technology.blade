@@ -28,7 +28,7 @@
 
     h1.name
       a.pull-left.technology-logo(href='#{technology.route()}')!= Html.imgPolaroid(technology.logoUrl({h: 40}))
-      .pull-left(contenteditable='#{technology.nameEditableByCurrentUser() ? true : false}')= technology.name()
+      #technology-name.pull-left(contenteditable='#{technology.nameEditableByCurrentUser() ? true : false}')= technology.name()
     .clearfix(style='margin:5px')
     table.table
       tbody
