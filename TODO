@@ -1,1 +1,6 @@
 This had moved over to here https://trello.com/b/vyu4D9O5/devdev
+
+Short term:
+- Test the loading template
+  Router.configure
+    loadingTemplate: 'loading'

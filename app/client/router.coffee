@@ -13,7 +13,9 @@ Router.map ->
   @route 'contributors', waitOn: subscriptionHandles['contributors']
 
 
-Router.configure layout: 'layout'
+Router.configure
+  layout: 'layout'
+  loadingTemplate: 'loading'
 
 # Meteor.Router.add
 #   '/technology': 'technologies'

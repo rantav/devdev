@@ -1,16 +1,6 @@
-# window.technology = null
-# window.currentContributor = null
-# Template.technology.technology = ->
-#   if not technology or technology.id() != Session.get('technologyId')
-#     window.technology = Technology.findOne(Session.get('technologyId'))
-#     if technology
-#       document.title = "#{technology.name()} | devdev.io"
-
-# Template.technology.currentContributor = ->
-#   if not currentContributor or currentContributor.id() != Meteor.userId()
-#     window.currentContributor = Contributor.current()
-
 Template.technology.technology= ->
+  if @technology
+    document.title = "#{@technology.name()} | devdev.io"
   @technology
 
 Template.technology.synched = ->
@@ -54,7 +44,7 @@ Template.technology.events
 
   'click .icon-trash': ->
     analytics.track('Delete aspect contribution')
-    Meteor.call('deleteAspectContribution', technology.id(), @contributionId())
+    Meteor.call('deleteAspectContribution', @technology.id(), @contributionId())
 
   'click #add-technology': (event) ->
     analytics.track('Add technology - technology page', {loggedIn: !!Meteor.userId()})
@@ -75,14 +65,14 @@ Template.technology.events
 
   'blur #technology-name': (event, element)->
     name = event.srcElement.innerText
-    if name != technology.name()
+    if name != @technology.name()
       analytics.track('Rename technology')
-      Meteor.call 'setName', technology.id(), name, (err, ret) ->
+      Meteor.call 'setName', @technology.id(), name, (err, ret) ->
         if err
           alertify.error err
         else
           alertify.success "OK, renamed to #{name}"
-          Meteor.Router.to technology.route()
+          Router.go(@technology.route())
 
   'blur #new-aspect-name': ->
     $name = $('#new-aspect-name')
@@ -96,13 +86,13 @@ Template.technology.events
       alertify.alert(Html.pleasLoginAlertifyHtml())
       return
     current = Contributor.current()
-    used = current.isUsingTechnology(technology)
-    Meteor.call 'iUseIt', technology.id(), not used, (err, ret) ->
+    used = current.isUsingTechnology(@technology)
+    Meteor.call 'iUseIt', @technology.id(), not used, (err, ret) ->
       if err
         alertify.error err
 
   'click #index-technology': ->
-    Meteor.call 'indexTechnology', technology.id(), (err, ret) ->
+    Meteor.call 'indexTechnology', @technology.id(), (err, ret) ->
       if err
         alertify.error err
       else
@@ -125,7 +115,6 @@ $ ->
   initHandlers(Template.technology)
 
 Template.technology.rendered = ->
-  # Template.technology.technology()
   # initialize all tooltips in this template
   $('.contribution[rel=tooltip]').tooltip()
   $('.contributor-dense[rel=tooltip]').tooltip()
