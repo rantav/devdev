@@ -20,17 +20,17 @@ Template.technology.twitterShareUrl = ->
     shareText = "Check out #{@technology.name()} on devdev.io, with #{@technology.numContributions()} contributions already!"
     "https://twitter.com/share?url=#{encodeURIComponent(document.location.href)}&text=#{encodeURIComponent(shareText)}&via=devdev_io"
 
-Template.technology.admin = ->
-  Contributor.current().isAdmin()
-
 Template.technology.imgPolaroid = (options) ->
   if @technology
     Html.imgPolaroid(@technology.logoUrl(options.hash))
 
 Template.technology.newAspect = ->
   if not window._newAspect
-    window._newAspect = new Aspect({aspectId: 'new-aspect'}, technology)
+    window._newAspect = new Aspect({aspectId: 'new-aspect'}, @technology)
   window._newAspect
+
+Template.technology.aspectEditor = (options) ->
+  renderAspectEditor(options.hash.aspect, options.hash.jqpath)
 
 Template.technology.events
 
