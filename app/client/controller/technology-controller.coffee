@@ -1,5 +1,13 @@
 class @TechnologyController extends RouteController
-  template: 'technology'
+
+  run: ->
+    t = Technology.findOne(@params.id)
+    if t and t.deletedAt()
+      @render('technologyDeleted')
+    else
+      @render('technology')
+
+
   notFoundTemplate: 'technologyNotFound'
 
   data: ->

@@ -1,96 +1,89 @@
 <template name='technology'>
-  {{#if technology.deletedAt}}
-    <div class='hero-unit'>
-      <h3>Sorry, this technology ({{technology.name}}) was deleted</h3>
-      <button id='add-technology' class='btn btn-primary {{btnEnabledDisabledClass}}'>Create {{technology.name}} again</button>
-    </div>
-  {{else}}
-    <div class='technology-page-actions pull-right'>
-      <button class='btn i-use-it {{btnEnabledDisabledClass}} {{iUseItClass}}'>
-        <i class='icon-white icon-thumbs-up'></i>
-        <span class='text'> I Use It</span>
+  <div class='technology-page-actions pull-right'>
+    <button class='btn i-use-it {{btnEnabledDisabledClass}} {{iUseItClass}}'>
+      <i class='icon-white icon-thumbs-up'></i>
+      <span class='text'> I Use It</span>
+    </button>
+    <button id='follow-technology' class='btn disabled not-implemented'>Follow {{technology.name}}</button>
+    <a id='share' class='btn' href="{{twitterShareUrl}}" target="_blank">
+      <i class='icon-twitter'></i> Share {{technology.name}}
+    </a>
+    {{#if admin}}
+      <button id='index-technology' class='btn'>
+        <i class='icon-cog'></i> Index
       </button>
-      <button id='follow-technology' class='btn disabled not-implemented'>Follow {{technology.name}}</button>
-      <a id='share' class='btn' href="{{twitterShareUrl}}" target="_blank">
-        <i class='icon-twitter'></i> Share {{technology.name}}
-      </a>
-      {{#if admin}}
-        <button id='index-technology' class='btn'>
-          <i class='icon-cog'></i> Index
-        </button>
-      {{/if}}
-    </div>
+    {{/if}}
+  </div>
 
-    <h1 class='name'>
-      <a class='pull-left technology-logo' href='{{technology.route}}'>
-        {{{imgPolaroid h=40}}}
-      </a>
-      <div id='technology-name' class='pull-left' contenteditable='{{technology.nameEditableByCurrentUser}}'>{{technology.name}}</div>
-    </h1>
-    <!--
-    .clearfix(style='margin:5px')
-    table.table
-      tbody
-        - if (Meteor.userId())
-          foreach [newAspect] as aspect
-            tr.aspect
-              th
-                .control-group
-                  input#new-aspect-name(type='text' placeholder='Add aspect&hellip; (? for help)')
-                  div
-                    small.help#new-aspect-help
-              td.aspect-data
-                #new-aspect-adder
-                  != renderAspectEditor(aspect, '#new-aspect-adder')
-
-        tr.used-by
-          th Used By
-          td
-            foreach technology.usedBy() as user
-              a.contributor-dense.pull-left(href='#{user.route()}' rel='tooltip' title='Used by #{user.name()}')
-                img.img-polaroid(src='#{user.photoUrl(40)}')
-            else
-              button.btn.i-use-it(class='#{Meteor.userId() ? "" : "disabled"} #{technology.isUsedBy(currentContributor) ? "btn-success" : ""}')
-                i.icon-white.icon-thumbs-up
-                |  Be the first to use it
-
-
-        foreach technology.aspects() as aspect
+  <h1 class='name'>
+    <a class='pull-left technology-logo' href='{{technology.route}}'>
+      {{{imgPolaroid h=40}}}
+    </a>
+    <div id='technology-name' class='pull-left' contenteditable='{{technology.nameEditableByCurrentUser}}'>{{technology.name}}</div>
+  </h1>
+  <!--
+  .clearfix(style='margin:5px')
+  table.table
+    tbody
+      - if (Meteor.userId())
+        foreach [newAspect] as aspect
           tr.aspect
             th
-              span.aspect-name(rel='tooltip' title='#{aspect.helpText()}')= aspect.name()
-            td.aspect-data.existing-data
-              foreach aspect.contributions() as contribution
-                - if (!contribution.deletedAt())
-                  .contribution(style='border-left-color: #{contribution.contributor().color()}'
-                      rel='tooltip'
-                      data-placement='left'
-                      title='#{contribution.contributor().name()}')
-                    .contribution-actions.pull-right
-                      - if (contribution.isCurrentUserOwner())
-                        <a.action.not-implemented(href='javascript:void(0)' title='Edit your contribution')
-                          i#edit-aspect-contribution.icon-edit.disabled
-                        <a.action(href='javascript:void(0)' title='Delete your contribution')
-                          i.icon-trash
-                      - else
-                        <a.not-implemented.action(href='javascript:void(0)' title='Vote up')
-                          i#vote-up-aspect-contribution.icon-thumbs-up.disabled
-                        <a.not-implemented.action(href='javascript:void(0)' title='Vote down')
-                          i#vote-down-aspect-contribution.icon-thumbs-down.disabled
-                    p.contribution
-                      small.pull-right.muted= moment(contribution.updatedAt()).fromNow()
-                      div(id='aspect-view-#{aspect.id()}')
-                        != renderAspectContribution(contribution, '#aspect-view-' + aspect.id())
-              - if (Meteor.userId())
-                div(id='aspect-edit-#{aspect.id()}')
-                  != renderAspectEditor(aspect, '#aspect-edit-' + aspect.id())
+              .control-group
+                input#new-aspect-name(type='text' placeholder='Add aspect&hellip; (? for help)')
+                div
+                  small.help#new-aspect-help
+            td.aspect-data
+              #new-aspect-adder
+                != renderAspectEditor(aspect, '#new-aspect-adder')
 
-    .contributors
-      h5 Contributors:
-      foreach technology.contributors() as contributor
-        div(class="contributor pull-left" style='border-left-color: #{contributor.color()}')
-          img.img-polaroid(src='#{contributor.photoUrl(40)}')
-          <a(href='#{contributor.route()}')= contributor.name()
-        -->
-  {{/if}}
+      tr.used-by
+        th Used By
+        td
+          foreach technology.usedBy() as user
+            a.contributor-dense.pull-left(href='#{user.route()}' rel='tooltip' title='Used by #{user.name()}')
+              img.img-polaroid(src='#{user.photoUrl(40)}')
+          else
+            button.btn.i-use-it(class='#{Meteor.userId() ? "" : "disabled"} #{technology.isUsedBy(currentContributor) ? "btn-success" : ""}')
+              i.icon-white.icon-thumbs-up
+              |  Be the first to use it
+
+
+      foreach technology.aspects() as aspect
+        tr.aspect
+          th
+            span.aspect-name(rel='tooltip' title='#{aspect.helpText()}')= aspect.name()
+          td.aspect-data.existing-data
+            foreach aspect.contributions() as contribution
+              - if (!contribution.deletedAt())
+                .contribution(style='border-left-color: #{contribution.contributor().color()}'
+                    rel='tooltip'
+                    data-placement='left'
+                    title='#{contribution.contributor().name()}')
+                  .contribution-actions.pull-right
+                    - if (contribution.isCurrentUserOwner())
+                      <a.action.not-implemented(href='javascript:void(0)' title='Edit your contribution')
+                        i#edit-aspect-contribution.icon-edit.disabled
+                      <a.action(href='javascript:void(0)' title='Delete your contribution')
+                        i.icon-trash
+                    - else
+                      <a.not-implemented.action(href='javascript:void(0)' title='Vote up')
+                        i#vote-up-aspect-contribution.icon-thumbs-up.disabled
+                      <a.not-implemented.action(href='javascript:void(0)' title='Vote down')
+                        i#vote-down-aspect-contribution.icon-thumbs-down.disabled
+                  p.contribution
+                    small.pull-right.muted= moment(contribution.updatedAt()).fromNow()
+                    div(id='aspect-view-#{aspect.id()}')
+                      != renderAspectContribution(contribution, '#aspect-view-' + aspect.id())
+            - if (Meteor.userId())
+              div(id='aspect-edit-#{aspect.id()}')
+                != renderAspectEditor(aspect, '#aspect-edit-' + aspect.id())
+
+  .contributors
+    h5 Contributors:
+    foreach technology.contributors() as contributor
+      div(class="contributor pull-left" style='border-left-color: #{contributor.color()}')
+        img.img-polaroid(src='#{contributor.photoUrl(40)}')
+        <a(href='#{contributor.route()}')= contributor.name()
+      -->
 </template>

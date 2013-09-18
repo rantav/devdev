@@ -7,7 +7,7 @@ Template.technology.synched = ->
   Session.get('devdevFullySynched')
 
 Template.technology.btnEnabledDisabledClass = ->
-  Meteor.userId() ? "" : "disabled"
+  if Meteor.userId() then "" else "disabled"
 
 Template.technology.technologyId = ->
   @technologyId
