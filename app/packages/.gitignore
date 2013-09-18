@@ -15,3 +15,5 @@ HTML5-History-API
 assert
 npm
 collection-hooks
+jade-handlebars
+iron-router

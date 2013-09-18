@@ -1,16 +1,46 @@
-Template.technology.technology = ->
-  technology = Technology.findOne(Session.get('technologyId'))
-  if technology
-    document.title = "#{technology.name()} | devdev.io"
-  window.technology = technology
+# window.technology = null
+# window.currentContributor = null
+# Template.technology.technology = ->
+#   if not technology or technology.id() != Session.get('technologyId')
+#     window.technology = Technology.findOne(Session.get('technologyId'))
+#     if technology
+#       document.title = "#{technology.name()} | devdev.io"
+
+# Template.technology.currentContributor = ->
+#   if not currentContributor or currentContributor.id() != Meteor.userId()
+#     window.currentContributor = Contributor.current()
+
+Template.technology.technology= ->
+  @technology
+
+Template.technology.synched = ->
+  Session.get('devdevFullySynched')
+
+Template.technology.btnEnabledDisabledClass = ->
+  Meteor.userId() ? "" : "disabled"
+
+Template.technology.technologyId = ->
+  @technologyId
+
+Template.technology.iUseItClass = ->
+  if @technology and @technology.isUsedBy(@currentUser) then "btn-success" else ""
+
+Template.technology.twitterShareUrl = ->
+  if @technology
+    shareText = "Check out #{@technology.name()} on devdev.io, with #{@technology.numContributions()} contributions already!"
+    "https://twitter.com/share?url=#{encodeURIComponent(document.location.href)}&text=#{encodeURIComponent(shareText)}&via=devdev_io"
+
+Template.technology.admin = ->
+  Contributor.current().isAdmin()
+
+Template.technology.imgPolaroid = (options) ->
+  if @technology
+    Html.imgPolaroid(@technology.logoUrl(options.hash))
 
 Template.technology.newAspect = ->
   if not window._newAspect
     window._newAspect = new Aspect({aspectId: 'new-aspect'}, technology)
   window._newAspect
-
-Template.technology.shareText = ->
-  "Check out #{technology.name()} on devdev.io, with #{technology.numContributions()} contributions already!"
 
 Template.technology.events
 
@@ -28,17 +58,8 @@ Template.technology.events
 
   'click #add-technology': (event) ->
     analytics.track('Add technology - technology page', {loggedIn: !!Meteor.userId()})
-    if not Meteor.userId()
-      alertify.alert(Html.pleasLoginAlertifyHtml())
-      return
-    name = if technology then technology.name() else Session.get('technologyId')
-    console.log(name)
-    Meteor.call 'createNewTechnology', name, (err, ret) ->
-      if err
-        alertify.error err
-        return
-      Meteor.Router.to routes.technology(Technology.findOne(ret))
-      alertify.success "Great, now add some smarts to #{name}"
+    name = if @technology then @technology.name() else @technologyId
+    addTechnology(name)
 
   'keyup #technology-name': (event) ->
     esc = event.which == 27
@@ -104,6 +125,7 @@ $ ->
   initHandlers(Template.technology)
 
 Template.technology.rendered = ->
+  # Template.technology.technology()
   # initialize all tooltips in this template
   $('.contribution[rel=tooltip]').tooltip()
   $('.contributor-dense[rel=tooltip]').tooltip()
@@ -123,7 +145,7 @@ Template.technology.rendered = ->
     html: true
     delay: 200
     trigger: 'hover'
-  if technology and technology.isUsedBy(Contributor.current())
+  if @technology and @technology.isUsedBy(@currentUser)
     $('.i-use-it').hover(->
       $(@).removeClass('btn-success').addClass('btn-danger').find('.text').html(' Unuse It')
     , ->
@@ -138,8 +160,8 @@ Template.technology.destroyed = ->
   $('input#new-aspect-value').popover('hide')
 
 refreshAspectNameTypeahead = ->
-  if technology
-    suggestions = technology.suggestAspectNames()
+  if @technology
+    suggestions = @technology.suggestAspectNames()
     $('input#new-aspect-name').typeahead('destroy')
     $('input#new-aspect-name').typeahead(
       name: 'aspects',

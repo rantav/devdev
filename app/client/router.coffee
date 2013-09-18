@@ -1,27 +1,43 @@
 root = exports ? this
 
-Meteor.Router.add
-  '/technology': 'technologies'
-  '/technologies': 'technologies'
-  "/search":  ->
-    Session.set "search", @querystring
-    "search"
-  "/technology/:id": (id) ->
-    Session.set "technologyId", id
-    "technology"
-  "/technology/:id/:name": (id) ->
-    Session.set "technologyId", id
-    "technology"
-  '/contributor': 'contributors'
-  '/contributors': 'contributors'
-  "/contributor/:id": (id) ->
-    Session.set "contributorId", id
-    "contributor"
-  "/contributor/:id/:name": (id) ->
-    Session.set "contributorId", id
-    "contributor"
-  '/about': 'about'
-  "*": "welcome"
+Router.map ->
+  @route 'welcome', path: '/'
+
+  @route 'about'
+
+  @route 'technologies', waitOn: subscriptionHandles['technologies']
+  @route 'technology', waitOn: subscriptionHandles['technologies']
+  @route 'technology/:id', controller: 'TechnologyController'
+  @route 'technology/:id/:name', controller: 'TechnologyController'
+
+  @route 'contributors', waitOn: subscriptionHandles['contributors']
+
+
+Router.configure layout: 'layout'
+
+# Meteor.Router.add
+#   '/technology': 'technologies'
+#   '/technologies': 'technologies'
+#   "/search":  ->
+#     Session.set "search", @querystring
+#     "search"
+#   "/technology/:id": (id) ->
+#     Session.set "technologyId", id
+#     "technology"
+#   "/technology/:id/:name": (id) ->
+#     Session.set "technologyId", id
+#     "technology"
+#   '/contributor': 'contributors'
+#   '/contributors': 'contributors'
+#   "/contributor/:id": (id) ->
+#     Session.set "contributorId", id
+
+#     "contributor"
+#   "/contributor/:id/:name": (id) ->
+#     Session.set "contributorId", id
+#     "contributor"
+#   '/about': 'about'
+#   "*": "welcome"
 
 
 routes = root.routes = {}

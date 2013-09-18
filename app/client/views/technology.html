@@ -1,34 +1,35 @@
-- currentContributor = Contributor.current()
-- if (!technology)
-  - if (Session.get('devdevFullySynched'))
-    h2 #{Session.get('technologyId')} had not been created.
-    button#add-technology.btn.btn-primary(class='#{Meteor.userId() ? "" : "disabled"}') Create #{Session.get('technologyId')}
-  - else
-    h2.center Loading...
-    .spin
-- else
-  - if (technology.deletedAt())
-    .hero-unit
-      h3 Sorry, this technology (#{technology.name()}) was deleted
-      <button#add-technology.btn.btn-primary(class='#{Meteor.userId() ? "" : "disabled"}') Create #{technology.name()} again
+<template name='technology'>
+  {{#if technology.deletedAt}}
+    <div class='hero-unit'>
+      <h3>Sorry, this technology ({{technology.name}}) was deleted</h3>
+      <button id='add-technology' class='btn btn-primary {{btnEnabledDisabledClass}}'>Create {{technology.name}} again</button>
+    </div>
+  {{else}}
+    <div class='technology-page-actions pull-right'>
+      <button class='btn i-use-it {{btnEnabledDisabledClass}} {{iUseItClass}}'>
+        <i class='icon-white icon-thumbs-up'></i>
+        <span class='text'> I Use It</span>
+      </button>
+      <button id='follow-technology' class='btn disabled not-implemented'>Follow {{technology.name}}</button>
+      <a id='share' class='btn' href="{{twitterShareUrl}}" target="_blank">
+        <i class='icon-twitter'></i> Share {{technology.name}}
+      </a>
+      {{#if admin}}
+        <button id='index-technology' class='btn'>
+          <i class='icon-cog'></i> Index
+        </button>
+      {{/if}}
+    </div>
 
-  - else
-    .technology-page-actions.pull-right
-      button.btn.i-use-it(class='#{Meteor.userId() ? "" : "disabled"} #{technology.isUsedBy(currentContributor) ? "btn-success" : ""}')
-        i.icon-white.icon-thumbs-up
-        span.text  I Use It
-      <button#follow-technology.btn.disabled.not-implemented Follow #{technology.name()}
-      <a#share.btn(href="https://twitter.com/share?url=#{encodeURIComponent(document.location.href)}&text=#{encodeURIComponent(shareText)}&via=devdev_io" target="_blank")
-        i.icon-twitter
-        |  Share #{technology.name()}
-      - if (currentContributor && currentContributor.isAdmin())
-        <button#index-technology.btn
-          i.icon-cog
-          |  Index
-
-    h1.name
-      a.pull-left.technology-logo(href='#{technology.route()}')!= Html.imgPolaroid(technology.logoUrl({h: 40}))
-      #technology-name.pull-left(contenteditable='#{technology.nameEditableByCurrentUser() ? true : false}')= technology.name()
+    <h1 class='name'>
+      <a class='pull-left technology-logo' href='{{technology.route}}'>
+        {{{imgPolaroid h=40}}}
+      </a>
+      <div id='technology-name' class='pull-left' contenteditable='{{technology.nameEditableByCurrentUser_____}}'>
+        {{technology.name}}
+      </div>
+    </h1>
+    <!--
     .clearfix(style='margin:5px')
     table.table
       tbody
@@ -92,3 +93,6 @@
         div(class="contributor pull-left" style='border-left-color: #{contributor.color()}')
           img.img-polaroid(src='#{contributor.photoUrl(40)}')
           <a(href='#{contributor.route()}')= contributor.name()
+        -->
+  {{/if}}
+</template>

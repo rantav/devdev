@@ -3,7 +3,7 @@ Meteor.publish "technologies", ->
     deletedAt:
       $exists: false
 
-Meteor.publish "technologies-deleted", ->
+Meteor.publish "technologiesDeleted", ->
   Technologies.find {
     deletedAt:
       $exists: true
@@ -12,7 +12,7 @@ Meteor.publish "technologies-deleted", ->
     name: 1
     deletedAt: 1
 
-Meteor.publish "users", ->
+Meteor.publish "contributors", ->
   Meteor.users.find {},
     fields:
       profile: 1

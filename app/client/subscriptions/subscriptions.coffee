@@ -1,9 +1,10 @@
 Session.set('devdevFullySynched', false)
-subscriptions = ['technologies', 'technologies-deleted', 'users']
+subscriptions = ['technologies', 'technologiesDeleted', 'contributors']
+window.subscriptionHandles = {}
 success = 0
 for s in subscriptions
   ((s) ->
-    Meteor.subscribe s,
+    subscriptionHandles[s] = Meteor.subscribe s,
       onReady: ->
         logger.log('OK: ' + s)
         success++

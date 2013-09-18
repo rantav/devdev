@@ -1,0 +1,25 @@
+<template name='contributors'>
+<h2>Contributors</h2>
+<table class='table'>
+  {{#each contributors}}
+    <tr>
+      <th class='contributor-line'>
+        <a class='contributor-small' href='{{route}}' style='border-left-color: {{color}}'>
+          <img class='img' src='{{photoUrl 20}}'/>
+          {{name}}
+        </a>
+      </th>
+      <td>
+        {{contributionCount}} contributions
+      </td>
+      <td>
+        {{#each usedTechnologies}}
+          <a class='technology-logo-small' href='{{route}}' title='{{name}}' rel='tooltip'>
+            {{{imgPolaroid}}}
+          </a>
+        {{/each}}
+      </td>
+    </tr>
+    {{/each}}
+</table>
+</template>
