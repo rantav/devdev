@@ -42,19 +42,21 @@
           </td>
         </tr>
       {{/if}}
+      <tr class='used-by'>
+        <th>Used By</th>
+        <td>
+          {{#each technology.usedBy}}
+            <a class='contributor-dense pull-left' href='{{route}}' rel='tooltip' title='Used by {{name}}'>
+              <img class='img-polaroid' src='{{photoUrl 40}}'/>
+            </a>
+          {{else}}
+            <button class='btn i-use-it {{btnEnabledDisabledClass}}'>
+              <i class='icon-white icon-thumbs-up'></i> Be the first to use it
+            </button>
+          {{/each}}
+        </td>
+      </tr>
 <!--
-      tr.used-by
-        th Used By
-        td
-          foreach technology.usedBy() as user
-            a.contributor-dense.pull-left(href='#{user.route()}' rel='tooltip' title='Used by #{user.name()}')
-              img.img-polaroid(src='#{user.photoUrl(40)}')
-          else
-            button.btn.i-use-it(class='#{Meteor.userId() ? "" : "disabled"} #{technology.isUsedBy(currentContributor) ? "btn-success" : ""}')
-              i.icon-white.icon-thumbs-up
-              |  Be the first to use it
-
-
       foreach technology.aspects() as aspect
         tr.aspect
           th
@@ -92,4 +94,6 @@
         img.img-polaroid(src='#{contributor.photoUrl(40)}')
         <a(href='#{contributor.route()}')= contributor.name()
       -->
+    </tbody>
+  </table>
 </template>
