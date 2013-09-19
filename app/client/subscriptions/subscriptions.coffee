@@ -6,7 +6,6 @@ for s in subscriptions
   ((s) ->
     subscriptionHandles[s] = Meteor.subscribe s,
       onReady: ->
-        logger.log('OK: ' + s)
         success++
         if success == subscriptions.length
           Session.set('devdevFullySynched', true)

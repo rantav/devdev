@@ -30,7 +30,14 @@ Template.technology.newAspect = ->
   window._newAspect
 
 Template.technology.aspectEditor = (options) ->
-  renderAspectEditor(options.hash.aspect, options.hash.jqpath)
+  aspect = options.hash.aspect
+  jqpath = options.hash.jqpath or '#aspect-edit-' + aspect.id()
+  renderAspectEditor(aspect, jqpath)
+
+Template.technology.aspectContributionViewer = (options) ->
+  contribution = options.hash.contribution
+  jqpath = options.hash.jqpath or '#aspect-view-' + contribution.id()
+  renderAspectContribution(contribution, jqpath)
 
 Template.technology.events
 
@@ -44,7 +51,7 @@ Template.technology.events
 
   'click .icon-trash': ->
     analytics.track('Delete aspect contribution')
-    Meteor.call('deleteAspectContribution', @technology.id(), @contributionId())
+    Meteor.call('deleteAspectContribution', @aspect().technology().id(), @contributionId())
 
   'click #add-technology': (event) ->
     analytics.track('Add technology - technology page', {loggedIn: !!Meteor.userId()})
@@ -77,8 +84,8 @@ Template.technology.events
   'blur #new-aspect-name': ->
     $name = $('#new-aspect-name')
     name = $name.val()
-    window._newAspect.type(Technology.typeForName(name))
-    window._newAspect.name(name)
+    window._newAspect.setType(Technology.typeForName(name))
+    window._newAspect.setName(name)
 
   'click .i-use-it': ->
     analytics.track('I use it', {loggedIn: !!Meteor.userId()})
@@ -158,10 +165,9 @@ refreshAspectNameTypeahead = (technology) ->
       limit: suggestions.length,
       local: suggestions
     ).bind('typeahead:selected', (obj, datum) ->
-      window._newAspect.type(datum.type)
-      window._newAspect.name(datum.value)
+      window._newAspect.setType(datum.type)
+      window._newAspect.setName(datum.value)
       window._newAspect.setDefId(datum.defId)
       help = if datum.defId and aspectDefinitions[datum.defId] and aspectDefinitions[datum.defId].help then aspectDefinitions[datum.defId].help else ''
       $('#new-aspect-help').html(help)
-
     )

@@ -39,7 +39,7 @@ window.ImageHandler = class ImageHandler
          </div>
        </div>"
 
-    if not jqPath then return ''
+    if jqPath != '#new-aspect-adder' then return ''
 
     $(jqPath).html(html)
     jqBind = =>

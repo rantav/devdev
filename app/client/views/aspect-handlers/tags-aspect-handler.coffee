@@ -25,7 +25,7 @@ window.TagsHandler = class TagsHandler
     html = @editHtml(tagString)
 
     $(jqPath).html(html)
-    jqBind = ->
+    jqBind = =>
       # BUG: When sepecting Vertical, then selecting Stack, the suggstion list doen't
       # get updated. The typeahead value isn't correct...
       $(jqPath).find('.tagsinput').tagsinput({
@@ -47,7 +47,7 @@ window.TagsHandler = class TagsHandler
     text = tags.join(',')
     if text
       NProgress.start()
-      Meteor.call 'contributeToAspect', technology.id(), aspect.id(), text, (err, ret) ->
+      Meteor.call 'contributeToAspect', aspect.technology().id(), aspect.id(), text, (err, ret) ->
         if err
           alertify.error err
         else
@@ -65,7 +65,7 @@ window.TagsHandler = class TagsHandler
     def = window._newAspect.defId()
     analytics.track('add new aspect', {name: name})
     NProgress.start()
-    Meteor.call 'contributeNewAspect', technology.id(), name, text, def, (err, ret) ->
+    Meteor.call 'contributeNewAspect', aspect.technology().id(), name, text, def, (err, ret) ->
       if err
         alertify.error err
         NProgress.done()

@@ -36,8 +36,9 @@
           </th>
           <td class='aspect-data'>
             <div id='new-aspect-adder'>
-              {{#aspectEditor aspect=newAspect jqpath='#new-aspect-adder'}}
-              {{/aspectEditor}}
+              {{#with newAspect}}
+                {{#aspectEditor aspect=. jqpath='#new-aspect-adder'}}{{/aspectEditor}}
+              {{/with}}
             </div>
           </td>
         </tr>
@@ -56,37 +57,55 @@
           {{/each}}
         </td>
       </tr>
-<!--
-      foreach technology.aspects() as aspect
-        tr.aspect
-          th
-            span.aspect-name(rel='tooltip' title='#{aspect.helpText()}')= aspect.name()
-          td.aspect-data.existing-data
-            foreach aspect.contributions() as contribution
-              - if (!contribution.deletedAt())
-                .contribution(style='border-left-color: #{contribution.contributor().color()}'
-                    rel='tooltip'
-                    data-placement='left'
-                    title='#{contribution.contributor().name()}')
-                  .contribution-actions.pull-right
-                    - if (contribution.isCurrentUserOwner())
-                      <a.action.not-implemented(href='javascript:void(0)' title='Edit your contribution')
-                        i#edit-aspect-contribution.icon-edit.disabled
-                      <a.action(href='javascript:void(0)' title='Delete your contribution')
-                        i.icon-trash
-                    - else
-                      <a.not-implemented.action(href='javascript:void(0)' title='Vote up')
-                        i#vote-up-aspect-contribution.icon-thumbs-up.disabled
-                      <a.not-implemented.action(href='javascript:void(0)' title='Vote down')
-                        i#vote-down-aspect-contribution.icon-thumbs-down.disabled
-                  p.contribution
-                    small.pull-right.muted= moment(contribution.updatedAt()).fromNow()
-                    div(id='aspect-view-#{aspect.id()}')
-                      != renderAspectContribution(contribution, '#aspect-view-' + aspect.id())
-            - if (Meteor.userId())
-              div(id='aspect-edit-#{aspect.id()}')
-                != renderAspectEditor(aspect, '#aspect-edit-' + aspect.id())
 
+      {{#each technology.aspects}}
+        <tr class='aspect'>
+          <th>
+            <span class='aspect-name' rel='tooltip' title='{{helpText}}'>{{name}}</span>
+          </th>
+          <td class='aspect-data existing-data'>
+            {{#each contributions}}
+              {{#unless deletedAt}}
+                <div class='contribution' style='border-left-color: {{contributor.color}}'
+                     rel='tooltip' data-placement='left'
+                     title='{{contributor.name}}'>
+                  <div class='contribution-actions pull-right'>
+                    {{#if isCurrentUserOwner}}
+                      <a class='action not-implemented' href='javascript:void(0)' title='Edit your contribution'>
+                        <i id='edit-aspect-contribution' class='icon-edit disabled'></i>
+                      </a>
+                      <a class='action' href='javascript:void(0)' title='Delete your contribution'>
+                        <i class='icon-trash'></i>
+                      </a>
+                    {{else}}
+                      <a class='not-implemented action' href='javascript:void(0)' title='Vote up'>
+                        <i id='vote-up-aspect-contribution' class='icon-thumbs-up disabled'></i>
+                      </a>
+                      <a class='not-implemented action' href='javascript:void(0)' title='Vote down'>
+                        <i id='vote-down-aspect-contribution' class='icon-thumbs-down disabled'></i>
+                      </a>
+                    {{/if}}
+                  </div>
+                  <p class='contribution'>
+                    <small class='pull-right muted'>
+                      {{timeAgo updatedAt}}
+                    </small>
+                    <div id='aspect-view-{{../id}}'>
+                      {{#aspectContributionViewer contribution=.}}{{/aspectContributionViewer}}
+                    </div>
+                  </p>
+                </div>
+              {{/unless}}
+            {{/each}}
+            {{#if loggedIn}}
+              <div id='aspect-edit-{{id}}'>
+                {{#aspectEditor aspect=.}}{{/aspectEditor}}
+              </div>
+            {{/if}}
+          </td>
+        </tr>
+      {{/each}}
+        <!--
   .contributors
     h5 Contributors:
     foreach technology.contributors() as contributor

@@ -8,24 +8,18 @@ root.Aspect = class Aspect
   depend: ->
     @dep.depend()
 
-  name: (n) ->
-    if n
-      @setName(n)
-    else @data.name if @data
+  name: () => @data.name if @data
 
-  setName: (n) ->
+  setName: (n) =>
     @data.name = n
     @changed()
 
-  id: -> @data.aspectId
+  id: => @data.aspectId
 
   defId: -> @data.defId if @data
   setDefId: (defId) -> @data.defId = defId
 
-  type: (t) ->
-    if t
-      @setType(t)
-    else @data.type if @data
+  type: (t) => @data.type if @data
 
   setType: (t) ->
     @data.type = t
