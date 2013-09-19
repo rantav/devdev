@@ -1,4 +1,4 @@
-Template.technology.technology= ->
+Template.technology.technology = ->
   if @technology
     document.title = "#{@technology.name()} | devdev.io"
   @technology
@@ -115,12 +115,13 @@ $ ->
   initHandlers(Template.technology)
 
 Template.technology.rendered = ->
+
   # initialize all tooltips in this template
   $('.contribution[rel=tooltip]').tooltip()
   $('.contributor-dense[rel=tooltip]').tooltip()
   $('.aspect-name[rel=tooltip]').tooltip({container: 'body', placement: 'right'})
 
-  refreshAspectNameTypeahead()
+  refreshAspectNameTypeahead(@data.technology)
   $('input#new-aspect-name').popover
     title: 'Aspect Name'
     content: 'For example: <code>Tagline</code>, or <code>Typical Use Cases</code> etc <hr/> Type <code>?</code> for suggestions'
@@ -134,7 +135,7 @@ Template.technology.rendered = ->
     html: true
     delay: 200
     trigger: 'hover'
-  if @technology and @technology.isUsedBy(@currentUser)
+  if @data.technology and @data.technology.isUsedBy(@data.currentUser)
     $('.i-use-it').hover(->
       $(@).removeClass('btn-success').addClass('btn-danger').find('.text').html(' Unuse It')
     , ->
@@ -148,9 +149,9 @@ Template.technology.destroyed = ->
   $('input#new-aspect-name').popover('hide')
   $('input#new-aspect-value').popover('hide')
 
-refreshAspectNameTypeahead = ->
-  if @technology
-    suggestions = @technology.suggestAspectNames()
+refreshAspectNameTypeahead = (technology) ->
+  if technology
+    suggestions = technology.suggestAspectNames()
     $('input#new-aspect-name').typeahead('destroy')
     $('input#new-aspect-name').typeahead(
       name: 'aspects',
