@@ -5,8 +5,8 @@ Router.map ->
 
   @route 'about'
 
-  @route 'technologies', waitOn: subscriptionHandles['technologies']
-  @route 'technology', waitOn: subscriptionHandles['technologies']
+  @route 'technologies', controller: 'TechnologiesController'
+  @route 'technology', controller: 'TechnologiesController'
   @route 'technology/:id', controller: 'TechnologyController'
   @route 'technology/:id/:name', controller: 'TechnologyController'
 

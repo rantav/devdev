@@ -1,53 +1,65 @@
 <template name='technologies'>
-  technologies
+<div class='technologies-page-actions pull-right'>
+  <button id='add-technology' class='btn btn-primary {{disableAnonymous}}'>Add Technology</button>
+</div>
+<h2>Technologies</h2>
+{{#if isAdmin}}
+  <div class='admin pull-right'>
+    <button id='index-all-technologies' class='btn'>
+      <i class='icon-cog'></i> Index All
+    </button>
+  </div>
+{{/if}}
+
+<table class='table'>
+  <tbody>
+    {{#each technologies}}
+      <tr>
+        <td class='technology-logo-small'>
+          <a href='{{route}}'>{{{imgPolaroid}}}</a>
+        </td>
+        <th>
+          <a href='{{route}}'>{{name}}</a>
+        </th>
+        <td class='tags'>
+          <div>
+            {{#each getTagsForAspectDefId 'stack'}}
+              <a class='label label-stack' href='{{tagLink tag  "stack"}}'>{{.}}</a>
+            {{/each}}
+          </div>
+          <div>
+            {{#each getTagsForAspectDefId 'vertical'}}
+              <a class='label label-vertical' href='{{tagLink tag "vertical"}}'>{{.}}</a>
+            {{/each}}
+          </div>
+        </td>
+        <td>
+          Started by <a href='{{creator.route}}'>{{creator.name}}</a>, {{timeAgo createdAt}}
+          <small class='muted'>(Last modified {{timeAgo updatedAt}})</small>
+        </td>
+        <td class='used-by'>
+          {{#each usedBy}}
+            <a class='contributor-xsmall pull-left' href='{{route}}' rel='tooltip' title='Used by {{name}}'>
+              <img class='img-polaroid' src='{{photoUrl 20}}'/>
+            </a>
+          {{/each}}
+        </td>
+        <td>
+          <button class='btn btn-small i-use-it {{disableAnonymous}} {{iUseItClass .}}'>
+            <i class='icon-white icon-thumbs-up'></i>&nbsp;I&nbsp;Use&nbsp;It
+          </button>
+        </td>
+        <td>
+          {{#if isCurrentUserOwner .}}
+            <div class='pull-right'>
+              <a class='action' href='javascript:void(0)' title='Delete {{name}}'>
+                <i class='icon-trash'></i>
+              </a>
+            </div>
+          {{/if}}
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
 </template>
-<!--
-.technologies-page-actions
-  .pull-right
-    button#add-technology.btn.btn-primary(class='#{Meteor.userId() ? "" : "disabled"}') Add Technology
-
-h2 Technologies
-- currentContributor = Contributor.current()
-- if (currentContributor && currentContributor.isAdmin())
-  .admin.pull-right
-    <button#index-all-technologies.btn
-      i.icon-cog
-      |  Index All
-table.table
-  tbody
-    foreach technologies as technology
-      tr
-        td.technology-logo-small
-          a(href='#{technology.route()}')
-            != Html.imgPolaroid(technology.logoUrl({h: 15, default: Cdn.cdnify('/img/cogs-17x15.png')}))
-        th
-          a(href='#{technology.route()}')= technology.name()
-        td.tags
-          div
-            foreach technology.getTagsForAspectDefId('stack') as tag
-              a.label.label-stack(href='#{Url.tagLink(tag, "stack")}')= tag
-          div
-            foreach technology.getTagsForAspectDefId('vertical') as tag
-              a.label.label-vertical(href='#{Url.tagLink(tag, "vertical")}')= tag
-        td
-          | Started by
-          <a(href='#{technology.creator().route()}')= technology.creator().name()
-          |,
-          |
-          = moment(technology.createdAt()).fromNow()
-          <small.muted (Last modified #{moment(technology.updatedAt()).fromNow()})
-        td.used-by
-          foreach technology.usedBy() as user
-            a.contributor-xsmall.pull-left(href='#{user.route()}' rel='tooltip' title='Used by #{user.name()}')
-              img.img-polaroid(src='#{user.photoUrl(20)}')
-        td
-          button.btn.btn-small.i-use-it(class='#{Meteor.userId() ? "" : "disabled"} #{technology.isUsedBy(currentContributor) ? "btn-success" : ""}')
-            i.icon-white.icon-thumbs-up
-            |&nbsp;I&nbsp;Use&nbsp;It
-        td
-          - if (Meteor.userId() === technology.contributorId())
-            .pull-right
-              a.action(href='javascript:void(0)' title='Delete #{technology.name()}')
-                i.icon-trash
-
--->

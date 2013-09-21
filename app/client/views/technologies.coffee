@@ -1,7 +1,13 @@
 Template.technologies.technologies = ->
-  technologies = Technology.find({}, {sort: {updatedAt: -1}})
-  document.title = "#{technologies.length} technologies | devdev.io"
-  technologies
+  @technologies = Technology.find({}, {sort: {updatedAt: -1}})
+  document.title = "#{@technologies.length} technologies | devdev.io"
+  @technologies
+
+Template.technologies.imgPolaroid = ->
+  Html.imgPolaroid(@logoUrl({h: 15, default: Cdn.cdnify('/img/cogs-17x15.png')}))
+
+Template.technologies.iUseItClass = () ->
+  if @isUsedBy(Contributor.findOne(Meteor.userId())) then "btn-success" else ""
 
 Template.technologies.events
   'click #add-technology': ->
@@ -12,13 +18,7 @@ Template.technologies.events
 
     alertify.prompt '<h1>Technology Name:</h1>', (e, str) ->
       if e
-        Meteor.call 'createNewTechnology', str, (err, ret) ->
-          if err
-            alertify.error err
-            return
-          technology = new Technology(ret)
-          Meteor.Router.to technology.route()
-          alertify.success "Great, now add some smarts to #{technology.name()}"
+        addTechnology(str)
 
   'click i.icon-trash': ->
     analytics.track('Delete technology')
