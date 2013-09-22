@@ -12,6 +12,8 @@ Router.map ->
 
   @route 'contributors', controller: 'ContributorsController'
   @route 'contributor', controller: 'ContributorsController'
+  @route 'contributor/:id', controller: 'ContributorController'
+  @route 'contributor/:id/:name', controller: 'ContributorController'
 
 
 Router.configure

@@ -38,6 +38,8 @@ root.Contributor = class Contributor
 
   isAdmin: -> @name() == "Ran Tavory" # Hah!
 
+  anonymous: -> @id() == 'unknown'
+
   photoUrl: (height) ->
     if @data.services
       if @data.services.google

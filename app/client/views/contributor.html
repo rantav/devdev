@@ -1,50 +1,47 @@
 <template name='contributor'>
-    {{this}}
+    contributor
 </template>
 
 <!--
-- if (!contributor)
-  h2 Sorry, looks like a broken link, #{Session.get('contributorId')} is not here...
-- else
-  .contributor-page-actions
-    .pull-right
-      <button#follow-contributor.btn.disabled.not-implemented Follow #{contributor.name()}
-      <button#share-contributor.btn.disabled.not-implemented Share #{contributor.name()}'s awesome work!
+.contributor-page-actions
+  .pull-right
+    <button#follow-contributor.btn.disabled.not-implemented Follow #{contributor.name()}
+    <button#share-contributor.btn.disabled.not-implemented Share #{contributor.name()}'s awesome work!
 
-  .contributor.pull-left(style='border-left-color: #{contributor.color()}')
-    img.img-polaroid(src='#{contributor.photoUrl(40)}')
+.contributor.pull-left(style='border-left-color: #{contributor.color()}')
+  img.img-polaroid(src='#{contributor.photoUrl(40)}')
 
-  h1 Contributions by #{contributor.name()}
-  table.table
-    thead
-      tr
-        th
-          = contributor.name()
-          |  Uses:
-          foreach contributor.usedTechnologies() as technology
-            a.technology-logo-small(href='#{technology.route()}' title='#{technology.name()}' rel='tooltip' style='margin-left: 3px')!= Html.imgPolaroid(technology.logoUrl({h: 15, default: '/img/cogs-17x15.png'}))
+h1 Contributions by #{contributor.name()}
+table.table
+  thead
+    tr
+      th
+        = contributor.name()
+        |  Uses:
+        foreach contributor.usedTechnologies() as technology
+          a.technology-logo-small(href='#{technology.route()}' title='#{technology.name()}' rel='tooltip' style='margin-left: 3px')!= Html.imgPolaroid(technology.logoUrl({h: 15, default: '/img/cogs-17x15.png'}))
 
-    tbody
-      foreach contributor.contributions() as contribution
-        tr.contribution
-          - if (contribution.technology())
-            - if (contribution.type() == 'technology')
-              th
-                | Created technology
-                <a(href='#{contribution.technology().route()}')= contribution.technology().name()
-              td.contribution-data
-              td
-                small.pull-right.muted Created #{moment(contribution.technology().createdAt()).fromNow()}, last update #{moment(contribution.technology().updatedAt()).fromNow()}
-            - else if (contribution.type() == 'aspectContribution')
-              th
-                | Contributed to
-                <a(href='#{contribution.technology().route()}')= contribution.technology().name()
-                |
-                | to aspect
-                |
-                span.label= contribution.aspect().name()
-              td.contribution-data
-                != renderAspectContribution(contribution.content(), null, true)
-              td
-                small.pull-right.muted Created #{moment(contribution.content().createdAt()).fromNow()}, last update #{moment(contribution.content().updatedAt()).fromNow()}
+  tbody
+    foreach contributor.contributions() as contribution
+      tr.contribution
+        - if (contribution.technology())
+          - if (contribution.type() == 'technology')
+            th
+              | Created technology
+              <a(href='#{contribution.technology().route()}')= contribution.technology().name()
+            td.contribution-data
+            td
+              small.pull-right.muted Created #{moment(contribution.technology().createdAt()).fromNow()}, last update #{moment(contribution.technology().updatedAt()).fromNow()}
+          - else if (contribution.type() == 'aspectContribution')
+            th
+              | Contributed to
+              <a(href='#{contribution.technology().route()}')= contribution.technology().name()
+              |
+              | to aspect
+              |
+              span.label= contribution.aspect().name()
+            td.contribution-data
+              != renderAspectContribution(contribution.content(), null, true)
+            td
+              small.pull-right.muted Created #{moment(contribution.content().createdAt()).fromNow()}, last update #{moment(contribution.content().updatedAt()).fromNow()}
 -->

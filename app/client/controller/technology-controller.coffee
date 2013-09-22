@@ -11,6 +11,7 @@ class @TechnologyController extends RouteController
   notFoundTemplate: 'technologyNotFound'
 
   data: ->
+    Session.set('technologyId', undefined)
     @technology = Technology.findOne(@params.id)
     if not @technology
       Session.set('technologyId', @params.id)
