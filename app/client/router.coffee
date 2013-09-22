@@ -10,7 +10,8 @@ Router.map ->
   @route 'technology/:id', controller: 'TechnologyController'
   @route 'technology/:id/:name', controller: 'TechnologyController'
 
-  @route 'contributors', waitOn: subscriptionHandles['contributors']
+  @route 'contributors', controller: 'ContributorsController'
+  @route 'contributor', controller: 'ContributorsController'
 
 
 Router.configure
