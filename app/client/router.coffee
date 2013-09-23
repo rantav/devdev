@@ -15,6 +15,8 @@ Router.map ->
   @route 'contributor/:id', controller: 'ContributorController'
   @route 'contributor/:id/:name', controller: 'ContributorController'
 
+  @route 'search', controller: 'SearchController'
+
 
 Router.configure
   layout: 'layout'

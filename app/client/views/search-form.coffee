@@ -6,5 +6,5 @@ Template['search-form'].events
     event.preventDefault()
     q = $('#navbar-search').val()
     q = encodeURIComponent(q)
-    Meteor.Router.to("/search?q=#{q}")
+    Router.go("/search?q=#{q}")
 

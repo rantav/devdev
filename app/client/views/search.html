@@ -1,35 +1,40 @@
 <template name='search'>
-  search
+<h1>Search</h1>
+<table class='table'>
+  <tbody>
+    {{#each technologies}}
+      <tr>
+        <td class='technology-logo-small'>
+          <a href='{{route}}'>{{{imgPolaroid}}}</a>
+         </td>
+        <th>
+          <a href='{{route}}'>{{name}}</a>
+        </th>
+        <td class='tags'>
+          <div>
+            {{#each getTagsForAspectDefId 'stack'}}
+              <a class='label label-stack' href='{{tagLink .  "stack"}}'>{{.}}</a>
+            {{/each}}
+          </div>
+          <div>
+            {{#each getTagsForAspectDefId 'vertical'}}
+              <a class='label label-vertical' href='{{tagLink . "vertical"}}'>{{.}}</a>
+            {{/each}}
+          </div>
+        </td>
+        <td>
+          Started by
+          <a href='{{creator.route}}'>{{creator.name}}</a>, {{timeAgo createdAt}}
+          <small class='muted'>(Last modified {{timeAgo updatedAt}}</small>
+        </td>
+        <td class='used-by'>
+          {{#each usedBy}}
+            <a class='contributor-xsmall pull-left' href='{{route}}' rel='tooltip' title='Used by {{name}}'>
+              <img class='img-polaroid' src='{{photoUrl 20}}'/>
+            </a>
+          {{/each}}
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
 </template>
-
-<!--
-h1 Search
-
-table.table
-  tbody
-    foreach technologies as technology
-      tr
-        td.technology-logo-small
-          a(href='#{technology.route()}')
-            != Html.imgPolaroid(technology.logoUrl({h: 15, default: Cdn.cdnify('/img/cogs-17x15.png')}))
-        th
-          a(href='#{technology.route()}')= technology.name()
-        td.tags
-          div
-            foreach technology.getTagsForAspectDefId('stack') as tag
-              a.label.label-stack(href='#{Url.tagLink(tag, "stack")}')= tag
-          div
-            foreach technology.getTagsForAspectDefId('vertical') as tag
-              a.label.label-vertical(href='#{Url.tagLink(tag, "vertical")}')= tag
-        td
-          | Started by
-          <a(href='#{technology.creator().route()}')= technology.creator().name()
-          |,
-          |
-          = moment(technology.createdAt()).fromNow()
-          <small.muted (Last modified #{moment(technology.updatedAt()).fromNow()})
-        td.used-by
-          foreach technology.usedBy() as user
-            a.contributor-xsmall.pull-left(href='#{user.route()}' rel='tooltip' title='Used by #{user.name()}')
-              img.img-polaroid(src='#{user.photoUrl(20)}')
--->

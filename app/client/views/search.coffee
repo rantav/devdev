@@ -10,20 +10,21 @@ window.esCallback = (data) ->
 
 
 Template.search.created = ->
+  query = Session.get('query')
+  type = Session.get('type')
   Deps.autorun ->
     technologies = []
-    search = Session.get('search')
-    q = Url.getParameterByName('q', search)
-    if q
-      type = Url.getParameterByName('type', search)
-      searcher.search(q, type, 'esCallback')
+    if query
+      searcher.search(query, type, 'esCallback')
 
 Template.search.rendered = ->
-  search = Session.get('search')
-  q = Url.getParameterByName('q', search)
-  $('#navbar-search').val(q)
+  query = Session.get('query')
+  $('#navbar-search').val(query)
 
 Template.search.technologies = ->
   technologiesDep.depend()
   document.title = "#{technologies.length} technologies | devdev.io"
   technologies
+
+Template.search.imgPolaroid = ->
+  Html.imgPolaroid(@logoUrl({h: 15, default: Cdn.cdnify('/img/cogs-17x15.png')}))

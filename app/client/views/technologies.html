@@ -24,12 +24,12 @@
         <td class='tags'>
           <div>
             {{#each getTagsForAspectDefId 'stack'}}
-              <a class='label label-stack' href='{{tagLink tag  "stack"}}'>{{.}}</a>
+              <a class='label label-stack' href='{{tagLink .  "stack"}}'>{{.}}</a>
             {{/each}}
           </div>
           <div>
             {{#each getTagsForAspectDefId 'vertical'}}
-              <a class='label label-vertical' href='{{tagLink tag "vertical"}}'>{{.}}</a>
+              <a class='label label-vertical' href='{{tagLink . "vertical"}}'>{{.}}</a>
             {{/each}}
           </div>
         </td>
