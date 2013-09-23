@@ -1,10 +1,13 @@
 Template.contributor.contributor = ->
-  contributorData = Meteor.users.findOne Session.get('contributorId')
-  if not contributorData
-    contributorData = Meteor.users.findOne({'profile.name': Session.get('contributorId')})
-  contributor = new Contributor(contributorData)
-  document.title = "#{contributor.name()} | devdev.io"
-  contributor
+  document.title = "#{@contributor.name()} | devdev.io"
+  @contributor
+
+Template.contributor.imgPolaroid = ->
+  Html.imgPolaroid(@logoUrl({h: 15, default: Cdn.cdnify('/img/cogs-17x15.png')}))
+
+Template.contributor.aspectContributionViewer = (options) ->
+  contribution = options.hash.contribution
+  renderAspectContribution(contribution, null, true)
 
 Template.contributor.events
   'click .not-implemented': (event) ->

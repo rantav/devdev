@@ -28,3 +28,5 @@ root.Contribution = class Contribution
 
   contributorId: -> @data.contributorId
 
+  typeIs: (typeStr) ->
+    @type() == typeStr
