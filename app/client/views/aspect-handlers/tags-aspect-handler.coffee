@@ -29,7 +29,7 @@ window.TagsHandler = class TagsHandler
       # BUG: When sepecting Vertical, then selecting Stack, the suggstion list doen't
       # get updated. The typeahead value isn't correct...
       $el = $(jqPath).find('.tagsinput')
-      unless $el.data('role') == 'tagsinput'
+      unless $el.is(':hidden')
         $el.tagsinput({
           typeahead: {
             local: aspect.technology()[datasource](),
