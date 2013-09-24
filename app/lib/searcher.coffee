@@ -13,7 +13,8 @@ class Searcher
 
   search: (query, type, callbackName) ->
     if callbackName
-      url = "#{baseUrl}/#{type}/_search?q=#{query}&fields=_id&callback=#{callbackName}"
+      type = if type then "/#{type}" else ''
+      url = "#{baseUrl}#{type}/_search?q=#{query}&fields=_id&callback=#{callbackName}"
       $.getScript(url).done((script, textStatus) ->
         # yay!
       ).fail((jqxhr, settings, exception) ->

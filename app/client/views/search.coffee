@@ -10,9 +10,9 @@ window.esCallback = (data) ->
 
 
 Template.search.created = ->
-  query = Session.get('query')
-  type = Session.get('type')
   Deps.autorun ->
+    query = Session.get('query')
+    type = Session.get('type')
     technologies = []
     if query
       searcher.search(query, type, 'esCallback')
