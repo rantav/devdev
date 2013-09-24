@@ -28,12 +28,14 @@ window.TagsHandler = class TagsHandler
     jqBind = =>
       # BUG: When sepecting Vertical, then selecting Stack, the suggstion list doen't
       # get updated. The typeahead value isn't correct...
-      $(jqPath).find('.tagsinput').tagsinput({
-        typeahead: {
-          local: aspect.technology()[datasource](),
-          freeInput: true
-        }
-      })
+      $el = $(jqPath).find('.tagsinput')
+      unless $el.data('role') == 'tagsinput'
+        $el.tagsinput({
+          typeahead: {
+            local: aspect.technology()[datasource](),
+            freeInput: true
+          }
+        })
     Meteor.setTimeout(jqBind, 100)
     return html
 
