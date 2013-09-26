@@ -105,14 +105,15 @@
           </td>
         </tr>
       {{/each}}
-        <!--
-  .contributors
-    h5 Contributors:
-    foreach technology.contributors() as contributor
-      div(class="contributor pull-left" style='border-left-color: #{contributor.color()}')
-        img.img-polaroid(src='#{contributor.photoUrl(40)}')
-        <a(href='#{contributor.route()}')= contributor.name()
-      -->
     </tbody>
   </table>
+  <div class='contributors'>
+    <h5>Contributors:</h5>
+    {{#each technology.contributors}}
+      <div class="contributor pull-left" style='border-left-color: {{color}}'>
+        <img class='img-polaroid' src='{{photoUrl 40}}'/>
+        <a href='{{route}}'>{{name}}</a>
+      </div>
+    {{/each}}
+  </div>
 </template>
