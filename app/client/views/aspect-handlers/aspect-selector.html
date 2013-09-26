@@ -1,0 +1,52 @@
+<template name='aspectViewer'>
+  {{#if aspect.typeIs 'markdown'}}
+    {{> markdownAspect}}
+  {{/if}}
+  {{#if aspect.typeIs 'image'}}
+    {{> imageAspect}}
+  {{/if}}
+  {{#if aspect.typeIs 'tags'}}
+    {{#if readonly}}
+      {{> tagsAspect}}
+    {{else}}
+      {{#if isCurrentUserOwner}}
+        {{> tagsAspectEditor}}
+      {{else}}
+        {{> tagsAspect}}
+      {{/if}}
+    {{/if}}
+  {{/if}}
+</template>
+
+<template name='aspectEditorHeader'>
+  {{#if typeIs 'markdown'}}
+    {{> markdownAspectEditor}}
+  {{/if}}
+  {{#if typeIs undefined}}
+    {{> markdownAspectEditor}}
+  {{/if}}
+  {{#if typeIs 'image'}}
+    {{> imageAspectEditor}}
+  {{/if}}
+  {{#if typeIs 'tags'}}
+    {{#unless hasContributionsFromUser currentContributor.id}}
+      {{> tagsAspectEditor}}
+    {{/unless}}
+  {{/if}}
+</template>
+
+<template name='aspectEditorInline'>
+  {{#if typeIs 'markdown'}}
+    {{> markdownAspectEditor}}
+  {{/if}}
+  {{#if typeIs undefined}}
+    {{> markdownAspectEditor}}
+  {{/if}}
+  {{#if typeIs 'image'}}
+  {{/if}}
+  {{#if typeIs 'tags'}}
+    {{#unless hasContributionsFromUser currentContributor.id}}
+      {{> tagsAspectEditor}}
+    {{/unless}}
+  {{/if}}
+</template>

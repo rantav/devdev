@@ -1,0 +1,34 @@
+<template name='imageAspect'>
+  <div class='img-logo-aspect'>
+    <img src='{{image}}' class='img'></img>
+  </div>
+</template>
+
+<template name='imageAspectEditor'>
+<div class='image-aspect edit-section'>
+  <div class='span5'>
+    <form class='contribute-form'>
+     <div class='control-group'>
+      <input class='filepicker-dragdrop'
+             type='filepicker-dragdrop'
+             data-fp-mimetypes='image/*'
+             data-fp-container='modal'
+             data-fp-button-class='btn'
+             data-fp-multiple='false'
+             data-fp-store-location='S3'
+             data-fp-store-path='{{storePath}}'
+             data-fp-store-access='public'
+             data-fp-services='COMPUTER,IMAGE_SEARCH,URL'></input>
+      <input type='hidden' id='new-aspect-value'/>
+     </div>
+     <div class='controls' style='display:none'>
+       <button type='submit' class='btn btn-primary submit-contribution' data-referred-id='{{id}}-value'>Save</button>
+       <button type='button' class='btn cancel-contribution' data-referred-id='{{id}}-value'>Cancel</button>
+     </div>
+    </form>
+   </div>
+   <div class='span5'>
+     <div class='contribute-preview img-logo-aspect' style='border-left-color: {{currentContributor.color}}'/>
+   </div>
+ </div>
+</template>

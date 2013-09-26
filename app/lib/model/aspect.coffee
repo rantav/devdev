@@ -24,6 +24,7 @@ root.Aspect = class Aspect
   setType: (t) ->
     @data.type = t
     @changed()
+  typeIs: (t) -> @type() == t
 
   helpText: ->
     if @defId and aspectDefinitions[@defId()] then aspectDefinitions[@defId()].help else undefined
@@ -89,7 +90,7 @@ root.Aspect = class Aspect
 
   placeholderText: ->
     if @id() == 'new-aspect'
-      if @type == 'markdown'
+      if @type() == 'markdown'
         return "Say something about #{@name()}"
       else
         return '<- Type aspect name first'

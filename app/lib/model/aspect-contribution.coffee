@@ -34,6 +34,9 @@ root.AspectContribution = class AspectContribution
   isCurrentUserOwner: -> Meteor.userId() == @data.contributorId
 
   aspect: -> @aspectRef
+  technology: -> @aspect().technology()
+
+  defId: -> @aspect().defId()
 
   id: -> @data.contributionId
 

@@ -42,7 +42,9 @@
               <span class='label'>{{aspect.name}}</span>
             </th>
             <td class='contribution-data'>
-              {{#aspectContributionViewer contribution=content}}{{/aspectContributionViewer}}
+              {{#with content}}
+                {{> aspectViewer readonly}}
+              {{/with}}
             </td>
             <td>
               <small class='pull-right muted'>Created {{timeAgo content.createdAt}}, last update {{timeAgo content.updatedAt}}</small>

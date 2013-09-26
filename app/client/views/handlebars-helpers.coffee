@@ -3,8 +3,7 @@ Handlebars.registerHelper 'loggedIn', (code) ->
   !!Meteor.userId()
 
 Handlebars.registerHelper 'isAdmin', (code) ->
-  current = Contributor.current()
-  current and current.isAdmin()
+  currentContributor and currentContributor.isAdmin()
 
 # Displays a simple "Time ago" string, such as "8 minutes ago", "5 hours ago" etc
 Handlebars.registerHelper 'timeAgo', (time) ->
@@ -16,3 +15,13 @@ Handlebars.registerHelper 'disableAnonymous', ->
 
 Handlebars.registerHelper 'tagLink', (tagName, category) ->
   Url.tagLink(tagName, category)
+
+# Converts markdown to HTML
+Handlebars.registerHelper 'marked', (markdown) ->
+  marked(markdown)
+
+Deps.autorun ->
+  window.currentContributor = Contributor.current()
+
+Handlebars.registerHelper 'currentContributor', ->
+  currentContributor

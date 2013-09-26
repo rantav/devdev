@@ -21,10 +21,12 @@ Template.technology.imgPolaroid = (options) ->
   if @technology
     Html.imgPolaroid(@technology.logoUrl(options.hash))
 
+newAspect = null
 Template.technology.newAspect = ->
-  if not window._newAspect
-    window._newAspect = new Aspect({aspectId: 'new-aspect'}, @technology)
-  window._newAspect
+  if not newAspect
+    newAspect = new Aspect({aspectId: 'new-aspect'}, @technology)
+  newAspect.depend()
+  newAspect
 
 Template.technology.aspectEditor = (options) ->
   aspect = options.hash.aspect
@@ -81,8 +83,8 @@ Template.technology.events
   'blur #new-aspect-name': ->
     $name = $('#new-aspect-name')
     name = $name.val()
-    window._newAspect.setType(Technology.typeForName(name))
-    window._newAspect.setName(name)
+    newAspect.setType(Technology.typeForName(name))
+    newAspect.setName(name)
 
   'click .i-use-it': ->
     analytics.track('I use it', {loggedIn: !!Meteor.userId()})
@@ -105,18 +107,6 @@ Template.technology.events
   'click .not-implemented': (event) ->
     alertify.log '<strong>Coming soonish...</strong> <i class="icon-cogs pull-right"> </i>'
     analytics.track('Clicked disabled', {id: event.srcElement.id})
-
-
-$ ->
-  marked.setOptions
-    gfm: true,
-    tables: true,
-    breaks: true,
-    pedantic: false,
-    sanitize: true,
-    smartLists: true,
-    smartypants: false,
-  initHandlers(Template.technology)
 
 Template.technology.rendered = ->
 
@@ -146,6 +136,7 @@ Template.technology.rendered = ->
       $(@).removeClass('btn-danger').addClass('btn-success').find('.text').html(' I Use It')
     )
 
+
 Template.technology.destroyed = ->
   $('.contribution[rel=tooltip]').tooltip('hide')
   $('.contributor-dense[rel=tooltip]').tooltip('hide')
@@ -162,9 +153,10 @@ refreshAspectNameTypeahead = (technology) ->
       limit: suggestions.length,
       local: suggestions
     ).bind('typeahead:selected', (obj, datum) ->
-      window._newAspect.setType(datum.type)
-      window._newAspect.setName(datum.value)
-      window._newAspect.setDefId(datum.defId)
+      newAspect.setType(datum.type)
+      newAspect.setName(datum.value)
+      newAspect.setDefId(datum.defId)
       help = if datum.defId and aspectDefinitions[datum.defId] and aspectDefinitions[datum.defId].help then aspectDefinitions[datum.defId].help else ''
       $('#new-aspect-help').html(help)
+      Meteor.setTimeout((->$('#new-aspect-value').focus()), 100)
     )

@@ -1,0 +1,25 @@
+<template name='markdownAspect'>
+  <div class='markdown-aspect'>
+     {{#marked markdownProcessed}}{{/marked}}
+  </div>
+</template>
+
+<template name='markdownAspectEditor'>
+  <div class='markdown-aspect edit-section'>
+    <div class='span5'>
+      <form class='contribute-form'>
+       <div class='control-group'>
+         <textarea class='contribute-text' id='{{id}}-value' placeholder='{{placeholderText}}'/>
+       </div>
+       <div class='controls' style='display:none'>
+         <small class='muted pull-right'>Markdown enabled</small>
+         <button type='submit' class='btn btn-primary submit-contribution' data-referred-id='{{id}}-value'>Save</button>
+         <button type='button' class='btn cancel-contribution' data-referred-id='{{id}}-value'>Cancel</button>
+       </div>
+      </form>
+     </div>
+     <div class='span5'>
+       <p class='contribute-preview' style='border-left-color: {{currentContributor.color}}'/>
+     </div>
+   </div>
+</template>

@@ -26,6 +26,17 @@ spin = (target) ->
     left: 'auto'
   spinner = new Spinner(opts).spin(target);
 
+Meteor.startup ->
+  marked.setOptions
+    gfm: true,
+    tables: true,
+    breaks: true,
+    pedantic: false,
+    sanitize: true,
+    smartLists: true,
+    smartypants: false,
+
+
 showSpinners = ->
   if not Session.get('devdevFullySynched')
     NProgress.start()

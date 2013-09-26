@@ -199,11 +199,12 @@ root.Technology = class Technology
 
   # Just picks up the first logo that it's able to find.
   findLogoContribution: ->
-    for aspect in @data.aspects
-      if aspect.name == 'Logo' and aspect.contributions.length
-        for contribution in aspect.contributions
-          if not contribution.deletedAt
-            return new AspectContribution(contribution, new Aspect(aspect), @)
+    if @data.aspects
+      for aspect in @data.aspects
+        if aspect.name == 'Logo' and aspect.contributions.length
+          for contribution in aspect.contributions
+            if not contribution.deletedAt
+              return new AspectContribution(contribution, new Aspect(aspect), @)
 
 createAspect = (aspectName, type, aspectDefId) ->
   name: aspectName

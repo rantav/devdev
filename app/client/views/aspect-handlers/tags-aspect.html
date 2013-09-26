@@ -1,0 +1,22 @@
+<template name='tagsAspect'>
+<div class='tags-aspect'>
+  {{#each getTags}}<a href='{{tagLink . ../aspect.defId}}' class='label label-info'>{{.}}</a>{{/each}}
+</div>
+</template>
+
+<template name='tagsAspectEditor'>
+<div class='tags-aspect edit-section'>
+  <div class='span5'>
+    <form class='contribute-form'>
+     <div class='control-group'>
+      <input value='{{content}}' data-role='tagsinput' class='tagsinput' data-defid='{{defId}}'></input>
+     </div>
+     <div class='controls' style='display:none'>
+       <small class='muted pull-right'>Enter tags</small>
+       <button type='submit' class='btn btn-primary submit-contribution'>Save</button>
+       <button type='button' class='btn cancel-contribution'>Cancel</button>
+     </div>
+    </form>
+   </div>
+ </div>
+</template>
