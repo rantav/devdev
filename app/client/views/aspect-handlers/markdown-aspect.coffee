@@ -37,9 +37,6 @@ Template.markdownAspectEditor.events
     $target = $(event.target)
     $target.parents('.edit-section').find('.control-group').removeClass('error')
 
-  'focus .markdown-aspect textarea.contribute-text': (event) ->
-    # $target = $(event.target)
-    # $target.parents('.edit-section').find('.controls').show(200)
 
 handleAspectContribution = (aspect, event) ->
   analytics.track('Submit aspect contribution')
@@ -61,7 +58,7 @@ handleNewAspect = (aspect, event) =>
     $name.parents('.control-group').addClass('error')
     $name.focus()
     return
-  $value = $('#new-aspect-value')
+  $value = $(event.srcElement).find('.contribute-text')
   value = $value.val()
   if not value
     $value.parents('.control-group').addClass('error')
