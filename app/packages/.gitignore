@@ -17,3 +17,6 @@ npm
 collection-hooks
 jade-handlebars
 iron-router
+observatory
+observatory-apollo
+observatory-galileo

@@ -14,7 +14,8 @@
       "npm": {},
       "collection-hooks": {
         "version": "0.3.2"
-      }
+      },
+      "observatory": {}
     },
     "packages": {
       "marked": {
@@ -42,15 +43,20 @@
         "tag": "v0.3.2",
         "commit": "200b3b1de905fdc639223d7696d64ce41dd8cebd"
       },
-      "page-js-ie-support": {
-        "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
-        "tag": "v1.3.5",
-        "commit": "b99ed8380aefd10b2afc8f18d9eed4dd0d8ea9cb"
+      "observatory": {
+        "git": "https://github.com/jhoxray/observatory.git",
+        "tag": "v0.3.21",
+        "commit": "3d6b436af0a70b784d0f9ec4709907c77bd4fd63"
       },
-      "HTML5-History-API": {
-        "git": "https://github.com/tmeasday/meteor-HTML5-History-API.git",
-        "tag": "v4.0.0",
-        "commit": "dc4965f1424cfca625ec3fbea17eace03f8e32c5"
+      "observatory-apollo": {
+        "git": "https://github.com/superstringsoftware/observatory-apollo.git",
+        "tag": "v0.3.2",
+        "commit": "f704848187a4da2bd179864ae80a1f73a3fd22a6"
+      },
+      "observatory-galileo": {
+        "git": "https://github.com/superstringsoftware/observatory-galileo.git",
+        "branch": "master",
+        "commit": "f21b80e6502d38a7ce66206374b706f2cbd0228d"
       }
     }
   }

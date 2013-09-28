@@ -11,6 +11,7 @@
     "npm": {},
     "collection-hooks": {
       "version": "0.3.2"
-    }
+    },
+    "observatory": {}
   }
 }
