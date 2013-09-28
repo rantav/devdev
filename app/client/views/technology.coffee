@@ -85,6 +85,7 @@ Template.technology.events
     name = $name.val()
     newAspect.setType(Technology.typeForName(name))
     newAspect.setName(name)
+    $('input#new-aspect-name').popover('hide')
 
   'click .i-use-it': ->
     analytics.track('I use it', {loggedIn: !!Meteor.userId()})
@@ -158,5 +159,6 @@ refreshAspectNameTypeahead = (technology) ->
       newAspect.setDefId(datum.defId)
       help = if datum.defId and aspectDefinitions[datum.defId] and aspectDefinitions[datum.defId].help then aspectDefinitions[datum.defId].help else ''
       $('#new-aspect-help').html(help)
+      $('input#new-aspect-name').popover('hide')
       Meteor.setTimeout((->$('#new-aspect-value').focus()), 100)
     )
