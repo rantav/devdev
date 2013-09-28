@@ -11,5 +11,5 @@ for s in subscriptions
           Session.set('devdevFullySynched', true)
           NProgress.done()
 
-      onError: -> logger.error('ERROR: ' + s)
+      onError: -> log.error('ERROR: ' + s)
   )(s)

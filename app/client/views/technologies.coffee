@@ -49,7 +49,7 @@ Template.technologies.events
       if err
         alertify.error err
       else
-        console.log('indexed. ' + JSON.stringify(ret))
+        log.info('indexed. ' + JSON.stringify(ret))
 
 Template.technologies.rendered = ->
   $('.contributor-xsmall[rel=tooltip]').tooltip()
