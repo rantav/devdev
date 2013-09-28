@@ -160,5 +160,5 @@ refreshAspectNameTypeahead = (technology) ->
       help = if datum.defId and aspectDefinitions[datum.defId] and aspectDefinitions[datum.defId].help then aspectDefinitions[datum.defId].help else ''
       $('#new-aspect-help').html(help)
       $('input#new-aspect-name').popover('hide')
-      Meteor.setTimeout((->$('#new-aspect-value').focus()), 100)
+      Meteor.setTimeout((->$('#new-aspect-adder textarea').focus()), 100)
     )

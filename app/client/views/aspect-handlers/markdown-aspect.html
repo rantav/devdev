@@ -9,12 +9,12 @@
     <div class='span5'>
       <form class='contribute-form'>
        <div class='control-group'>
-         <textarea class='contribute-text' id='{{id}}-value' placeholder='{{placeholderText}}'/>
-       </div>
-       <div class='controls' style='display:none'>
-         <small class='muted pull-right'>Markdown enabled</small>
-         <button type='submit' class='btn btn-primary submit-contribution' data-referred-id='{{id}}-value'>Save</button>
-         <button type='button' class='btn cancel-contribution' data-referred-id='{{id}}-value'>Cancel</button>
+         <textarea class='contribute-text' placeholder='{{placeholderText}}'/>
+         <div class='controls-hidden'>
+           <small class='muted pull-right'>Markdown enabled</small>
+           <button type='submit' class='btn btn-primary submit-contribution'>Save</button>
+           <button type='button' class='btn cancel-contribution'>Cancel</button>
+         </div>
        </div>
       </form>
      </div>

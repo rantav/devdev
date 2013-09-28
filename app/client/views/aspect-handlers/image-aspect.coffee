@@ -15,7 +15,6 @@ onPickFile = (event) ->
   resized = url + "/convert?h=30"
   html = "<img src='#{resized}' class='img-polaroid'></img>"
   $target.parents('.edit-section').find('.contribute-preview').html(html)
-  $target.parents('.edit-section').find('.controls').show(200)
   $target.parents('.edit-section').find('input[type=hidden]').val(url)
 
 handleNewAspect = (aspect, event) ->
@@ -47,12 +46,6 @@ handleNewAspect = (aspect, event) ->
       NProgress.done()
 
 Template.imageAspectEditor.events
-  'click .image-aspect .cancel-contribution': (event) ->
-    $target = $(event.target)
-    $target.parent().hide(200)
-    $target.parents('.edit-section').find('textarea.contribute-text').val('')
-    $target.parents('.edit-section').find('.contribute-preview').html('')
-
   'submit .image-aspect form.contribute-form': (event) ->
     if @id() == 'new-aspect'
       handleNewAspect(this, event)

@@ -4,7 +4,6 @@ Template.markdownAspectEditor.rendered = ->
 Template.markdownAspectEditor.events
   'click .markdown-aspect.cancel-contribution': (event)->
     $target = $(event.target)
-    $target.parent().hide(200)
     $target.parents('.edit-section').find('textarea.contribute-text').val('')
     $target.parents('.edit-section').find('.contribute-preview').html('')
     $target.parents('.edit-section').find('.control-group').removeClass('error')
@@ -31,27 +30,16 @@ Template.markdownAspectEditor.events
 
 
   'blur .markdown-aspect textarea.contribute-text': (event) ->
-    $relatedTarget = $(event.relatedTarget)
-    if $relatedTarget.data('referred-id') == event.target.id
-      # Don't hide the controls if they have the focus
-      return
     $target = $(event.target)
-    $target.parents('.edit-section').find('.controls').hide(200)
     $target.parents('.edit-section').find('.control-group').removeClass('error')
 
   'blur .markdown-aspect .controls button': (event) ->
     $target = $(event.target)
-    if event.relatedTarget
-      $relatedTarget = $(event.relatedTarget)
-      if $relatedTarget.data('referred-id') == $target.data('referred-id') or event.relatedTarget.id == $target.data('referred-id')
-        # Don't hide the controls if they have the focus
-        return
-    $target.parent().hide(200)
     $target.parents('.edit-section').find('.control-group').removeClass('error')
 
   'focus .markdown-aspect textarea.contribute-text': (event) ->
-    $target = $(event.target)
-    $target.parents('.edit-section').find('.controls').show(200)
+    # $target = $(event.target)
+    # $target.parents('.edit-section').find('.controls').show(200)
 
 handleAspectContribution = (aspect, event) ->
   analytics.track('Submit aspect contribution')
