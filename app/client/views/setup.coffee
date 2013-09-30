@@ -1,6 +1,6 @@
 Template.setup.displayLogs = ->
   obs = Meteor.settings.public.observatory
-  obs and obs.display
+  obs and obs.display or currentContributor and currentContributor.isAdmin()
 
 Template.setup.rendered = ->
   setupSegmentIo()
