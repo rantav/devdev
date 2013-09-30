@@ -12,6 +12,9 @@
       "port": "9200",
       "index": "dev_devdev",
       "suggest-enabled": true
+    },
+    "observatory": {
+      "display": true
     }
   }
 }

@@ -1,3 +1,7 @@
+Template.setup.displayLogs = ->
+  obs = Meteor.settings.public.observatory
+  obs and obs.display
+
 Template.setup.rendered = ->
   setupSegmentIo()
   analytics.pageview(document.location.pathname)
