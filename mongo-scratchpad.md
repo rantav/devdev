@@ -135,3 +135,14 @@ db.technologies.find().forEach(function(t){
   db.technologies.save(t);
 })
 
+// Add types to aspects
+db.technologies.find().forEach(function(t){
+  for (var a = 0; a < t.aspects.length; ++a) {
+    var aspect = t.aspects[a];
+    if (!aspect.type) {
+      aspect.type = 'markdown';
+    }
+   print(aspect.name + ': ' + aspect.type);
+  }
+  db.technologies.save(t);
+})
