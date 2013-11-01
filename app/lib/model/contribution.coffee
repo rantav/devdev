@@ -1,32 +1,14 @@
-root = exports ? this
+class @Contribution extends Minimongoid
+  @embedded_in: 'contributor'
+  @belongs_to: [{name: 'technology', identifier: 'technologyId'}]
 
-root.Contribution = class Contribution
-
-  constructor: (@data) ->
-    @cache = {}
-
-  technology: ->
-    if @data
-      cached = @cache.technology
-      if not cached
-        cached = Technology.findOne(@data.technologyId)
-        @cache.technology = cached
-      cached
-
-  type: -> @data.type if @data
+  deleted: -> @deletedAt or @technology().deletedAt or @aspect().deletedAt
 
   aspect: ->
-    if @data
-      cached = @cache.aspect
-      if not cached
-        cached = @technology().findAspectById(@data.aspectId)
-        @cache.aspect = cached
-      cached
+    @technology().findAspectById(@aspectId)
 
   content: ->
-    @aspect().findContributionById(@data.contributionId) if @data
+    @aspect().findContributionById(@contributionId)
 
-  contributorId: -> @data.contributorId
 
-  typeIs: (typeStr) ->
-    @type() == typeStr
+  typeIs: (typeStr) -> @type == typeStr

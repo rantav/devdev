@@ -1,9 +1,9 @@
-root = exports ? this
+class @Aspect extends Minimongoid
+  @embedded_in: 'technology'
+  @embeds_many: [{name: 'aspectContributions', class_name: 'AspectContribution'}]
 
-root.Aspect = class Aspect
-
-  constructor: (@data, @technologyRef) ->
-    @dep = new Deps.Dependency()
+  # constructor: (@data, @technologyRef) ->
+  #   @dep = new Deps.Dependency()
 
   depend: ->
     @dep.depend()
@@ -19,12 +19,10 @@ root.Aspect = class Aspect
   defId: -> @data.defId if @data
   setDefId: (defId) -> @data.defId = defId
 
-  type: (t) => @data.type if @data
-
   setType: (t) ->
     @data.type = t
     @changed()
-  typeIs: (t) -> @type() == t
+  typeIs: (t) -> @type == t
 
   helpText: ->
     if @defId and aspectDefinitions[@defId()] then aspectDefinitions[@defId()].help else undefined
@@ -60,7 +58,7 @@ root.Aspect = class Aspect
     now = new Date()
     if @isSingleDataPerContributor() and @hasContributionsFromUser(contributor.id())
       aspectContribution = @getContributionForUser(contributor.id())
-      aspectContribution.setContent(text)
+      aspectContribution.content = text
     else
       aspectContributionData =
         contributorId: Meteor.userId()
@@ -75,18 +73,11 @@ root.Aspect = class Aspect
     @save(now)
     aspectContribution
 
-  contributions: ->
-    (new AspectContribution(aspectContributionData, @) for aspectContributionData in @data.contributions) if @data
-
-  technology: -> @technologyRef
-
   findContributionById: (contributionId) ->
-    if not @data
-      return new AspectContribution(null, @)
-
-    for contribution in @data.contributions
+    # TODO: Turn this into a map, not an array of objects
+    for contribution in @aspectContributions
       if contribution.contributionId == contributionId
-        return new AspectContribution(contribution, @)
+        return contribution
 
   placeholderText: ->
     if @id() == 'new-aspect'

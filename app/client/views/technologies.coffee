@@ -1,5 +1,5 @@
 Template.technologies.technologies = ->
-  @technologies = Technology.find({}, {sort: {updatedAt: -1}})
+  @technologies = Technology.findUndeleted({}, {sort: {updatedAt: -1}})
   document.title = "#{@technologies.length} technologies | devdev.io"
   @technologies
 

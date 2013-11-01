@@ -1,3 +1,14 @@
+Minimongoid: Fix find by name for users and technologies
+Test support for non logged in users: Contributor.anonymous: -> @id == 'unknown'
+
+
+Add this back to smart.json: 
+
+    "minimongoid": {
+      "git": "https://github.com/rantav/minimongoid"
+    }
+
+
 This had moved over to here https://trello.com/b/vyu4D9O5/devdev
 
 Short term:

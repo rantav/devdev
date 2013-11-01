@@ -4,7 +4,7 @@ class @ContributorController extends RouteController
 
   data: ->
     Session.set('contributorId', undefined)
-    @contributor = Contributor.findOne(@params.id)
+    @contributor = Contributor.find(@params.id)
     if not @contributor or @contributor.anonymous()
       Session.set('contributorId', @params.id)
       return null

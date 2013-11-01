@@ -146,3 +146,57 @@ db.technologies.find().forEach(function(t){
   }
   db.technologies.save(t);
 })
+
+
+Move to Minimongoid
+===================
+
+// Move all Contributor.profile.contributions to Contributor.contributions.
+// This will make the work with embedded documents much easier
+db.users.find().forEach(function(u) {
+  if (! u.contributions) {
+    u.contributions = u.profile.contributions;
+    db.users.save(u);
+  }
+})
+
+// Deleted all user contributions that were marked as deleted. Actually delete them
+db.users.find().forEach(function(u) {
+  contributions = [];
+  for (var i = 0; i < u.contributions.length; ++i) {
+    if (!u.contributions[i].deletedAt) {
+      contributions.push(u.contributions[i]);
+    }
+  }
+  print(u.contributions.length);
+  print(contributions.length);
+  u.contributions = contributions;
+  db.users.save(u);
+})
+
+// Prune all contributions to technologies that were already deleted
+db.users.find().forEach(function(u) {
+  contributions = [];
+  for (var i = 0; i < u.contributions.length; ++i) {
+    var t = db.technologies.findOne({_id: u.contributions[i].technologyId});
+    if (t && !t.deletedAt) {
+      contributions.push(u.contributions[i]);
+    }
+  }
+  print(u.contributions.length);
+  print(contributions.length);
+  u.contributions = contributions;
+  db.users.save(u);
+})
+
+// Change all Aspect.contributions to Aspect.aspectContributions
+db.technologies.find().forEach(function(t){
+  for (var a = 0; a < t.aspects.length; ++a) {
+    var aspect = t.aspects[a];
+    aspect.aspectContributions = aspect.contributions;
+    delete aspect.contributions;
+  }
+  db.technologies.save(t);
+})
+
+

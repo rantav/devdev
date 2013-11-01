@@ -1,25 +1,9 @@
-root = exports ? this
-
-root.AspectContribution = class AspectContribution
-
-  constructor: (@data, @aspectRef) ->
-
-  createdAt: -> @data.createdAt if @data
-
-  updatedAt: -> @data.updatedAt if @data
-
-  deletedAt: -> @data.deletedAt if @data
-
-  content: -> if @data then @data.content else ""
-
-  setContent: (content) ->
-    if content
-      @data.content = content
-    else
-      @remove()
+class @AspectContribution extends Minimongoid
+  @embedded_in: 'aspect'
 
   markdownProcessed: ->
-    text = @content()
+    text = @content
+    console.log(text)
     text = Text.escapeMarkdown(text)
     text = Text.markdownWithSmartLinks(text)
     text
@@ -33,9 +17,8 @@ root.AspectContribution = class AspectContribution
   # Is the current logged in user the owner of this contribution?
   isCurrentUserOwner: -> Meteor.userId() == @data.contributorId
 
-  aspect: -> @aspectRef
-  technology: -> @aspect().technology()
-
+  typeIs: (t) -> @aspect.typeIs(t)
+  
   defId: -> @aspect().defId()
 
   id: -> @data.contributionId
@@ -60,7 +43,7 @@ root.AspectContribution = class AspectContribution
 
   # provide options as {w: 5, h: 6}
   imageUrl: (options) ->
-    url = @content()
+    url = @content
     if not url.indexOf('http') == 0 then return null
     w = if options and options.w then "&w=#{options.w}" else ''
     h = if options and options.h then "&h=#{options.h}" else ''

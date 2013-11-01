@@ -7,13 +7,11 @@ Router.map ->
 
   @route 'technologies', controller: 'TechnologiesController'
   @route 'technology', controller: 'TechnologiesController'
-  @route 'technology/:id', controller: 'TechnologyController'
-  @route 'technology/:id/:name', controller: 'TechnologyController'
+  @route 'technology', path: '/technology/:id/:name?', controller: 'TechnologyController'
 
   @route 'contributors', controller: 'ContributorsController'
   @route 'contributor', controller: 'ContributorsController'
-  @route 'contributor/:id', controller: 'ContributorController'
-  @route 'contributor/:id/:name', controller: 'ContributorController'
+  @route 'contributor', path: '/contributor/:id/:name?', controller: 'ContributorController'
 
   @route 'search', controller: 'SearchController'
 
@@ -26,5 +24,5 @@ routes = root.routes = {}
 routes.technology = (tech) ->
   "/technology/#{tech.id()}/#{tech.name()}" if tech
 
-routes.contributor = (contributor) ->
-  "/contributor/#{contributor.id()}/#{contributor.name()}" if contributor
+# routes.contributor = (contributor) ->
+#   "/contributor/#{contributor.id()}/#{contributor.name()}" if contributor

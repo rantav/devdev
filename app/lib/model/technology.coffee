@@ -1,22 +1,22 @@
-root = exports ? this
-
-root.Technology = class Technology
-
-  @all: -> @find({})
+class @Technology extends Minimongoid
+  @_collection: new Meteor.Collection("technologies")
+  @embeds_many: [{name: 'aspects'}]
 
   # Finds all technologies, and filters out the ones that were deleted
-  @find: (selector, options) ->
+  @findUndeleted: (selector, options) ->
     if not selector
       selector = {}
-    selector['deletedAt'] = {$exists: false}
-    (new Technology(techData) for techData in Technologies.find(selector, options).fetch())
+    if typeof selector == 'object'
+      selector['deletedAt'] = {$exists: false}
+    @find(selector, options)
 
-  @findOne: (idOrName) ->
-    technologyData = Technologies.findOne idOrName
-    if not technologyData
-      technologyData = Technologies.findOne({name: new RegExp('^' + idOrName + '$', 'i')})
-    if technologyData
-      new Technology(technologyData)
+  # TODO: Fix find-by-name
+  # @findOne: (idOrName) ->
+  #   technologyData = Technologies.findOne idOrName
+  #   if not technologyData
+  #     technologyData = Technologies.findOne({name: new RegExp('^' + idOrName + '$', 'i')})
+  #   if technologyData
+  #     new Technology(technologyData)
 
   @add: (data) ->
     id = Technologies.insert data
@@ -53,31 +53,14 @@ root.Technology = class Technology
   @getAspectDef: (aspectDefId) ->
     @aspectDefinitions()[aspectDefId] || {type: 'markdown'}
 
-  constructor: (@data) ->
+  # creator: -> new Contributor(Meteor.users.findOne(@contributorId)) if @data
+  # owner: -> Contributor.findOne(@data.contributorId) if @data
 
-  creator: -> new Contributor(Meteor.users.findOne(@data.contributorId)) if @data
+  route: -> Router.path('technology', {id: @id, name: @name})
 
-  name: -> @data.name if @data
+  suggestVerticals: -> @suggestByDefId('vertical')
 
-  id: -> @data._id if @data
-
-  createdAt: -> @data.createdAt if @data
-
-  updatedAt: -> @data.updatedAt if @data
-
-  deletedAt: -> @data.deletedAt if @data
-
-  contributorId: -> @data.contributorId if @data
-
-  owner: -> Contributor.findOne(@data.contributorId) if @data
-
-  route: -> routes.technology(@) if @data
-
-  suggestVerticals: ->
-    @suggestByDefId('vertical')
-
-  suggestStacks: ->
-    @suggestByDefId('stack')
+  suggestStacks: -> @suggestByDefId('stack')
 
   suggestByDefId: (defId) ->
     # This is a temporary solution until we get the tags component to work
@@ -104,9 +87,6 @@ root.Technology = class Technology
               tags = _.union(tags, newTags)
     tags
 
-  aspects: ->
-    (new Aspect(aspectData, @) for aspectData in @data.aspects) if @data
-
   # Is the current logged in user the owner of this technology?
   # (owner is the one creating it in the first place)
   isCurrentUserOwner: -> Meteor.userId() == @contributorId()
@@ -126,11 +106,9 @@ root.Technology = class Technology
       (Contributor.findOne(contributorId) for contributorId in contributorIds)
 
   findAspectById: (aspectId) ->
-    if @data and @data.aspects
-      candidates = (aspect for aspect in @data.aspects when aspect.aspectId == aspectId)
-      return new Aspect(candidates[0], @)
-    else
-      return new Aspect(null, @)
+    # TODO: Change from an array to a map by ID. Much more efficient and readable...
+    candidates = (aspect for aspect in @aspects when aspect.aspectId == aspectId)
+    candidates[0]
 
   findAspectByName: (name) ->
     if @data and @data.aspects
@@ -154,6 +132,7 @@ root.Technology = class Technology
   delete: ->
     now = new Date()
     @data.deletedAt = now
+    # TODO: Prune all contributions referencing this technology
     @save(now)
 
   nameEditableByCurrentUser: ->
@@ -173,7 +152,7 @@ root.Technology = class Technology
 
   # Returns the list of users that use this technology
   usedBy: ->
-    (Contributor.findOne(id) for id, used of @data.usedBy when used) if @data.usedBy
+    (Contributor.find(id) for id, used of @data.usedBy when used) if @data.usedBy
 
   addAspectAndContribution: (aspectName, aspectTextValue, aspectDefId, contributor) ->
     aspect = @findAspectByName(aspectName)
@@ -199,12 +178,10 @@ root.Technology = class Technology
 
   # Just picks up the first logo that it's able to find.
   findLogoContribution: ->
-    if @data.aspects
-      for aspect in @data.aspects
-        if aspect.name == 'Logo' and aspect.contributions.length
-          for contribution in aspect.contributions
-            if not contribution.deletedAt
-              return new AspectContribution(contribution, new Aspect(aspect), @)
+    for aspect in @aspects
+      if aspect.name == 'Logo'
+        for contribution in aspect.aspectContributions
+          return contribution unless contribution.deletedAt
 
 createAspect = (aspectName, type, aspectDefId) ->
   name: aspectName
@@ -213,5 +190,3 @@ createAspect = (aspectName, type, aspectDefId) ->
   aspectId: Meteor.uuid()
   defId: aspectDefId
 
-
-root.Technologies = new Meteor.Collection "technologies"

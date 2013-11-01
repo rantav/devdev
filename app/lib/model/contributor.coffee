@@ -1,55 +1,39 @@
-root = exports ? this
+class @Contributor extends Minimongoid
+  @_collection: Meteor.users
 
-root.Contributor = class Contributor
+  @embeds_many: [{name: 'contributions'}]
 
-  @all: -> @find({})
+  @defaults:
+    id: 'unknown'
 
-  @find: (selector, options) ->
-    (new Contributor(contribData) for contribData in Meteor.users.find(selector, options).fetch())
+  @current: -> Contributor.init(Meteor.user()) if Meteor.userId()
 
-  @findOne: (idOrName) ->
-    contribData = Contributors.findOne(idOrName)
-    if not contribData
-      contribData = Contributors.findOne({'profile.name': new RegExp('^' + idOrName + '$', 'i')})
-    new Contributor(contribData)
+  contributionCount: -> @profile.contributionCount || 0
 
-  # Current logged in user; undefined if the user is not logged in
-  @current: -> new Contributor(Meteor.user()) if Meteor.userId()
-
-  constructor: (@data) ->
-    if not @data then @data = {}
-    if not @data._id then @data._id = 'unknown'
-    if not @data.profile then @data.profile = {}
-    if not @data.profile.color then @data.profile.color = '#fff'
-    if not @data.profile.contributions then @data.profile.contributions = []
-    if not @data.profile.contributionCount then @data.profile.contributionCount = 0
-    if not @data.profile.name then @data.profile.name = 'unknown'
-
-  contributionCount: ->
-    @data.profile.contributionCount || 0
-
-  id: -> @data._id
-
-  name: -> @data.profile.name
-
-  color: -> @data.profile.color
-
-  route: -> routes.contributor(@)
+  name: -> @profile.name
+  color: -> @profile.color
+  route: -> Router.path('contributor', id: @id, name: @name())
 
   isAdmin: -> @name() == "Ran Tavory" # Hah!
 
-  anonymous: -> @id() == 'unknown'
+  anonymous: -> @id == 'unknown'
 
   photoUrl: (height) ->
-    if @data.services
-      if @data.services.google
-        picture = @data.services.google.picture
+    if @services
+      if @services.google
+        picture = @services.google.picture
         if picture and height
           picture = "#{picture}?sz=#{height}"
-      else if @data.services.github
-        picture = @data.services.github.picture
+      else if @services.github
+        picture = @services.github.picture
         if picture and height
           picture = "#{picture}&s=#{height}"
+      else if @services.facebook
+        picture = "http://graph.facebook.com/#{@services.facebook.id}/picture/"
+        if height
+          picture = "#{picture}?height=#{height/2}&width=#{height/2}"
+      else if @services.twitter
+        picture = @services.twitter.profile_image_url
     if not picture
       if height
         picture = Cdn.cdnify("/img/user-#{height}x#{height}.png")
@@ -59,8 +43,9 @@ root.Contributor = class Contributor
 
 
   # Gets all undeleted contributions from the contributor
-  contributions: ->
-    (new Contribution(contribData) for contribData in @data.profile.contributions when not contribData.deletedAt)
+  # TODO: Make this mongoid
+  # contributions: ->
+  #   (new Contribution(contribData) for contribData in @profile.contributions when not contribData.deletedAt)
 
   addTechnologyContribution: (technology) ->
     if not @data.profile.contributions
@@ -99,9 +84,9 @@ root.Contributor = class Contributor
     @data.profile.usingTechnology and @data.profile.usingTechnology[technology.id()]
 
   usedTechnologies: ->
-    if not @data.profile.usingTechnology or not Session.get('devdevFullySynched')
+    if not @profile.usingTechnology or not Session.get('devdevFullySynched')
       return []
-    (Technology.findOne(techId) for techId, using of @data.profile.usingTechnology when using)
+    (Technology.find(techId) for techId, using of @profile.usingTechnology when using)
 
   save: ->
     Meteor.users.update(@data._id, @data)
@@ -114,8 +99,9 @@ root.Contributor = class Contributor
     (contribution for contribution in @data.profile.contributions when contribution.technologyId == technology.id())
 
   deleteAspectContribution: (aspectContribution) ->
-    userContributionData = @findUserAspectContribution(aspectContribution)
-    userContributionData.deletedAt = new Date()
+    # TODO: Test deletion
+    userContribution = @findUserAspectContribution(aspectContribution)
+    userContribution.destroy()
     @data.profile.contributionCount--;
     @save()
 
@@ -126,4 +112,3 @@ root.Contributor = class Contributor
     @data.profile.contributionCount--;
     @save()
 
-root.Contributors = Meteor.users
