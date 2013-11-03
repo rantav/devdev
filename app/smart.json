@@ -11,6 +11,9 @@
     "npm": {},
     "collection-hooks": {
       "version": "0.3.2"
+    },
+    "migrations": {
+      "git": "https://github.com/rantav/meteor-migrations"
     }
   }
 }

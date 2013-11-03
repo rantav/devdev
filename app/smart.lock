@@ -14,6 +14,10 @@
       "npm": {},
       "collection-hooks": {
         "version": "0.3.2"
+      },
+      "migrations": {
+        "git": "https://github.com/rantav/meteor-migrations",
+        "branch": "master"
       }
     },
     "packages": {
@@ -41,6 +45,11 @@
         "git": "https://github.com/matb33/meteor-collection-hooks.git",
         "tag": "v0.3.2",
         "commit": "200b3b1de905fdc639223d7696d64ce41dd8cebd"
+      },
+      "migrations": {
+        "git": "https://github.com/rantav/meteor-migrations",
+        "branch": "master",
+        "commit": "57a13628cb57cf70dfc20107b5cc120a66e979b7"
       }
     }
   }
