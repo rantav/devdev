@@ -3,7 +3,6 @@ class @AspectContribution extends Minimongoid
 
   markdownProcessed: ->
     text = @content
-    console.log(text)
     text = Text.escapeMarkdown(text)
     text = Text.markdownWithSmartLinks(text)
     text
