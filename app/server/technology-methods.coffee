@@ -48,7 +48,7 @@ Meteor.methods
     contributor.deleteAspectContribution(aspectContribution)
 
   deleteTechnology: (technologyId) ->
-    technology = Technology.findOne(technologyId)
+    technology = Technology.find(technologyId)
     if not technology
       throw new Meteor.Error 401, "Technology #{technologyId} was not found"
     # Permission check
@@ -75,8 +75,9 @@ Meteor.methods
     contributor = Contributor.current()
     if not contributor
       throw new Meteor.Error 404, 'Please log in'
-    technology = Technology.findOne(technologyId)
+    technology = Technology.find(technologyId)
     if not technology
       throw new Meteor.Error 401, "Technology #{technologyId} was not found"
     technology.setUsedBy(contributor, used)
     contributor.setUsingTechnology(technology, used)
+    true

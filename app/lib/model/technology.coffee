@@ -70,7 +70,7 @@ class @Technology extends Minimongoid
     # This is a temporary solution until we get the tags component to work
     # well with elastic search...
     suggestions = []
-    for technology in Technologies.find({deletedAt: {$exists: false}}).fetch()
+    for technology in Technology.find({deletedAt: {$exists: false}}).fetch()
       for aspect in technology.aspects
         if aspect.defId == defId
           for contribution in aspect.aspectContributions
@@ -141,11 +141,10 @@ class @Technology extends Minimongoid
 
   nameEditableByCurrentUser: -> Meteor.userId() == @contributorId
 
-  # TODO: refactor to adjust for minimongoid
   setUsedBy: (contributor, used) ->
-    if not @usedBy then @usedBy = {}
-    @usedBy[contributor.id()] = used
-    @save(@updatedAt())
+    updates = {}
+    updates["usedBy.#{contributor.id}"] = used
+    @save(updates)
 
   isUsedBy: (contributor) ->
     contributor and @usedBy and @usedBy[contributor.id]

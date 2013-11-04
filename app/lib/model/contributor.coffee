@@ -48,66 +48,63 @@ class @Contributor extends Minimongoid
   #   (new Contribution(contribData) for contribData in @profile.contributions when not contribData.deletedAt)
 
   addTechnologyContribution: (technology) ->
-    if not @data.profile.contributions
-      @data.profile.contributions = []
-    if not @data.profile.contributionCount
-      @data.profile.contributionCount = 0
-    @data.profile.contributions.push
+    if not @profile.contributions
+      @profile.contributions = []
+    if not @profile.contributionCount
+      @profile.contributionCount = 0
+    @profile.contributions.push
       technologyId: technology.id()
       type: 'technology'
       createdAt: technology.createdAt()
       updatedAt: technology.updatedAt()
-    @data.profile.contributionCount++;
-    @save(technology.updatedAt())
+    @profile.contributionCount++;
+    # @save(technology.updatedAt())
 
   addAspectContribution: (aspectContribution) ->
-    if not @data.profile.contributions
-      @data.profile.contributions = []
-    if not @data.profile.contributionCount
-      @data.profile.contributionCount = 0
-    @data.profile.contributions.push
+    if not @profile.contributions
+      @profile.contributions = []
+    if not @profile.contributionCount
+      @profile.contributionCount = 0
+    @profile.contributions.push
       technologyId: aspectContribution.aspect().technology().id()
       aspectId: aspectContribution.aspect().id()
       contributionId: aspectContribution.id()
       type: 'aspectContribution'
       createdAt: aspectContribution.createdAt()
       updatedAt: aspectContribution.updatedAt()
-    @data.profile.contributionCount++;
-    @save(aspectContribution.updatedAt())
+    @profile.contributionCount++;
+    # @save(aspectContribution.updatedAt())
 
   setUsingTechnology: (technology, using) ->
-    if not @data.profile.usingTechnology then @data.profile.usingTechnology = {}
-    @data.profile.usingTechnology[technology.id()] = using
-    @save()
+    updates = {}
+    updates["profile.usingTechnology.#{technology.id}"] = using
+    @save(updates)
 
   isUsingTechnology: (technology) ->
-    @data.profile.usingTechnology and @data.profile.usingTechnology[technology.id()]
+    @profile.usingTechnology and @profile.usingTechnology[technology.id]
 
   usedTechnologies: ->
     if not @profile.usingTechnology or not Session.get('devdevFullySynched')
       return []
     (Technology.find(techId) for techId, using of @profile.usingTechnology when using)
 
-  save: ->
-    Meteor.users.update(@data._id, @data)
-
   findUserAspectContribution: (aspectContribution) ->
-    candidates = (contribution for contribution in @data.profile.contributions when contribution.contributionId == aspectContribution.id())
+    candidates = (contribution for contribution in @profile.contributions when contribution.contributionId == aspectContribution.id())
     candidates[0]
 
   findUserTechnologyContributions: (technology) ->
-    (contribution for contribution in @data.profile.contributions when contribution.technologyId == technology.id())
+    (contribution for contribution in @profile.contributions when contribution.technologyId == technology.id())
 
   deleteAspectContribution: (aspectContribution) ->
     userContribution = @findUserAspectContribution(aspectContribution)
     userContribution.destroy()
-    @data.profile.contributionCount--;
-    @save()
+    @profile.contributionCount--;
+    # @save()
 
   # TODO: Delete all other aspect contributions (from all other users as well)
   deleteTechnologyContribution: (technology) ->
     userContributionData = @findUserTechnologyContributions(technology)
     userContributionData.deletedAt = new Date()
-    @data.profile.contributionCount--;
-    @save()
+    @profile.contributionCount--;
+    # @save()
 

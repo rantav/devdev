@@ -5,7 +5,7 @@ Template.tagsAspectEditor.rendered = ->
   datasource = def.datasource
   $el.tagsinput({
     typeahead: {
-      local: @data.technology()[datasource](),
+      local: @data.technology[datasource](),
       freeInput: true
     }
   })
