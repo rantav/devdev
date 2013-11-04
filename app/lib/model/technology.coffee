@@ -18,9 +18,11 @@ class @Technology extends Minimongoid
   #   if technologyData
   #     new Technology(technologyData)
 
-  @add: (data) ->
-    id = Technologies.insert data
-    @findOne(id)
+  # TODO: replace with create
+  # https://github.com/Exygy/minimongoid/blob/master/lib/minimongoid.coffee#L262
+  # @add: (data) ->
+  #   id = Technologies.insert data
+  #   @findOne(id)
 
   @allAspectNames: ->
     _.map(@aspectDefinitions(), (e, i) -> i)
@@ -32,15 +34,17 @@ class @Technology extends Minimongoid
     def = Technology.aspectDefinitions()[name.toLowerCase()]
     if def then def.type else 'markdown'
 
-  @create: (name) ->
-    now = new Date()
-    tech =
-      name: name
-      contributorId: Meteor.userId()
-      aspects: @createPinnedAspects()
-      createdAt: now
-      updatedAt: now
-    Technology.add(tech)
+  # TODO: replace with create
+  # https://github.com/Exygy/minimongoid/blob/master/lib/minimongoid.coffee#L262
+  # @create: (name) ->
+  #   now = new Date()
+  #   tech =
+  #     name: name
+  #     contributorId: Meteor.userId()
+  #     aspects: @createPinnedAspects()
+  #     createdAt: now
+  #     updatedAt: now
+  #   Technology.add(tech)
 
   @createPinnedAspects: ->
     defs = @aspectDefinitions()
@@ -69,20 +73,18 @@ class @Technology extends Minimongoid
     for technology in Technologies.find({deletedAt: {$exists: false}}).fetch()
       for aspect in technology.aspects
         if aspect.defId == defId
-          for contribution in aspect.contributions
+          for contribution in aspect.aspectContributions
             suggestions = suggestions.concat(contribution.tags)
     suggestions = _.uniq(suggestions)
 
   # Gets all the tags for the stack
   getTagsForAspectDefId: (aspectDefId)->
     tags = []
-    for aspect in @data.aspects
+    for aspect in @aspects
       if aspect.defId == aspectDefId
-        aspectObj = new Aspect(aspect)
-        for contribution in aspect.contributions
+        for contribution in aspect.aspectContributions
           if not contribution.deletedAt
-            aspectContribution = new AspectContribution(contribution, aspectObj, @)
-            newTags = aspectContribution.getTags()
+            newTags = contribution.getTags()
             if newTags
               tags = _.union(tags, newTags)
     tags
@@ -97,13 +99,13 @@ class @Technology extends Minimongoid
   aspectNames: ->
     (aspectData.name for aspectData in @data.aspects)
 
-  contributors: ->
-    if @data
-      contributorIds = [@data.contributorId].concat (contribution.contributorId for contribution in aspect.contributions for aspect in @data.aspects)...
-      output = {}
-      output[contributorIds[key]] = contributorIds[key] for key in [0...contributorIds.length]
-      contributorIds = (value for key, value of output)
-      (Contributor.findOne(contributorId) for contributorId in contributorIds)
+  # TODO: refactor for mongoid
+  # contributors: ->
+  #   contributorIds = [@data.contributorId].concat (contribution.contributorId for contribution in aspect.aspectContributions for aspect in @data.aspects)...
+  #   output = {}
+  #   output[contributorIds[key]] = contributorIds[key] for key in [0...contributorIds.length]
+  #   contributorIds = (value for key, value of output)
+  #   (Contributor.findOne(contributorId) for contributorId in contributorIds)
 
   findAspectById: (aspectId) ->
     # TODO: Change from an array to a map by ID. Much more efficient and readable...
@@ -111,62 +113,66 @@ class @Technology extends Minimongoid
     candidates[0]
 
   findAspectByName: (name) ->
-    if @data and @data.aspects
-      candidates = (aspect for aspect in @data.aspects when aspect.name.toLowerCase() == name.toLowerCase())
-      if (candidates[0])
-        return new Aspect(candidates[0], @)
+    for aspect in @aspects
+      if aspect.name.toLowerCase() == name.toLowerCase()
+        return aspect
+
 
   findContributionById: (contributionId) ->
-    for aspect in @aspects()
+    for aspect in @aspects
       contribution = aspect.findContributionById(contributionId)
       return contribution if contribution
 
-  save: (updatedAt) ->
-    updatedAt = updatedAt or new Date()
-    @data.updatedAt = updatedAt
-    Technologies.update(@id(), @data)
+  # TODO: refactor to adjust for minimongoid
+  # save: (updatedAt) ->
+  #   updatedAt = updatedAt or new Date()
+  #   @updatedAt = updatedAt
+  #   Technologies.update(@id, @)
 
-  saveNoTouch: ->
-    Technologies.update(@id(), @data)
+  # TODO: refactor to adjust for minimongoid
+  # saveNoTouch: ->
+  #   Technologies.update(@id, @)
 
-  delete: ->
-    now = new Date()
-    @data.deletedAt = now
-    # TODO: Prune all contributions referencing this technology
-    @save(now)
+  # TODO: refactor to adjust for minimongoid
+  # delete: ->
+  #   now = new Date()
+  #   @data.deletedAt = now
+  #   # TODO: Prune all contributions referencing this technology
+  #   @save(now)
 
-  nameEditableByCurrentUser: ->
-    return Meteor.userId() == @data.contributorId
+  nameEditableByCurrentUser: -> Meteor.userId() == @contributorId
 
+  # TODO: refactor to adjust for minimongoid
   setName: (newName) ->
-    @data.name = newName
+    @name = newName
     @save()
 
+  # TODO: refactor to adjust for minimongoid
   setUsedBy: (contributor, used) ->
-    if not @data.usedBy then @data.usedBy = {}
-    @data.usedBy[contributor.id()] = used
+    if not @usedBy then @usedBy = {}
+    @usedBy[contributor.id()] = used
     @save(@updatedAt())
 
   isUsedBy: (contributor) ->
-    contributor and @data.usedBy and @data.usedBy[contributor.id()]
+    contributor and @usedBy and @usedBy[contributor.id()]
 
   # Returns the list of users that use this technology
   usedBy: ->
-    (Contributor.find(id) for id, used of @data.usedBy when used) if @data.usedBy
+    (Contributor.find(id) for id, used of @usedBy when used) if @usedBy
 
   addAspectAndContribution: (aspectName, aspectTextValue, aspectDefId, contributor) ->
     aspect = @findAspectByName(aspectName)
     if not aspect
       type = Technology.getAspectDef(aspectDefId).type
       aspectData = createAspect(aspectName, type, aspectDefId)
-      @data.aspects.push(aspectData)
+      @aspects.push(aspectData)
       aspect = new Aspect(aspectData, @)
     aspect.addContribution(aspectTextValue, contributor)
 
   numContributions: ->
     num = 0
-    for aspect in @data.aspects
-      for contribution in aspect.contributions
+    for aspect in @aspects
+      for contribution in aspect.aspectContributions
         if not contribution.deletedAt
           num++
     num
@@ -186,7 +192,7 @@ class @Technology extends Minimongoid
 createAspect = (aspectName, type, aspectDefId) ->
   name: aspectName
   type: type
-  contributions: []
+  aspectContributions: []
   aspectId: Meteor.uuid()
   defId: aspectDefId
 

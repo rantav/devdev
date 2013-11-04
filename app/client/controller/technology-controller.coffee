@@ -1,8 +1,8 @@
 class @TechnologyController extends RouteController
 
   run: ->
-    t = Technology.findOne(@params.id)
-    if t and t.deletedAt()
+    t = Technology.find(@params.id)
+    if t and t.deletedAt
       @render('technologyDeleted')
     else
       @render('technology')
@@ -12,11 +12,11 @@ class @TechnologyController extends RouteController
 
   data: ->
     Session.set('technologyId', undefined)
-    @technology = Technology.findOne(@params.id)
-    if not @technology
+    t = Technology.find(@params.id)
+    if not t
       Session.set('technologyId', @params.id)
       return null
-    technology: @technology
+    technology: t
     technologyId: @params.id
     currentUser: Contributor.current()
 

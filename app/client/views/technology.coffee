@@ -1,6 +1,6 @@
 Template.technology.technology = ->
   if @technology
-    document.title = "#{@technology.name()} | devdev.io"
+    document.title = "#{@technology.name} | devdev.io"
   @technology
 
 Template.technology.synched = ->
@@ -14,7 +14,7 @@ Template.technology.iUseItClass = ->
 
 Template.technology.twitterShareUrl = ->
   if @technology
-    shareText = "Check out #{@technology.name()} on devdev.io, with #{@technology.numContributions()} contributions already!"
+    shareText = "Check out #{@technology.name} on devdev.io, with #{@technology.numContributions()} contributions already!"
     "https://twitter.com/share?url=#{encodeURIComponent(document.location.href)}&text=#{encodeURIComponent(shareText)}&via=devdev_io"
 
 Template.technology.imgPolaroid = (options) ->

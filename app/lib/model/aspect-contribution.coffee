@@ -1,5 +1,6 @@
 class @AspectContribution extends Minimongoid
   @embedded_in: 'aspect'
+  @belongs_to: [{name: 'contributor', identifier: 'contributorId'}]
 
   markdownProcessed: ->
     text = @content
@@ -7,39 +8,36 @@ class @AspectContribution extends Minimongoid
     text = Text.markdownWithSmartLinks(text)
     text
 
-  contributor: -> Contributor.findOne(@data.contributorId)
-
-  contributorId: -> @data.contributorId
-
-  contributionId: -> @data.contributionId
-
   # Is the current logged in user the owner of this contribution?
-  isCurrentUserOwner: -> Meteor.userId() == @data.contributorId
+  isCurrentUserOwner: -> Meteor.userId() == @contributorId
 
   typeIs: (t) ->
     @aspect.typeIs(t)
 
   defId: -> @aspect().defId
 
-  id: -> @data.contributionId
+  id: -> @contributionId
 
+  # TODO minimongoid
   remove: ->
     @aspect().removeContribution(@)
 
+  # TODO minimongoid
   delete: ->
-    @data.deletedAt = new Date()
+    @deletedAt = new Date()
     @save()
 
+  # TODO minimongoid
   save: ->
     @aspectRef.save()
 
   # Assumes the data stored is tags and gets an array of them
   getTags: ->
-    return @data.tags
+    return @tags
 
   setTags: (text) ->
-    @data.tags = (tag.trim() for tag in text.split(',') when tag.trim())
-    @data.content = text
+    @tags = (tag.trim() for tag in text.split(',') when tag.trim())
+    @content = text
 
   # provide options as {w: 5, h: 6}
   imageUrl: (options) ->

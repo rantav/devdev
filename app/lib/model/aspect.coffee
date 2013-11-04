@@ -5,52 +5,51 @@ class @Aspect extends Minimongoid
   # constructor: (@data, @technologyRef) ->
   #   @dep = new Deps.Dependency()
 
-  depend: ->
-    @dep.depend()
-
-  name: () => @data.name if @data
+  # depend: ->
+  #   @dep.depend()
 
   setName: (n) =>
-    @data.name = n
+    @name = n
     @changed()
 
   setDefId: (defId) -> @data.defId = defId
 
   setType: (t) ->
-    @data.type = t
+    @type = t
     @changed()
+
   typeIs: (t) -> @type == t
 
   helpText: ->
-    if @defId and aspectDefinitions[@defId()] then aspectDefinitions[@defId()].help else undefined
+    if @defId and aspectDefinitions[@defId] then aspectDefinitions[@defId].help else undefined
 
   hasContributionsFromUser: (contributorId) ->
-    return false if not @data.contributions
-    for contribution in @data.contributions
+    return false if not @contributions
+    for contribution in @contributions
       if contribution.contributorId == contributorId
         return true
     return false
 
   getContributionForUser: (contributorId) ->
-    return null if not @data.contributions
-    for contribution in @data.contributions
+    return null if not @contributions
+    for contribution in @dcontributions
       if contribution.contributorId == contributorId
         return new AspectContribution(contribution, @)
     return null
 
   isSingleDataPerContributor: ->
-    def = Technology.aspectDefinitions()[@defId()]
+    def = Technology.aspectDefinitions()[@defId]
     return def and def.multiplicity == 'single-per-user'
 
   changed: -> @dep.changed()
 
   removeContribution: (aspectContribution) ->
     contributionId = aspectContribution.id()
-    @data.contributions = (c for c in @data.contributions when not c.contributionId == contributionId)
+    @contributions = (c for c in @data.contributions when not c.contributionId == contributionId)
 
   addContribution: (text, contributor) ->
-    if not @data.contributions
-      @data.contributions = []
+    if not @contributions
+      @contributions = []
 
     now = new Date()
     if @isSingleDataPerContributor() and @hasContributionsFromUser(contributor.id())
@@ -63,9 +62,9 @@ class @Aspect extends Minimongoid
         contributionId: Meteor.uuid()
         createdAt: now
         updatedAt: now
-      @data.contributions.push(aspectContributionData)
+      @contributions.push(aspectContributionData)
       aspectContribution = new AspectContribution(aspectContributionData, @)
-    if @type() == 'tags'
+    if @type == 'tags'
       aspectContribution.setTags(text)
     @save(now)
     aspectContribution
@@ -77,9 +76,9 @@ class @Aspect extends Minimongoid
         return contribution
 
   placeholderText: ->
-    if @id() == 'new-aspect'
-      if @type() == 'markdown'
-        return "Say something about #{@name()}"
+    if @id == 'new-aspect'
+      if @type == 'markdown'
+        return "Say something about #{@name}"
       else
         return '<- Type aspect name first'
     else
@@ -89,4 +88,4 @@ class @Aspect extends Minimongoid
     @technologyRef.save(modificationTime)
 
   storePath: ->
-    if @type() == 'image' and @name() == 'Logo' then 'logos/'
+    if @type == 'image' and @name == 'Logo' then 'logos/'
