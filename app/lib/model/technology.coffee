@@ -156,7 +156,7 @@ class @Technology extends Minimongoid
     contributor and @usedBy and @usedBy[contributor.id()]
 
   # Returns the list of users that use this technology
-  usedBy: ->
+  usedByUsers: ->
     (Contributor.find(id) for id, used of @usedBy when used) if @usedBy
 
   addAspectAndContribution: (aspectName, aspectTextValue, aspectDefId, contributor) ->
