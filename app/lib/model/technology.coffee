@@ -9,7 +9,7 @@ class @Technology extends Minimongoid
       selector = {}
     if typeof selector == 'object'
       selector['deletedAt'] = {$exists: false}
-    @find(selector, options)
+    @where(selector, options)
 
   # TODO: Fix find-by-name
   # @findOne: (idOrName) ->

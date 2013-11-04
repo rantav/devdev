@@ -6,8 +6,8 @@ Template.technologies.technologies = ->
 Template.technologies.imgPolaroid = ->
   Html.imgPolaroid(@logoUrl({h: 15, default: Cdn.cdnify('/img/cogs-17x15.png')}))
 
-Template.technologies.iUseItClass = () ->
-  if @isUsedBy(Contributor.findOne(Meteor.userId())) then "btn-success" else ""
+Template.technologies.iUseItClass = ->
+  if @isUsedBy(Contributor.current()) then "btn-success" else ""
 
 Template.technologies.events
   'click #add-technology': ->
