@@ -1,6 +1,7 @@
 class @Technology extends Minimongoid
   @_collection: new Meteor.Collection("technologies")
   @embeds_many: [{name: 'aspects'}]
+  @belongs_to: [{name: 'creator', identifier: 'contributorId', class_name: 'Contributor'}]
 
   # Finds all technologies, and filters out the ones that were deleted
   @findUndeleted: (selector, options) ->
@@ -57,8 +58,7 @@ class @Technology extends Minimongoid
   @getAspectDef: (aspectDefId) ->
     @aspectDefinitions()[aspectDefId] || {type: 'markdown'}
 
-  # creator: -> new Contributor(Meteor.users.findOne(@contributorId)) if @data
-  # owner: -> Contributor.findOne(@data.contributorId) if @data
+  owner: -> @creator()
 
   route: -> Router.path('technology', {id: @id, name: @name})
 
@@ -91,7 +91,7 @@ class @Technology extends Minimongoid
 
   # Is the current logged in user the owner of this technology?
   # (owner is the one creating it in the first place)
-  isCurrentUserOwner: -> Meteor.userId() == @contributorId()
+  isCurrentUserOwner: -> Meteor.userId() == @contributorId
 
   suggestAspectNames: ->
     {value: def.display, tokens: _.union('?', Text.tokenize(def.display)), type: def.type, defId: key} for key, def of Technology.aspectDefinitions()
@@ -99,13 +99,12 @@ class @Technology extends Minimongoid
   aspectNames: ->
     (aspectData.name for aspectData in @data.aspects)
 
-  # TODO: refactor for mongoid
-  # contributors: ->
-  #   contributorIds = [@data.contributorId].concat (contribution.contributorId for contribution in aspect.aspectContributions for aspect in @data.aspects)...
-  #   output = {}
-  #   output[contributorIds[key]] = contributorIds[key] for key in [0...contributorIds.length]
-  #   contributorIds = (value for key, value of output)
-  #   (Contributor.findOne(contributorId) for contributorId in contributorIds)
+  contributors: ->
+    contribs = [@creator()]
+    for aspect in @aspects
+      for aspectContribution in aspect.aspectContributions
+        contribs.push(aspectContribution.contributor())
+    _.uniq(contribs, false, (c) -> c.id)
 
   findAspectById: (aspectId) ->
     # TODO: Change from an array to a map by ID. Much more efficient and readable...
