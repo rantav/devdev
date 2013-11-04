@@ -2,11 +2,10 @@ class @Aspect extends Minimongoid
   @embedded_in: 'technology'
   @embeds_many: [{name: 'aspectContributions', class_name: 'AspectContribution'}]
 
-  # constructor: (@data, @technologyRef) ->
-  #   @dep = new Deps.Dependency()
+  dep: new Deps.Dependency()
 
-  # depend: ->
-  #   @dep.depend()
+  depend: ->
+    @dep.depend()
 
   setName: (n) =>
     @name = n

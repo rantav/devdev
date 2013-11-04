@@ -142,18 +142,13 @@ class @Technology extends Minimongoid
   nameEditableByCurrentUser: -> Meteor.userId() == @contributorId
 
   # TODO: refactor to adjust for minimongoid
-  setName: (newName) ->
-    @name = newName
-    @save()
-
-  # TODO: refactor to adjust for minimongoid
   setUsedBy: (contributor, used) ->
     if not @usedBy then @usedBy = {}
     @usedBy[contributor.id()] = used
     @save(@updatedAt())
 
   isUsedBy: (contributor) ->
-    contributor and @usedBy and @usedBy[contributor.id()]
+    contributor and @usedBy and @usedBy[contributor.id]
 
   # Returns the list of users that use this technology
   usedByUsers: ->

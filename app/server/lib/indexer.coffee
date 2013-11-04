@@ -153,7 +153,7 @@ class Indexer
 
   # Prepares the document for indexing
   prepare: (doc) ->
-    doc = _.extend({}, doc)
+    doc = _.clone(doc)
     @removeDeleted(doc)
     @removeNoIndex(doc)
     @extractTags(doc)
@@ -172,17 +172,17 @@ class Indexer
       return
     for aspect in doc.aspects
       newContributions = []
-      for contribution in aspect.contributions
-        if not contribution.deletedAt
-          newContributions.push contribution
-      aspect.contributions = newContributions
+      for aspectContribution in aspect.aspectContributions
+        if not aspectContribution.deletedAt
+          newContributions.push aspectContribution
+      aspect.aspectContributions = newContributions
 
   # Removes aspects marked as noindex
   removeNoIndex: (doc) ->
     defs = Technology.aspectDefinitions()
     newAspects = []
     for aspect in doc.aspects
-      if aspect.defId and defs[aspect.defId] and defs[aspect.defId].noindes
+      if aspect.defId and defs[aspect.defId] and defs[aspect.defId].noindex
         #remove
       else
         newAspects.push(aspect)

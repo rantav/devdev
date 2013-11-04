@@ -50,11 +50,11 @@ Template.technology.events
 
   'click .icon-trash': ->
     analytics.track('Delete aspect contribution')
-    Meteor.call('deleteAspectContribution', @aspect().technology().id(), @contributionId())
+    Meteor.call('deleteAspectContribution', @aspect.technology.id, @contributionId)
 
   'click #add-technology': (event) ->
     analytics.track('Add technology - technology page', {loggedIn: !!Meteor.userId()})
-    name = if @technology then @technology.name() else @technologyId
+    name = if @technology then @technology.name else @technologyId
     addTechnology(name)
 
   'keyup #technology-name': (event) ->
@@ -71,9 +71,9 @@ Template.technology.events
 
   'blur #technology-name': (event, element)->
     name = event.srcElement.innerText
-    if name != @technology.name()
+    if name != @technology.name
       analytics.track('Rename technology')
-      Meteor.call 'setName', @technology.id(), name, (err, ret) ->
+      Meteor.call 'setName', @technology.id, name, (err, ret) =>
         if err
           alertify.error err
         else
@@ -94,19 +94,19 @@ Template.technology.events
       return
     current = Contributor.current()
     used = current.isUsingTechnology(@technology)
-    Meteor.call 'iUseIt', @technology.id(), not used, (err, ret) ->
+    Meteor.call 'iUseIt', @technology.id, not used, (err, ret) ->
       if err
         alertify.error err
 
   'click #index-technology': ->
-    Meteor.call 'indexTechnology', @technology.id(), (err, ret) ->
+    Meteor.call 'indexTechnology', @technology.id, (err, ret) ->
       if err
         alertify.error err
       else
         log.info('indexed. ' + JSON.stringify(ret))
 
   'click .not-implemented': (event) ->
-    alertify.log '<strong>Coming soonish...</strong> <i class="icon-cogs pull-right"> </i>'
+    alertify.log '<strong>Coming sometime, maybe...</strong> <i class="icon-cogs pull-right"> </i>'
     analytics.track('Clicked disabled', {id: event.srcElement.id})
 
 Template.technology.rendered = ->

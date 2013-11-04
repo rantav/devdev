@@ -3,7 +3,7 @@ Technology._collection.after 'update', (userId, docId, fieldNames, modifier) ->
   if fieldNames.deletedAt
     indexer.removeTechnology(docId)
   else
-    indexer.indexTechnology(fieldNames)
+    indexer.indexTechnology(Technology._collection.findOne(docId))
 
 Technology._collection.after 'insert', (userId, doc) ->
   indexer.indexTechnology(doc)

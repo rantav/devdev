@@ -99,7 +99,6 @@ class @Contributor extends Minimongoid
     (contribution for contribution in @data.profile.contributions when contribution.technologyId == technology.id())
 
   deleteAspectContribution: (aspectContribution) ->
-    # TODO: Test deletion
     userContribution = @findUserAspectContribution(aspectContribution)
     userContribution.destroy()
     @data.profile.contributionCount--;
