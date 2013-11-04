@@ -16,9 +16,10 @@ class @AspectContribution extends Minimongoid
   # Is the current logged in user the owner of this contribution?
   isCurrentUserOwner: -> Meteor.userId() == @data.contributorId
 
-  typeIs: (t) -> @aspect.typeIs(t)
-  
-  defId: -> @aspect().defId()
+  typeIs: (t) ->
+    @aspect.typeIs(t)
+
+  defId: -> @aspect().defId
 
   id: -> @data.contributionId
 

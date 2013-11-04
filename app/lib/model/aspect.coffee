@@ -14,9 +14,6 @@ class @Aspect extends Minimongoid
     @data.name = n
     @changed()
 
-  id: => @data.aspectId
-
-  defId: -> @data.defId if @data
   setDefId: (defId) -> @data.defId = defId
 
   setType: (t) ->

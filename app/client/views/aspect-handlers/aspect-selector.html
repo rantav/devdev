@@ -1,11 +1,11 @@
 <template name='aspectViewer'>
-  {{#if aspect.typeIs 'markdown'}}
+  {{#if typeIs 'markdown'}}
     {{> markdownAspect}}
   {{/if}}
-  {{#if aspect.typeIs 'image'}}
+  {{#if typeIs 'image'}}
     {{> imageAspect}}
   {{/if}}
-  {{#if aspect.typeIs 'tags'}}
+  {{#if typeIs 'tags--'}}
     {{#if readonly}}
       {{> tagsAspect}}
     {{else}}

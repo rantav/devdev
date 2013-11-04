@@ -25,3 +25,7 @@ Deps.autorun ->
 
 Handlebars.registerHelper 'currentContributor', ->
   currentContributor
+
+Handlebars.registerHelper 'stringify', (obj)->
+  JSON.stringify(obj)
+
