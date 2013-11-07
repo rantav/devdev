@@ -8,7 +8,7 @@ class @Contributor extends Minimongoid
 
   @current: -> Contributor.init(Meteor.user()) if Meteor.userId()
 
-  contributionCount: -> @profile.contributionCount || 0
+  contributionCount: -> @contributions.length
 
   name: -> @profile.name
   color: -> @profile.color
@@ -48,32 +48,24 @@ class @Contributor extends Minimongoid
   #   (new Contribution(contribData) for contribData in @profile.contributions when not contribData.deletedAt)
 
   addTechnologyContribution: (technology) ->
-    if not @profile.contributions
-      @profile.contributions = []
-    if not @profile.contributionCount
-      @profile.contributionCount = 0
-    @profile.contributions.push
+    if not @contributions
+      @contributions = []
+    @contributions.push
       technologyId: technology.id()
       type: 'technology'
       createdAt: technology.createdAt()
       updatedAt: technology.updatedAt()
-    @profile.contributionCount++;
-    # @save(technology.updatedAt())
 
   addAspectContribution: (aspectContribution) ->
-    if not @profile.contributions
-      @profile.contributions = []
-    if not @profile.contributionCount
-      @profile.contributionCount = 0
-    @profile.contributions.push
-      technologyId: aspectContribution.aspect().technology().id()
-      aspectId: aspectContribution.aspect().id()
-      contributionId: aspectContribution.id()
+    if not @contributions
+      @contributions = []
+    @contributions.push
+      technologyId: aspectContribution.aspect.technology.id
+      aspectId: aspectContribution.aspect.id
+      contributionId: aspectContribution.id
       type: 'aspectContribution'
-      createdAt: aspectContribution.createdAt()
-      updatedAt: aspectContribution.updatedAt()
-    @profile.contributionCount++;
-    # @save(aspectContribution.updatedAt())
+      createdAt: aspectContribution.createdAt
+      updatedAt: aspectContribution.updatedAt
 
   setUsingTechnology: (technology, using) ->
     updates = {}
@@ -98,13 +90,11 @@ class @Contributor extends Minimongoid
   deleteAspectContribution: (aspectContribution) ->
     userContribution = @findUserAspectContribution(aspectContribution)
     userContribution.destroy()
-    @profile.contributionCount--;
     # @save()
 
   # TODO: Delete all other aspect contributions (from all other users as well)
   deleteTechnologyContribution: (technology) ->
     userContributionData = @findUserTechnologyContributions(technology)
     userContributionData.deletedAt = new Date()
-    @profile.contributionCount--;
     # @save()
 

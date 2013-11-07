@@ -47,26 +47,27 @@ class @Aspect extends Minimongoid
     @contributions = (c for c in @data.contributions when not c.contributionId == contributionId)
 
   addContribution: (text, contributor) ->
-    if not @contributions
-      @contributions = []
-
+    if not @aspectContributions
+      @aspectContributions = []
     now = new Date()
-    if @isSingleDataPerContributor() and @hasContributionsFromUser(contributor.id())
-      aspectContribution = @getContributionForUser(contributor.id())
+    if @isSingleDataPerContributor() and @hasContributionsFromUser(contributor.id)
+      aspectContribution = @getContributionForUser(contributor.id)
       aspectContribution.content = text
+      # TODO: aspectContribution.save(content: text)
+      contribId = aspectContribution.contributionId
     else
       aspectContributionData =
-        contributorId: Meteor.userId()
+        contributorId: contributor.id
         content: text
         contributionId: Meteor.uuid()
         createdAt: now
         updatedAt: now
-      @contributions.push(aspectContributionData)
-      aspectContribution = new AspectContribution(aspectContributionData, @)
-    if @type == 'tags'
-      aspectContribution.setTags(text)
-    @save(now)
-    aspectContribution
+      if @type == 'tags'
+        aspectContributionData.tags = text
+      contribId = aspectContributionData.contributionId
+      @aspectContributions.push(aspectContributionData)
+    @technology.saveObject(now)
+    new AspectContribution(@findContributionById(contribId), @)
 
   findContributionById: (contributionId) ->
     # TODO: Turn this into a map, not an array of objects
@@ -83,8 +84,7 @@ class @Aspect extends Minimongoid
     else
       return 'Add...'
 
-  save: (modificationTime)->
-    @technologyRef.save(modificationTime)
+  saveAt: (modificationTime) -> @technology.saveAt(modificationTime)
 
   storePath: ->
     if @type == 'image' and @name == 'Logo' then 'logos/'

@@ -9,10 +9,10 @@ Template.markdownAspectEditor.events
     $target.parents('.edit-section').find('.control-group').removeClass('error')
 
   'submit .markdown-aspect form.contribute-form': (event) ->
-    if @id() == 'new-aspect'
-      handleNewAspect(this, event)
+    if @id == 'new-aspect'
+      handleNewAspect(@, event)
     else
-      handleAspectContribution(this, event)
+      handleAspectContribution(@, event)
     # return false to prevent browser form submission
     false
 
@@ -43,7 +43,7 @@ handleAspectContribution = (aspect, event) ->
   text = $('textarea.contribute-text', event.target).val()
   if text
     NProgress.start()
-    Meteor.call 'contributeToAspect', aspect.technology().id(), aspect.id(), text, (err, ret) ->
+    Meteor.call 'contributeToAspect', aspect.technology.id, aspect.aspectId, text, (err, ret) ->
       if err
         alertify.error err
       else
@@ -68,7 +68,7 @@ handleNewAspect = (aspect, event) =>
   def = aspect.defId()
   analytics.track('add new aspect', {name: name})
   NProgress.start()
-  Meteor.call 'contributeNewAspect', aspect.technology().id(), name, value, def, (err, ret) ->
+  Meteor.call 'contributeNewAspect', aspect.technology.id, name, value, def, (err, ret) ->
     if err
       alertify.error err
       NProgress.done()

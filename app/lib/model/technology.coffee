@@ -122,6 +122,14 @@ class @Technology extends Minimongoid
       contribution = aspect.findContributionById(contributionId)
       return contribution if contribution
 
+  # touch: (time) ->
+  #   time ||= new Date()
+  #   @save(updatedAt: time)
+
+  # saveObject: (modificationTime) ->
+  #   @updatedAt = modificationTime
+  #   @save(@)
+
   # TODO: refactor to adjust for minimongoid
   # save: (updatedAt) ->
   #   updatedAt = updatedAt or new Date()

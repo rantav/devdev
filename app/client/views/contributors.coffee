@@ -1,5 +1,5 @@
 Template.contributors.contributors = ->
-  contributors = Contributor.all({}, {sort: {'profile.contributionCount': -1}})
+  contributors = Contributor.all()
   document.title = "#{contributors.length} contributors | devdev.io"
   contributors
 
