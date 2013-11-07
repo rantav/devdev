@@ -24,25 +24,6 @@
   <div class='clearfix' style='margin:5px'></div>
   <table class='table'>
     <tbody>
-      {{#if loggedIn}}
-        {{#with newAspect}}
-          <tr class='aspect'>
-            <th>
-              <div class='control-group'>
-                <input id='new-aspect-name' type='text' placeholder='Add aspect&hellip; (? for help)' value='{{name}}'/>
-                <div>
-                  <small class='help' id='new-aspect-help'></small>
-                </div>
-              </div>
-            </th>
-            <td class='aspect-data'>
-              <div id='new-aspect-adder'>
-                {{> aspectEditorHeader}}
-              </div>
-            </td>
-          </tr>
-        {{/with}}
-      {{/if}}
       <tr class='used-by'>
         <th>Used By</th>
         <td>
@@ -69,23 +50,6 @@
                 <div class='contribution' style='border-left-color: {{contributor.color}}'
                      rel='tooltip' data-placement='left'
                      title='{{contributor.name}}'>
-                  <div class='contribution-actions pull-right'>
-                    {{#if isCurrentUserOwner}}
-                      <a class='action not-implemented' href='javascript:void(0)' title='Edit your contribution'>
-                        <i id='edit-aspect-contribution' class='icon-edit disabled'></i>
-                      </a>
-                      <a class='action' href='javascript:void(0)' title='Delete your contribution'>
-                        <i class='icon-trash'></i>
-                      </a>
-                    {{else}}
-                      <a class='not-implemented action' href='javascript:void(0)' title='Vote up'>
-                        <i id='vote-up-aspect-contribution' class='icon-thumbs-up disabled'></i>
-                      </a>
-                      <a class='not-implemented action' href='javascript:void(0)' title='Vote down'>
-                        <i id='vote-down-aspect-contribution' class='icon-thumbs-down disabled'></i>
-                      </a>
-                    {{/if}}
-                  </div>
                   <p class='contribution'>
                     <small class='pull-right muted'>
                       {{timeAgo updatedAt}}
@@ -97,11 +61,6 @@
                 </div>
               {{/unless}}
             {{/each}}
-            {{#if loggedIn}}
-              <div id='aspect-edit-{{id}}'>
-                {{> aspectEditorInline}}
-              </div>
-            {{/if}}
           </td>
         </tr>
       {{/each}}
