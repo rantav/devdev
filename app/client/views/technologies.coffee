@@ -12,13 +12,7 @@ Template.technologies.iUseItClass = ->
 Template.technologies.events
   'click #add-technology': ->
     analytics.track('Add technology', {loggedIn: !!Meteor.userId()})
-    if not Meteor.userId()
-      alertify.alert(Html.pleasLoginAlertifyHtml())
-      return
-
-    alertify.prompt '<h1>Technology Name:</h1>', (e, str) ->
-      if e
-        addTechnology(str)
+    alertify.log("Sorry, this is currently disabled, we're working on it...")
 
   'click i.icon-trash': ->
     analytics.track('Delete technology')
