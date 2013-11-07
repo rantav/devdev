@@ -4,7 +4,7 @@ window.technologiesDep = new Deps.Dependency()
 window.esCallback = (data) ->
   technologies = []
   for hit in data.hits.hits
-    tech = Technology.findOne(hit._id)
+    tech = Technology.find(hit._id)
     technologies.push(tech)
   technologiesDep.changed()
 
