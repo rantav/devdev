@@ -190,6 +190,21 @@ class @Technology extends Minimongoid
         for contribution in aspect.aspectContributions
           return contribution unless contribution.deletedAt
 
+  # Get only the data from the technology
+  data: ->
+    _.object(
+      _.without(
+        _.map(
+          _.pairs(@),
+          (kv) ->
+            if kv[0] == 'creator' then return null
+            if kv[0] == 'aspects' then return [kv[0], _.map(kv[1], (a) -> a.data())]
+            return kv
+        )
+        ,null
+      )
+    )
+
 createAspect = (aspectName, type, aspectDefId) ->
   name: aspectName
   type: type

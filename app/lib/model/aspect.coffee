@@ -88,3 +88,17 @@ class @Aspect extends Minimongoid
 
   storePath: ->
     if @type == 'image' and @name == 'Logo' then 'logos/'
+
+  data: ->
+    _.object(
+      _.without(
+        _.map(
+          _.pairs(@),
+          (kv) ->
+            if kv[0] in ['setName', 'technology'] then return null
+            if kv[0] == 'aspectContributions' then return [kv[0], _.map(kv[1], (c) -> c.data())]
+            return kv
+        )
+        ,null
+      )
+    )

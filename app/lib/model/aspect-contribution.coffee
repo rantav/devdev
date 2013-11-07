@@ -47,3 +47,16 @@ class @AspectContribution extends Minimongoid
     h = if options and options.h then "&h=#{options.h}" else ''
     url = "#{url}/convert?#{w}#{h}&fit=clip&cache=true"
     cdned = Cdn.cdnify(url)
+
+  data: ->
+    _.object(
+      _.without(
+        _.map(
+          _.pairs(@),
+          (kv) ->
+            if kv[0] in ['aspect', 'contributor'] then return null
+            return kv
+        )
+        ,null
+      )
+    )
