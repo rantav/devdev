@@ -52,19 +52,6 @@ root.Contributor = class Contributor
         picture = Cdn.cdnify('/img/user.png')
     picture
 
-  addTechnologyContribution: (technology) ->
-    if not @data.profile.contributions
-      @data.profile.contributions = []
-    if not @data.profile.contributionCount
-      @data.profile.contributionCount = 0
-    @data.profile.contributions.push
-      technologyId: technology.id()
-      type: 'technology'
-      createdAt: technology.createdAt()
-      updatedAt: technology.updatedAt()
-    @data.profile.contributionCount++;
-    @save(technology.updatedAt())
-
   setUsingTechnology: (technology, using) ->
     if not @data.profile.usingTechnology then @data.profile.usingTechnology = {}
     @data.profile.usingTechnology[technology.id()] = using

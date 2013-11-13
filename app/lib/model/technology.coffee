@@ -59,7 +59,6 @@ root.Technology = class Technology
   isCurrentUserOwner: -> Meteor.userId() == @contributorId()
 
 
-
   save: (updatedAt) ->
     updatedAt = updatedAt or new Date()
     @data.updatedAt = updatedAt
