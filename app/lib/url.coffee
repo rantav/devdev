@@ -13,3 +13,11 @@ Url.getParameterByName = (name, search) ->
 Url.tagLink = (tag, category) ->
   tag = '"' + tag + '"'
   "/search?type=technology&q=tags.#{category}:#{tag}"
+
+# provide options as {w: 5, h: 6}
+Url.imageUrl = (url, options) ->
+  if not url.indexOf('http') == 0 then return null
+  w = if options and options.w then "&w=#{options.w}" else ''
+  h = if options and options.h then "&h=#{options.h}" else ''
+  url = "#{url}/convert?#{w}#{h}&fit=clip&cache=true"
+  cdned = Cdn.cdnify(url)

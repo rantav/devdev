@@ -90,20 +90,6 @@ root.Technology = class Technology
             suggestions = suggestions.concat(contribution.tags)
     suggestions = _.uniq(suggestions)
 
-  # Gets all the tags for the stack
-  getTagsForAspectDefId: (aspectDefId)->
-    tags = []
-    for aspect in @data.aspects
-      if aspect.defId == aspectDefId
-        aspectObj = new Aspect(aspect)
-        for contribution in aspect.contributions
-          if not contribution.deletedAt
-            aspectContribution = new AspectContribution(contribution, aspectObj, @)
-            newTags = aspectContribution.getTags()
-            if newTags
-              tags = _.union(tags, newTags)
-    tags
-
   aspects: ->
     (new Aspect(aspectData, @) for aspectData in @data.aspects) if @data
 
@@ -193,18 +179,9 @@ root.Technology = class Technology
     num
 
   logoUrl: (options) ->
-    logo = @findLogoContribution()
+    logo = @data.logo
     if not logo then return options.default
-    logo.imageUrl(options)
-
-  # Just picks up the first logo that it's able to find.
-  findLogoContribution: ->
-    if @data.aspects
-      for aspect in @data.aspects
-        if aspect.name == 'Logo' and aspect.contributions.length
-          for contribution in aspect.contributions
-            if not contribution.deletedAt
-              return new AspectContribution(contribution, new Aspect(aspect), @)
+    Url.imageUrl(logo, options)
 
 createAspect = (aspectName, type, aspectDefId) ->
   name: aspectName

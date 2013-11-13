@@ -94,6 +94,8 @@ class Indexer
     )
 
   indexTechnology: (techData) ->
+    return
+
     techData = @prepare(techData)
     Meteor.sync((done) ->
       technologies.index({_id: techData._id}, techData, (err, data) ->
@@ -107,6 +109,8 @@ class Indexer
     )
 
   bulkIndexTechnologies: (techDatas) ->
+    return
+
     techDatas = (@prepare(t) for t in techDatas)
     options = {}
     Meteor.sync((done) =>

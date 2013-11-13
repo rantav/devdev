@@ -10,18 +10,6 @@
         <th>
           <a href='{{route}}'>{{name}}</a>
         </th>
-        <td class='tags'>
-          <div>
-            {{#each getTagsForAspectDefId 'stack'}}
-              <a class='label label-stack' href='{{tagLink .  "stack"}}'>{{.}}</a>
-            {{/each}}
-          </div>
-          <div>
-            {{#each getTagsForAspectDefId 'vertical'}}
-              <a class='label label-vertical' href='{{tagLink . "vertical"}}'>{{.}}</a>
-            {{/each}}
-          </div>
-        </td>
         <td>
           Started by
           <a href='{{creator.route}}'>{{creator.name}}</a>, {{timeAgo createdAt}}

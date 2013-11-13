@@ -58,11 +58,3 @@ root.AspectContribution = class AspectContribution
     @data.tags = (tag.trim() for tag in text.split(',') when tag.trim())
     @data.content = text
 
-  # provide options as {w: 5, h: 6}
-  imageUrl: (options) ->
-    url = @content()
-    if not url.indexOf('http') == 0 then return null
-    w = if options and options.w then "&w=#{options.w}" else ''
-    h = if options and options.h then "&h=#{options.h}" else ''
-    url = "#{url}/convert?#{w}#{h}&fit=clip&cache=true"
-    cdned = Cdn.cdnify(url)
