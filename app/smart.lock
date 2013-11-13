@@ -15,7 +15,8 @@
       "collection-hooks": {
         "version": "0.3.2"
       },
-      "observatory": {}
+      "observatory": {},
+      "migrations": {}
     },
     "packages": {
       "marked": {
@@ -47,6 +48,11 @@
         "git": "https://github.com/jhoxray/observatory.git",
         "tag": "v0.3.21",
         "commit": "3d6b436af0a70b784d0f9ec4709907c77bd4fd63"
+      },
+      "migrations": {
+        "git": "https://github.com/rantav/meteor-migrations.git",
+        "tag": "v0.0.2",
+        "commit": "4e75c06b8e94961567765c4dea20a007816ad274"
       },
       "observatory-apollo": {
         "git": "https://github.com/superstringsoftware/observatory-apollo.git",
