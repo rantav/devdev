@@ -1,16 +1,8 @@
-ToolsCollection = Tool._collection
-
 
 Meteor.startup ->
 
-  Meteor.Migrations.add 'copy technologies -> tools', (log) ->
-    Technologies.find().forEach (t) ->
-      Tool.insert(t)
-      log.info("Inserted #{t._id}: #{t.name}")
-
-
   Meteor.Migrations.add 'move logo', (log) ->
-    ToolsCollection.find().forEach (t) ->
+    Technologies.find().forEach (t) ->
       logo = null
       for aspect in t.aspects
         if aspect.name == 'Logo'
@@ -19,6 +11,19 @@ Meteor.startup ->
             logo = contributions[0].content
             break
       if logo
-        ToolsCollection.update({_id: t._id}, {$set: {logo: logo}})
+        Technologies.update({_id: t._id}, {$set: {logo: logo}})
         log.info("#{t.name}: #{logo}")
 
+  Meteor.Migrations.add 'copy technologies -> tools', (log) ->
+    Technologies.find().forEach (t) ->
+      Tool.insert(t)
+      log.info("Inserted #{t._id}: #{t.name}")
+
+
+
+  Meteor.Migrations.add 'cleanup tools data', ((log) ->
+    Tool._collection.find().forEach (t) ->
+      delete t.data.aspects
+      Tool._collection.update(t.data._id, t.data)
+      log.info("Cleaned #{t.data._id}"))
+      , force: true
