@@ -1,7 +1,14 @@
-ToolsCollection = Technologies # Will rename later...
+ToolsCollection = Tool._collection
 
 
 Meteor.startup ->
+
+  Meteor.Migrations.add 'copy technologies -> tools', (log) ->
+    Technologies.find().forEach (t) ->
+      Tool.insert(t)
+      log.info("Inserted #{t._id}: #{t.name}")
+
+
   Meteor.Migrations.add 'move logo', (log) ->
     ToolsCollection.find().forEach (t) ->
       logo = null
