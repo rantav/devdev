@@ -9,4 +9,4 @@ root.addTechnology = (name) ->
       alertify.error err
       return
     Router.go(routes.technology(Technology.findOne(ret)))
-    alertify.success "Great, now add some smarts to #{name}"
+    alertify.success "Great, do you use #{name}? Then click I Use It"
