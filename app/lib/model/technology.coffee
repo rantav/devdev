@@ -22,36 +22,16 @@ root.Technology = class Technology
     id = Technologies.insert data
     @findOne(id)
 
-  @allAspectNames: ->
-    _.map(@aspectDefinitions(), (e, i) -> i)
-
-  @aspectDefinitions: ->
-    aspectDefinitions
-
-  @typeForName: (name) ->
-    def = Technology.aspectDefinitions()[name.toLowerCase()]
-    if def then def.type else 'markdown'
 
   @create: (name) ->
     now = new Date()
     tech =
       name: name
       contributorId: Meteor.userId()
-      aspects: @createPinnedAspects()
       createdAt: now
       updatedAt: now
     Technology.add(tech)
 
-  @createPinnedAspects: ->
-    defs = @aspectDefinitions()
-    (createAspect(defs[k].display, defs[k].type, k) for k in @pinnedAspectDefIds())
-
-  # Gets all the pinned aspect definitions
-  @pinnedAspectDefIds: ->
-    (k for k, def of @aspectDefinitions() when def.pinned)
-
-  @getAspectDef: (aspectDefId) ->
-    @aspectDefinitions()[aspectDefId] || {type: 'markdown'}
 
   constructor: (@data) ->
 
@@ -73,61 +53,12 @@ root.Technology = class Technology
 
   route: -> routes.technology(@) if @data
 
-  suggestVerticals: ->
-    @suggestByDefId('vertical')
-
-  suggestStacks: ->
-    @suggestByDefId('stack')
-
-  suggestByDefId: (defId) ->
-    # This is a temporary solution until we get the tags component to work
-    # well with elastic search...
-    suggestions = []
-    for technology in Technologies.find({deletedAt: {$exists: false}}).fetch()
-      for aspect in technology.aspects
-        if aspect.defId == defId
-          for contribution in aspect.contributions
-            suggestions = suggestions.concat(contribution.tags)
-    suggestions = _.uniq(suggestions)
-
-  aspects: ->
-    (new Aspect(aspectData, @) for aspectData in @data.aspects) if @data
 
   # Is the current logged in user the owner of this technology?
   # (owner is the one creating it in the first place)
   isCurrentUserOwner: -> Meteor.userId() == @contributorId()
 
-  suggestAspectNames: ->
-    {value: def.display, tokens: _.union('?', Text.tokenize(def.display)), type: def.type, defId: key} for key, def of Technology.aspectDefinitions()
 
-  aspectNames: ->
-    (aspectData.name for aspectData in @data.aspects)
-
-  contributors: ->
-    if @data
-      contributorIds = [@data.contributorId].concat (contribution.contributorId for contribution in aspect.contributions for aspect in @data.aspects)...
-      output = {}
-      output[contributorIds[key]] = contributorIds[key] for key in [0...contributorIds.length]
-      contributorIds = (value for key, value of output)
-      (Contributor.findOne(contributorId) for contributorId in contributorIds)
-
-  findAspectById: (aspectId) ->
-    if @data and @data.aspects
-      candidates = (aspect for aspect in @data.aspects when aspect.aspectId == aspectId)
-      return new Aspect(candidates[0], @)
-    else
-      return new Aspect(null, @)
-
-  findAspectByName: (name) ->
-    if @data and @data.aspects
-      candidates = (aspect for aspect in @data.aspects when aspect.name.toLowerCase() == name.toLowerCase())
-      if (candidates[0])
-        return new Aspect(candidates[0], @)
-
-  findContributionById: (contributionId) ->
-    for aspect in @aspects()
-      contribution = aspect.findContributionById(contributionId)
-      return contribution if contribution
 
   save: (updatedAt) ->
     updatedAt = updatedAt or new Date()
@@ -161,34 +92,10 @@ root.Technology = class Technology
   usedBy: ->
     (Contributor.findOne(id) for id, used of @data.usedBy when used) if @data.usedBy
 
-  addAspectAndContribution: (aspectName, aspectTextValue, aspectDefId, contributor) ->
-    aspect = @findAspectByName(aspectName)
-    if not aspect
-      type = Technology.getAspectDef(aspectDefId).type
-      aspectData = createAspect(aspectName, type, aspectDefId)
-      @data.aspects.push(aspectData)
-      aspect = new Aspect(aspectData, @)
-    aspect.addContribution(aspectTextValue, contributor)
-
-  numContributions: ->
-    num = 0
-    for aspect in @data.aspects
-      for contribution in aspect.contributions
-        if not contribution.deletedAt
-          num++
-    num
 
   logoUrl: (options) ->
     logo = @data.logo
     if not logo then return options.default
     Url.imageUrl(logo, options)
-
-createAspect = (aspectName, type, aspectDefId) ->
-  name: aspectName
-  type: type
-  contributions: []
-  aspectId: Meteor.uuid()
-  defId: aspectDefId
-
 
 root.Technologies = new Meteor.Collection "technologies"

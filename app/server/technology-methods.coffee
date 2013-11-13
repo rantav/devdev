@@ -57,7 +57,6 @@ Meteor.methods
 
     contributor = technology.owner()
     technology.delete()
-    contributor.deleteTechnologyContribution(technology)
 
   setName: (technologyId, newName) ->
     technology = Technology.findOne(technologyId)

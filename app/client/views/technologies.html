@@ -22,8 +22,7 @@
           <a href='{{route}}'>{{name}}</a>
         </th>
         <td>
-          Started by <a href='{{creator.route}}'>{{creator.name}}</a>, {{timeAgo createdAt}}
-          <small class='muted'>(Last modified {{timeAgo updatedAt}})</small>
+          Added by <a href='{{creator.route}}'>{{creator.name}}</a>, {{timeAgo createdAt}}
         </td>
         <td class='used-by'>
           {{#each usedBy}}
