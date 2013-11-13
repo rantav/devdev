@@ -2,4 +2,8 @@ class @Model
   @insert: (data) ->
     @_collection.insert(data)
 
-  constructor: (@data)
+  @find: (q, opt) ->
+    @_collection.find(q, opt)
+
+  constructor: (@data) ->
+

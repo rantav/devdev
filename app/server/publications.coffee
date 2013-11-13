@@ -3,6 +3,11 @@ Meteor.publish "technologies", ->
     deletedAt:
       $exists: false
 
+Meteor.publish "tools", ->
+  Tool._collection.find
+    deletedAt:
+      $exists: false
+
 Meteor.publish "technologiesDeleted", ->
   Technologies.find {
     deletedAt:
