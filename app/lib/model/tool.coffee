@@ -56,6 +56,7 @@ Tool._collection.allow
 #     doc.owner == userId
 
   fetch: ['owner']
+  transform: null
 
 # Wishes.deny
 #   update: (userId, doc, fields, modifier) ->
