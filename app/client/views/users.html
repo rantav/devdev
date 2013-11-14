@@ -1,5 +1,5 @@
 <template name='users'>
-<h2>users</h2>
+<h2>Users:</h2>
 <table class='table'>
   {{#each users}}
     <tr>
@@ -10,8 +10,8 @@
         </a>
       </th>
       <td>
-        {{#each usedTechnologies}}
-          <a class='technology-logo-small' href='{{route}}' title='{{name}}' rel='tooltip'>
+        {{#each usedTools}}
+          <a class='tool-logo-small' href='{{route}}' title='{{name}}' rel='tooltip'>
             {{{imgPolaroid}}}
           </a>
         {{/each}}

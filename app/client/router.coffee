@@ -5,10 +5,8 @@ Router.map ->
 
   @route 'about'
 
-  @route 'technologies', controller: 'TechnologiesController'
-  @route 'technology', controller: 'TechnologiesController'
-  @route 'technology/:id', controller: 'TechnologyController'
-  @route 'technology/:id/:name', controller: 'TechnologyController'
+  @route 'tools', path: '/tools', controller: 'ToolsController'
+  @route 'tool', path: '/tool/:id/:name?', controller: 'ToolController'
 
   @route 'users', path: '/users', controller: 'UsersController'
   @route 'user', path: '/user/:id/:name?', controller: 'UserController'

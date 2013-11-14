@@ -19,7 +19,7 @@ Template.user.events
     analytics.track('Clicked disabled', {id: event.srcElement.id})
 
 Template.user.rendered = ->
-  $('.technology-logo-small[rel=tooltip]').tooltip()
+  $('.tool-logo-small[rel=tooltip]').tooltip()
 
 Template.user.destroyed = ->
-  $('.technology-logo-small[rel=tooltip]').tooltip('hide')
+  $('.tool-logo-small[rel=tooltip]').tooltip('hide')

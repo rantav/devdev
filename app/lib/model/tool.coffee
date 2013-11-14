@@ -2,6 +2,9 @@ class @Tool extends Model
   @_collection: new Meteor.Collection('tools', transform: (data) => @modelize(data))
   @modelize: (data) -> new Tool(data)
 
+  @findOne: (idOrName) ->
+    super({$or: [{_id: idOrName}, {'name': new RegExp('^' + idOrName + '$', 'i')}]})
+
   constructor: (data) ->
     super(data)
     @_usedBy = new MinimongoidHashBooleanSet(Tool._collection, data, 'usedBy')
@@ -12,19 +15,21 @@ class @Tool extends Model
   createdAt: -> @data.createdAt
   updatedAt: -> @data.updatedAt
   deletedAt: -> @data.deletedAt
-  creator: -> User.findOne(@data.creatorId)
+  creator: -> User.findOneUser(@data.creatorId)
+
+  route: -> Router.path('tool', id: @id(), name: @name())
 
   logoUrl: (options) ->
     logo = @data.logo
     if not logo then return options.default
     Url.imageUrl(logo, options)
 
-  isUsedBy: (contributor) -> @_usedBy.has(contributor.id())
+  isUsedBy: (user) -> @_usedBy.has(user.id())
 
   usedBy: ->
-    User.findOne(e) for e in @_usedBy.elements()
+    User.findOneUser(e) for e in @_usedBy.elements()
 
-  setUsedBy: (contributor, used) -> @_usedBy.update(contributor.id(), used)
+  setUsedBy: (user, used) -> @_usedBy.update(user.id(), used)
 
 Tool._collection.allow
   insert: (userId, doc) ->

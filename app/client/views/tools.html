@@ -1,11 +1,11 @@
-<template name='technologies'>
-<div class='technologies-page-actions pull-right'>
-  <button id='add-technology' class='btn btn-primary {{disableAnonymous}}'>Add a Tool</button>
+<template name='tools'>
+<div class='tools-page-actions pull-right'>
+  <button id='add-tool' class='btn btn-primary {{disableAnonymous}}'>Add a Tool</button>
 </div>
 <h2>Tools</h2>
 {{#if isAdmin}}
   <div class='admin pull-right'>
-    <button id='index-all-technologies' class='btn'>
+    <button id='index-all-tools' class='btn'>
       <i class='icon-cog'></i> Index All
     </button>
   </div>
@@ -15,7 +15,7 @@
   <tbody>
     {{#each tools}}
       <tr>
-        <td class='technology-logo-small'>
+        <td class='tool-logo-small'>
           <a href='{{route}}'>{{{imgPolaroid}}}</a>
         </td>
         <th>

@@ -26,7 +26,7 @@ class Searcher
   tagSuggestLive: (query, category, callback) ->
     return unless suggestEnabled
     if callback
-      json = technology:
+      json = tool:
         text: query
         completion:
           field: "tags_suggest.#{category}"
@@ -43,7 +43,7 @@ class Searcher
     callbackIndex += 1
     name = 'callback' + callbackIndex
     @[name] = (data) ->
-      suggestions = (option.text for option in data.technology[0].options)
+      suggestions = (option.text for option in data.tool[0].options)
       callback(suggestions)
     "searcher.#{name}"
 

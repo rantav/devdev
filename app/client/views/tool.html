@@ -1,25 +1,25 @@
-<template name='technology'>
-  <div class='technology-page-actions pull-right'>
+<template name='tool'>
+  <div class='tool-page-actions pull-right'>
     <button class='btn i-use-it {{disableAnonymous}} {{iUseItClass}}'>
       <i class='icon-white icon-thumbs-up'></i>
       <span class='text'> I Use It</span>
     </button>
-    <button id='follow-technology' class='btn disabled not-implemented'>Follow {{technology.name}}</button>
+    <button id='follow-tool' class='btn disabled not-implemented'>Follow {{tool.name}}</button>
     <a id='share' class='btn' href="{{twitterShareUrl}}" target="_blank">
-      <i class='icon-twitter'></i> Share {{technology.name}}
+      <i class='icon-twitter'></i> Share {{tool.name}}
     </a>
     {{#if isAdmin}}
-      <button id='index-technology' class='btn'>
+      <button id='index-tool' class='btn'>
         <i class='icon-cog'></i> Index
       </button>
     {{/if}}
   </div>
 
   <h1 class='name'>
-    <a class='pull-left technology-logo' href='{{technology.route}}'>
+    <a class='pull-left tool-logo' href='{{tool.route}}'>
       {{{imgPolaroid h=40}}}
     </a>
-    <div id='technology-name' class='pull-left' contenteditable='{{technology.nameEditableByCurrentUser}}'>{{technology.name}}</div>
+    <div id='tool-name' class='pull-left' contenteditable='{{tool.nameEditableByCurrentUser}}'>{{tool.name}}</div>
   </h1>
   <div class='clearfix' style='margin:5px'></div>
   <table class='table'>
@@ -27,7 +27,7 @@
       <tr class='used-by'>
         <th>Used By</th>
         <td>
-          {{#each technology.usedBy}}
+          {{#each tool.usedBy}}
             <a class='user-dense pull-left' href='{{route}}' rel='tooltip' title='Used by {{name}}'>
               <img class='img-polaroid' src='{{photoUrl 40}}'/>
             </a>
@@ -38,7 +38,6 @@
           {{/each}}
         </td>
       </tr>
-
     </tbody>
   </table>
 </template>

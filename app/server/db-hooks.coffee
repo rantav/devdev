@@ -1,12 +1,12 @@
 # https://github.com/matb33/meteor-collection-hooks/tree/v0.3.2
-Technologies.after 'update', (userId, docId, fieldNames, modifier) ->
+Tool._collection.after 'update', (userId, docId, fieldNames, modifier) ->
   if fieldNames.deletedAt
-    indexer.removeTechnology(docId)
+    indexer.removeTool(docId)
   else
-    indexer.indexTechnology(fieldNames)
+    indexer.indexTool(fieldNames)
 
-Technologies.after 'insert', (userId, doc) ->
-  indexer.indexTechnology(doc)
+Tool._collection.after 'insert', (userId, doc) ->
+  indexer.indexTool(doc)
 
-Technologies.after 'delete', (userId, docId) ->
-  indexer.removeTechnology(docId)
+Tool._collection.after 'delete', (userId, docId) ->
+  indexer.removeTool(docId)

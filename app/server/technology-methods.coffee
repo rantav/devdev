@@ -76,4 +76,4 @@ Meteor.methods
     tool = Tool.findOne(toolId)
     if not tool
       throw new Meteor.Error 401, "Tool #{toolId} was not found"
-    contributor.setUsingTechnology(tool, used)
+    contributor.setUsingTool(tool, used)

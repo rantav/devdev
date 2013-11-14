@@ -9,7 +9,7 @@ class @UserController extends RouteController
 
   data: ->
     Session.set('userId', undefined)
-    @user = User.findOne(@params.id)
+    @user = User.findOneUser(@params.id)
     if not @user or @user.anonymous()
       Session.set('userId', @params.id)
       return null

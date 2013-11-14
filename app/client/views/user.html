@@ -12,8 +12,8 @@
     <tr>
       <th>
         {{user.name}} Uses:
-        {{#each user.usedTechnologies}}
-          <a class='technology-logo-small' href='{{route}}' title='{{name}}' rel='tooltip' style='margin-left: 3px'>
+        {{#each user.usedTools}}
+          <a class='tool-logo-small' href='{{route}}' title='{{name}}' rel='tooltip' style='margin-left: 3px'>
             {{{imgPolaroid}}}
           </a>
         {{/each}}
@@ -22,22 +22,22 @@
   </thead>
   <tbody>
     {{#each user.contributions}}
-      {{#if technology}}
+      {{#if tool}}
         <tr class='contribution'>
-          {{#if typeIs 'technology'}}
+          {{#if typeIs 'tool'}}
             <th>
-              Created technology
-              <a href='{{technology.route}}'>{{technology.name}}</a>
+              Created tool
+              <a href='{{tool.route}}'>{{tool.name}}</a>
             </th>
             <td class='contribution-data'></td>
             <td>
-              <small class='pull-right muted'>Created {{timeAgo technology.createdAt}}, last update {{timeAgo technology.updatedAt}}</small>
+              <small class='pull-right muted'>Created {{timeAgo tool.createdAt}}, last update {{timeAgo tool.updatedAt}}</small>
             </td>
           {{/if}}
           {{#if typeIs 'aspectContribution'}}
             <th>
               Contributed to
-              <a href='{{technology.route}}'>{{technology.name}}</a>
+              <a href='{{tool.route}}'>{{tool.name}}</a>
               to aspect
               <span class='label'>{{aspect.name}}</span>
             </th>

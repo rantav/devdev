@@ -1,6 +1,8 @@
 class @User extends Model
-  Meteor.users._transform = (data) -> new User(data)
+
   @_collection: Meteor.users
+
+  transform = (doc) -> new User(doc)
 
   constructor: (data) ->
     super(data)
@@ -11,11 +13,13 @@ class @User extends Model
     @data.profile.name ||= 'unknown'
 
 
-  @findOne: (idOrName) ->
-    super(idOrName) # TODO: || @findByName(idOrName)
+  @findOneUser: (idOrName) ->
+    Meteor.users.findOne(
+      {$or: [{_id: idOrName}, {'profile.name': new RegExp('^' + idOrName + '$', 'i')}]},
+      {transform: transform})
 
-  @findByName: (name) ->
-    super.findOne({'profile.name': new RegExp('^' + idOrName + '$', 'i')})
+  @findUsers: (selector, options) ->
+    Meteor.users.find(selector, _.extend({transform: transform}, options))
 
   # Current logged in user; undefined if the user is not logged in
   @current: -> Meteor.user() # new User(Meteor.user()) if Meteor.userId()
@@ -44,18 +48,18 @@ class @User extends Model
         picture = Cdn.cdnify('/img/user.png')
     picture
 
-  setUsingTechnology: (technology, using) ->
-    if not @data.profile.usingTechnology then @data.profile.usingTechnology = {}
-    @data.profile.usingTechnology[technology.id()] = using
+  setUsingTool: (tool, using) ->
+    if not @data.profile.usingTool then @data.profile.usingTool = {}
+    @data.profile.usingTool[tool.id()] = using
     @save()
 
-  isUsingTechnology: (technology) ->
-    @data.profile.usingTechnology and @data.profile.usingTechnology[technology.id()]
+  isUsingTool: (tool) ->
+    @data.profile.usingTool and @data.profile.usingTool[tool.id()]
 
-  usedTechnologies: ->
-    if not @data.profile.usingTechnology or not Session.get('devdevFullySynched')
+  usedTools: ->
+    if not @data.profile.usingTool or not Session.get('devdevFullySynched')
       return []
-    (Tool.findOne(techId) for techId, using of @data.profile.usingTechnology when using)
+    (Tool.findOne(toolId) for toolId, using of @data.profile.usingTool when using)
 
   # save: ->
   #   Meteor.users.update(@data._id, @data)

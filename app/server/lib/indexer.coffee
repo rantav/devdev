@@ -10,19 +10,19 @@ class Indexer
     console.log('Will connect to ES at ' + settings.host + ':' + settings.port + '  Using index: ' + settings.index)
     conf =
       _index: settings.index
-      _type: 'technology'
+      _type: 'tool'
       server:
         host: settings.host
         port: settings.port
     if priv.auth then conf.server.auth = priv.auth
-    technologies = elasticsearch(conf)
+    tools = elasticsearch(conf)
 
 
   init: ->
-    @mapTechnologies()
+    @mapTools()
 
-  # Initializes the technology document mapping
-  mapTechnologies: ->
+  # Initializes the tools document mapping
+  mapTools: ->
     return
     # TODO
     options = {}
@@ -76,7 +76,7 @@ class Indexer
             type: "string"
 
     if suggestEnabled
-      mapping.technology.properties.tags_suggest =
+      mapping.Tool.properties.tags_suggest =
         type: "object"
         properties:
           vertical:
@@ -85,7 +85,7 @@ class Indexer
             type: "completion"
 
     Meteor.sync((done) ->
-      technologies.indices.putMapping(options, mapping, (err, data) ->
+      tools.indices.putMapping(options, mapping, (err, data) ->
         if err
           console.log(err)
           done(err)
@@ -95,12 +95,12 @@ class Indexer
       )
     )
 
-  indexTechnology: (techData) ->
+  indexTool: (techData) ->
     return
 
     techData = @prepare(techData)
     Meteor.sync((done) ->
-      technologies.index({_id: techData._id}, techData, (err, data) ->
+      tools.index({_id: techData._id}, techData, (err, data) ->
         if err
           console.error(err)
           done(err)
@@ -110,13 +110,13 @@ class Indexer
       )
     )
 
-  bulkIndexTechnologies: (techDatas) ->
+  bulkIndexTools: (techDatas) ->
     return
 
     techDatas = (@prepare(t) for t in techDatas)
     options = {}
     Meteor.sync((done) =>
-      @bulkIndex(technologies, options, techDatas, (err, data) ->
+      @bulkIndex(tools, options, techDatas, (err, data) ->
         if err
           console.error(err)
           done(err)
@@ -145,9 +145,9 @@ class Indexer
 
     index.bulk(options, commands, callback)
 
-  removeTechnology: (techId) ->
+  removeTool: (techId) ->
     Meteor.sync((done) ->
-      technologies.delete({_id: techId}, (err, data) ->
+      tools.delete({_id: techId}, (err, data) ->
         if err
           console.error(err)
           done(err)
@@ -183,16 +183,6 @@ class Indexer
           newContributions.push contribution
       aspect.contributions = newContributions
 
-  # Removes aspects marked as noindex
-  removeNoIndex: (doc) ->
-    defs = Technology.aspectDefinitions()
-    newAspects = []
-    for aspect in doc.aspects
-      if aspect.defId and defs[aspect.defId] and defs[aspect.defId].noindes
-        #remove
-      else
-        newAspects.push(aspect)
-    doc.aspects = newAspects
 
   # Refactors the usedBy map {userId: boolean} into an array [userId1, userId2]
   refactorUsedBy: (doc) ->

@@ -1,18 +1,20 @@
 Meteor.methods
-  indexTechnology: (technologyId) ->
+  indexTool: (toolId) ->
+    return
     user = User.current()
     if not user.isAdmin()
       throw new Meteor.Error 401, "Sorry, only admins can do that..."
-    technology = Technology.findOne(technologyId)
-    response = indexer.indexTechnology(technology.data)
+    tool = Tool.findOne(toolId)
+    response = indexer.indexTool(tool.data)
     if response.error then throw new Meteor.Error 500, JSON.stringify(response.error)
     response.result
 
-  indexAllTechnologies: ->
+  indexAllTools: ->
+    return
     user = Contributor.current()
     if not user.isAdmin()
       throw new Meteor.Error 401, "Sorry, only admins can do that..."
-    technologies = (t for t in Technologies.find({deletedAt: {$exists: false}}).fetch())
-    response = indexer.bulkIndexTechnologies(technologies)
+    tools = (t for t in Tool.find({deletedAt: {$exists: false}}).fetch())
+    response = indexer.bulkIndexTools(tools)
     if response.error then throw new Meteor.Error 500, JSON.stringify(response.error)
     response.result

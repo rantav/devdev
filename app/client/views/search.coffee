@@ -1,19 +1,19 @@
-technologies = []
-window.technologiesDep = new Deps.Dependency()
+tools = []
+window.toolsDep = new Deps.Dependency()
 
 window.esCallback = (data) ->
-  technologies = []
+  tools = []
   for hit in data.hits.hits
-    tech = Technology.findOne(hit._id)
-    technologies.push(tech)
-  technologiesDep.changed()
+    tool = Tools.findOne(hit._id)
+    tools.push(tool)
+  toolsDep.changed()
 
 
 Template.search.created = ->
   Deps.autorun ->
     query = Session.get('query')
     type = Session.get('type')
-    technologies = []
+    tools = []
     if query
       searcher.search(query, type, 'esCallback')
 
@@ -21,10 +21,10 @@ Template.search.rendered = ->
   query = Session.get('query')
   $('#navbar-search').val(query)
 
-Template.search.technologies = ->
-  technologiesDep.depend()
-  document.title = "#{technologies.length} technologies | devdev.io"
-  technologies
+Template.search.tools = ->
+  toolsDep.depend()
+  document.title = "#{tools.length} tools | devdev.io"
+  tools
 
 Template.search.imgPolaroid = ->
   Html.imgPolaroid(@logoUrl({h: 15, default: Cdn.cdnify('/img/cogs-17x15.png')}))
