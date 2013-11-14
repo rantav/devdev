@@ -18,7 +18,6 @@ class @TechnologyController extends RouteController
       return null
     technology: @technology
     technologyId: @params.id
-    currentUser: Contributor.current()
 
-  waitOn: -> subscriptionHandles['technologies']
+  waitOn: -> subscriptionHandles['tools']
 

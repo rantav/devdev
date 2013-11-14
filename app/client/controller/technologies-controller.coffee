@@ -1,7 +1,6 @@
 class @TechnologiesController extends RouteController
 
-  data: ->
-    currentContributor: Contributor.current()
+  data: -> {}
 
   waitOn: -> subscriptionHandles['tools']
 

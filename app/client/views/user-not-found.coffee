@@ -1,0 +1,1 @@
+Template.userNotFound.userId = -> Session.get('userId')

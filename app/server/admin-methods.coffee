@@ -1,6 +1,6 @@
 Meteor.methods
   indexTechnology: (technologyId) ->
-    user = Contributor.current()
+    user = User.current()
     if not user.isAdmin()
       throw new Meteor.Error 401, "Sorry, only admins can do that..."
     technology = Technology.findOne(technologyId)

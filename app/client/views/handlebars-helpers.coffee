@@ -3,7 +3,8 @@ Handlebars.registerHelper 'loggedIn', (code) ->
   !!Meteor.userId()
 
 Handlebars.registerHelper 'isAdmin', (code) ->
-  currentContributor and currentContributor.isAdmin()
+  user = Meteor.user()
+  user and user.isAdmin()
 
 # Displays a simple "Time ago" string, such as "8 minutes ago", "5 hours ago" etc
 Handlebars.registerHelper 'timeAgo', (time) ->
@@ -20,8 +21,8 @@ Handlebars.registerHelper 'tagLink', (tagName, category) ->
 Handlebars.registerHelper 'marked', (markdown) ->
   marked(markdown)
 
-Deps.autorun ->
-  window.currentContributor = Contributor.current()
+# Deps.autorun ->
+#   window.currentUser = User.current()
 
-Handlebars.registerHelper 'currentContributor', ->
-  currentContributor
+# Handlebars.registerHelper 'currentUser', ->
+#   currentUser

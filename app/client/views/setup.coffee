@@ -1,6 +1,7 @@
 Template.setup.displayLogs = ->
   obs = Meteor.settings.public.observatory
-  obs and obs.display or currentContributor and currentContributor.isAdmin()
+  user = Meteor.user()
+  obs and obs.display or user and user.isAdmin()
 
 Template.setup.rendered = ->
   setupSegmentIo()
@@ -91,7 +92,7 @@ setupSegmentIo = ->
 identify = ->
   Deps.autorun ->
     if Meteor.userId()
-      user = Contributor.current()
+      user = Meteor.user()
       if user.id()
         analytics.identify("#{user.name()} - #{user.id()}")
 

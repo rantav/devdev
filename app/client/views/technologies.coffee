@@ -7,7 +7,7 @@ Template.technologies.imgPolaroid = ->
   Html.imgPolaroid(@logoUrl({h: 15, default: Cdn.cdnify('/img/cogs-17x15.png')}))
 
 Template.technologies.iUseItClass = () ->
-  if @isUsedBy(Contributor.findOne(Meteor.userId())) then "btn-success" else ""
+  if @isUsedBy(User.findOne(Meteor.userId())) then "btn-success" else ""
 
 Template.technologies.events
   'click #add-technology': ->
@@ -38,7 +38,7 @@ Template.technologies.events
     if not Meteor.userId()
       alertify.alert(Html.pleasLoginAlertifyHtml())
       return
-    current = Contributor.current()
+    current = User.current()
     used = current.isUsingTechnology(@)
     @setUsedBy(current, not used)
     Meteor.call 'iUseIt', @id(), not used, (err, ret) ->
@@ -53,7 +53,7 @@ Template.technologies.events
         log.info('indexed. ' + JSON.stringify(ret))
 
 Template.technologies.rendered = ->
-  $('.contributor-xsmall[rel=tooltip]').tooltip()
+  $('.user-xsmall[rel=tooltip]').tooltip()
 
 Template.technologies.destroyed = ->
-  $('.contributor-xsmall[rel=tooltip]').tooltip('hide')
+  $('.user-xsmall[rel=tooltip]').tooltip('hide')

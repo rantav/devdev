@@ -1,18 +1,18 @@
-<template name='contributor'>
-<div class='contributor-page-actions pull-right'>
-  <button id='follow-contributor' class='btn disabled not-implemented'>Follow {{contributor.name}}</button>
-  <button id='share-contributor' class='btn disabled not-implemented'>Share {{contributor.name}}'s awesome work!</button>
+<template name='user'>
+<div class='user-page-actions pull-right'>
+  <button id='follow-user' class='btn disabled not-implemented'>Follow {{user.name}}</button>
+  <button id='share-user' class='btn disabled not-implemented'>Share {{user.name}}'s awesome work!</button>
 </div>
-<div class='contributor pull-left' style='border-left-color: {{contributor.color}}'>
-  <img class='img-polaroid' src='{{contributor.photoUrl 40 }}'/>
+<div class='user pull-left' style='border-left-color: {{user.color}}'>
+  <img class='img-polaroid' src='{{user.photoUrl 40 }}'/>
 </div>
-<h1>Contributions by {{contributor.name}}</h1>
+<h1>Contributions by {{user.name}}</h1>
 <table class='table'>
   <thead>
     <tr>
       <th>
-        {{contributor.name}} Uses:
-        {{#each contributor.usedTechnologies}}
+        {{user.name}} Uses:
+        {{#each user.usedTechnologies}}
           <a class='technology-logo-small' href='{{route}}' title='{{name}}' rel='tooltip' style='margin-left: 3px'>
             {{{imgPolaroid}}}
           </a>
@@ -21,7 +21,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each contributor.contributions}}
+    {{#each user.contributions}}
       {{#if technology}}
         <tr class='contribution'>
           {{#if typeIs 'technology'}}

@@ -23,6 +23,8 @@ class Indexer
 
   # Initializes the technology document mapping
   mapTechnologies: ->
+    return
+    # TODO
     options = {}
     mapping =
       technology:

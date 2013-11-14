@@ -10,10 +10,8 @@ Router.map ->
   @route 'technology/:id', controller: 'TechnologyController'
   @route 'technology/:id/:name', controller: 'TechnologyController'
 
-  @route 'contributors', controller: 'ContributorsController'
-  @route 'contributor', controller: 'ContributorsController'
-  @route 'contributor/:id', controller: 'ContributorController'
-  @route 'contributor/:id/:name', controller: 'ContributorController'
+  @route 'users', path: '/users', controller: 'UsersController'
+  @route 'user', path: '/user/:id/:name?', controller: 'UserController'
 
   @route 'search', controller: 'SearchController'
 
@@ -21,10 +19,3 @@ Router.map ->
 Router.configure
   layout: 'layout'
   loadingTemplate: 'loading'
-
-routes = root.routes = {}
-routes.technology = (tech) ->
-  "/technology/#{tech.id()}/#{tech.name()}" if tech
-
-routes.contributor = (contributor) ->
-  "/contributor/#{contributor.id()}/#{contributor.name()}" if contributor

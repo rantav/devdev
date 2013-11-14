@@ -91,7 +91,7 @@ Template.technology.events
     if not Meteor.userId()
       alertify.alert(Html.pleasLoginAlertifyHtml())
       return
-    current = Contributor.current()
+    current = User.current()
     used = current.isUsingTechnology(@technology)
     Meteor.call 'iUseIt', @technology.id(), not used, (err, ret) ->
       if err
@@ -110,7 +110,7 @@ Template.technology.events
 
 Template.technology.rendered = ->
   # initialize all tooltips in this template
-  $('.contributor-dense[rel=tooltip]').tooltip()
+  $('.user-dense[rel=tooltip]').tooltip()
 
   if @data.technology and @data.technology.isUsedBy(@data.currentUser)
     $('.i-use-it').hover(->
@@ -120,4 +120,4 @@ Template.technology.rendered = ->
     )
 
 Template.technology.destroyed = ->
-  $('.contributor-dense[rel=tooltip]').tooltip('hide')
+  $('.user-dense[rel=tooltip]').tooltip('hide')

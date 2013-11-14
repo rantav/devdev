@@ -23,17 +23,17 @@ root.Technology = class Technology
     @findOne(id)
 
 
-  @create: (name) ->
-    now = new Date()
-    tech =
-      name: name
-      contributorId: Meteor.userId()
-      createdAt: now
-      updatedAt: now
-    Technology.add(tech)
+  # @create: (name) ->
+  #   now = new Date()
+  #   tech =
+  #     name: name
+  #     contributorId: Meteor.userId()
+  #     createdAt: now
+  #     updatedAt: now
+  #   Technology.add(tech)
 
 
-  constructor: (@data) ->
+  # constructor: (@data) ->
 
   # creator: -> new Contributor(Meteor.users.findOne(@data.contributorId)) if @data
 

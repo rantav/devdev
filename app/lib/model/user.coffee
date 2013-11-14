@@ -1,5 +1,5 @@
-class @Contributor extends Model
-  Meteor.users._transform = (data) -> new Contributor(data)
+class @User extends Model
+  Meteor.users._transform = (data) -> new User(data)
   @_collection: Meteor.users
 
   constructor: (data) ->
@@ -18,12 +18,12 @@ class @Contributor extends Model
     super.findOne({'profile.name': new RegExp('^' + idOrName + '$', 'i')})
 
   # Current logged in user; undefined if the user is not logged in
-  @current: -> new Contributor(Meteor.user()) if Meteor.userId()
+  @current: -> Meteor.user() # new User(Meteor.user()) if Meteor.userId()
 
   id: -> @data._id
   name: -> @data.profile.name
   color: -> @data.profile.color
-  route: -> routes.contributor(@)
+  route: -> Router.path('user', id: @id(), name: @name())
   isAdmin: -> @name() == "Ran Tavory" # Hah!
   anonymous: -> @id() == 'unknown'
 

@@ -1,5 +1,5 @@
 Session.set('devdevFullySynched', false)
-subscriptions = ['contributors', 'tools']
+subscriptions = ['users', 'tools']
 window.subscriptionHandles = {}
 success = 0
 for s in subscriptions

@@ -12,7 +12,7 @@ class @Tool extends Model
   createdAt: -> @data.createdAt
   updatedAt: -> @data.updatedAt
   deletedAt: -> @data.deletedAt
-  creator: -> Contributor.findOne(@data.creatorId)
+  creator: -> User.findOne(@data.creatorId)
 
   logoUrl: (options) ->
     logo = @data.logo
@@ -22,7 +22,7 @@ class @Tool extends Model
   isUsedBy: (contributor) -> @_usedBy.has(contributor.id())
 
   usedBy: ->
-    Contributor.findOne(e) for e in @_usedBy.elements()
+    User.findOne(e) for e in @_usedBy.elements()
 
   setUsedBy: (contributor, used) -> @_usedBy.update(contributor.id(), used)
 

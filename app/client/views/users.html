@@ -1,10 +1,10 @@
-<template name='contributors'>
-<h2>Contributors</h2>
+<template name='users'>
+<h2>users</h2>
 <table class='table'>
-  {{#each contributors}}
+  {{#each users}}
     <tr>
-      <th class='contributor-line'>
-        <a class='contributor-small' href='{{route}}' style='border-left-color: {{color}}'>
+      <th class='user-line'>
+        <a class='user-small' href='{{route}}' style='border-left-color: {{color}}'>
           <img class='img' src='{{photoUrl 20}}'/>
           {{name}}
         </a>
