@@ -35,21 +35,21 @@ root.Technology = class Technology
 
   constructor: (@data) ->
 
-  creator: -> new Contributor(Meteor.users.findOne(@data.contributorId)) if @data
+  # creator: -> new Contributor(Meteor.users.findOne(@data.contributorId)) if @data
 
-  name: -> @data.name if @data
+  # name: -> @data.name if @data
 
-  id: -> @data._id if @data
+  # id: -> @data._id if @data
 
-  createdAt: -> @data.createdAt if @data
+  # createdAt: -> @data.createdAt if @data
 
-  updatedAt: -> @data.updatedAt if @data
+  # updatedAt: -> @data.updatedAt if @data
 
-  deletedAt: -> @data.deletedAt if @data
+  # deletedAt: -> @data.deletedAt if @data
 
-  contributorId: -> @data.contributorId if @data
+  # contributorId: -> @data.contributorId if @data
 
-  owner: -> Contributor.findOne(@data.contributorId) if @data
+  # owner: -> Contributor.findOne(@data.contributorId) if @data
 
   route: -> routes.technology(@) if @data
 
@@ -84,17 +84,17 @@ root.Technology = class Technology
     @data.usedBy[contributor.id()] = used
     @save(@updatedAt())
 
-  isUsedBy: (contributor) ->
-    contributor and @data.usedBy and @data.usedBy[contributor.id()]
+  # isUsedBy: (contributor) ->
+  #   contributor and @data.usedBy and @data.usedBy[contributor.id()]
 
   # Returns the list of users that use this technology
-  usedBy: ->
-    (Contributor.findOne(id) for id, used of @data.usedBy when used) if @data.usedBy
+  # usedBy: ->
+  #   (Contributor.findOne(id) for id, used of @data.usedBy when used) if @data.usedBy
 
 
-  logoUrl: (options) ->
-    logo = @data.logo
-    if not logo then return options.default
-    Url.imageUrl(logo, options)
+  # logoUrl: (options) ->
+  #   logo = @data.logo
+  #   if not logo then return options.default
+  #   Url.imageUrl(logo, options)
 
 root.Technologies = new Meteor.Collection "technologies"

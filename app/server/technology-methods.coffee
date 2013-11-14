@@ -69,12 +69,11 @@ Meteor.methods
 
   # Marks the technology as used by the current user.
   # used:boolean true to mean that it's used, false to mean that it isn't
-  iUseIt: (technologyId, used) ->
+  iUseIt: (toolId, used) ->
     contributor = Contributor.current()
     if not contributor
       throw new Meteor.Error 404, 'Please log in'
-    technology = Technology.findOne(technologyId)
-    if not technology
-      throw new Meteor.Error 401, "Technology #{technologyId} was not found"
-    technology.setUsedBy(contributor, used)
-    contributor.setUsingTechnology(technology, used)
+    tool = Tool.findOne(toolId)
+    if not tool
+      throw new Meteor.Error 401, "Tool #{toolId} was not found"
+    contributor.setUsingTechnology(tool, used)

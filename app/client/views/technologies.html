@@ -1,8 +1,8 @@
 <template name='technologies'>
 <div class='technologies-page-actions pull-right'>
-  <button id='add-technology' class='btn btn-primary {{disableAnonymous}}'>Add Technology</button>
+  <button id='add-technology' class='btn btn-primary {{disableAnonymous}}'>Add a Tool</button>
 </div>
-<h2>Technologies</h2>
+<h2>Tools</h2>
 {{#if isAdmin}}
   <div class='admin pull-right'>
     <button id='index-all-technologies' class='btn'>
@@ -13,7 +13,7 @@
 
 <table class='table'>
   <tbody>
-    {{#each technologies}}
+    {{#each tools}}
       <tr>
         <td class='technology-logo-small'>
           <a href='{{route}}'>{{{imgPolaroid}}}</a>

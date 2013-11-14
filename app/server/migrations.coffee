@@ -19,11 +19,15 @@ Meteor.startup ->
       Tool.insert(t)
       log.info("Inserted #{t._id}: #{t.name}")
 
-
-
   Meteor.Migrations.add 'cleanup tools data', ((log) ->
     Tool._collection.find().forEach (t) ->
       delete t.data.aspects
       Tool._collection.update(t.data._id, t.data)
       log.info("Cleaned #{t.data._id}"))
-      , force: true
+
+  Meteor.Migrations.add 'Tool.contributorId -> creatorId', ((log) ->
+    Tool._collection.find().forEach (t) ->
+      t.data.creatorId = t.data.contributorId
+      delete t.data.contributorId
+      Tool._collection.update(t.data._id, t.data)
+      log.info("Renamed to creatorId #{t.data._id}: #{t.data.creatorId}"))

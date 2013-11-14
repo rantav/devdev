@@ -1,7 +1,7 @@
-Template.technologies.technologies = ->
-  @technologies = Technology.find({}, {sort: {updatedAt: -1}})
-  document.title = "#{@technologies.length} technologies | devdev.io"
-  @technologies
+Template.technologies.tools = ->
+  @tools = Tool.find({}, {sort: {updatedAt: -1}})
+  document.title = "#{@tools.count()} tools | devdev.io"
+  @tools
 
 Template.technologies.imgPolaroid = ->
   Html.imgPolaroid(@logoUrl({h: 15, default: Cdn.cdnify('/img/cogs-17x15.png')}))
@@ -40,6 +40,7 @@ Template.technologies.events
       return
     current = Contributor.current()
     used = current.isUsingTechnology(@)
+    @setUsedBy(current, not used)
     Meteor.call 'iUseIt', @id(), not used, (err, ret) ->
       if err
         alertify.error err

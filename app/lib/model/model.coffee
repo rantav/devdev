@@ -5,5 +5,8 @@ class @Model
   @find: (q, opt) ->
     @_collection.find(q, opt)
 
+  @findOne: (q, opt) ->
+    @_collection.findOne(q, opt)
+
   constructor: (@data) ->
 
