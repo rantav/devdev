@@ -22,7 +22,8 @@ class @User extends Model
     Meteor.users.find(selector, _.extend({transform: transform}, options))
 
   # Current logged in user; undefined if the user is not logged in
-  @current: -> Meteor.user() # new User(Meteor.user()) if Meteor.userId()
+  @current: ->
+    new User(Meteor.user()) if Meteor.userId()
 
   id: -> @data._id
   name: -> @data.profile.name

@@ -3,7 +3,7 @@ Handlebars.registerHelper 'loggedIn', (code) ->
   !!Meteor.userId()
 
 Handlebars.registerHelper 'isAdmin', (code) ->
-  user = Meteor.user()
+  user = User.current()
   user and user.isAdmin()
 
 # Displays a simple "Time ago" string, such as "8 minutes ago", "5 hours ago" etc

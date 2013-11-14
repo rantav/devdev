@@ -10,7 +10,7 @@ Template.tool.toolId = ->
   @toolId
 
 Template.tool.iUseItClass = ->
-  if @tool and @tool.isUsedBy(@currentUser) then "btn-success" else ""
+  if @tool and @tool.isUsedBy(User.current()) then "btn-success" else ""
 
 Template.tool.twitterShareUrl = ->
   if @tool
@@ -96,7 +96,7 @@ Template.tool.rendered = ->
   # initialize all tooltips in this template
   $('.user-dense[rel=tooltip]').tooltip()
 
-  if @data.tool and @data.tool.isUsedBy(@data.currentUser)
+  if @data.tool and @data.tool.isUsedBy(User.current())
     $('.i-use-it').hover(->
       $(@).removeClass('btn-success').addClass('btn-danger').find('.text').html(' Unuse It')
     , ->
