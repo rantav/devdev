@@ -33,17 +33,16 @@ Template.tools.events
             alertify.log "OK, deleted #{name}"
       else
         alertify.log "<i class='icon-thumbs-up-alt pull-right'></i> <em>Oh, that was close!...</em>"
+
   'click .i-use-it': ->
     analytics.track('I use it', {loggedIn: !!Meteor.userId()})
     if not Meteor.userId()
       alertify.alert(Html.pleasLoginAlertifyHtml())
       return
-    current = User.current()
-    used = current.isUsingTool(@)
-    @setUsedBy(current, not used)
-    Meteor.call 'iUseIt', @id(), not used, (err, ret) ->
-      if err
-        alertify.error err
+    user = User.current()
+    used = user.isUsingTool(@)
+    @setUsedBy(user, not used)
+    user.setUsingTool(@, not used)
 
   'click #index-all-tools': ->
     Meteor.call 'indexAlltools', (err, ret) ->

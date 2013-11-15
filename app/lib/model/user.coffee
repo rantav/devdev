@@ -11,6 +11,8 @@ class @User extends Model
     @data.profile ||= {}
     @data.profile.color ||= '#fff'
     @data.profile.name ||= 'unknown'
+    @_usedBy = new MinimongoidHashBooleanSet(User._collection, data, 'profile.usingTool')
+
 
 
   @findOneUser: (idOrName) ->
@@ -50,17 +52,20 @@ class @User extends Model
     picture
 
   setUsingTool: (tool, using) ->
-    if not @data.profile.usingTool then @data.profile.usingTool = {}
-    @data.profile.usingTool[tool.id()] = using
-    @save()
+    @_usedBy.update(tool.id(), using) if tool
+    # if not @data.profile.usingTool then @data.profile.usingTool = {}
+    # @data.profile.usingTool[tool.id()] = using
+    # @save()
 
   isUsingTool: (tool) ->
-    @data.profile.usingTool and @data.profile.usingTool[tool.id()]
+    @_usedBy.has(tool.id()) if tool
+    # @data.profile.usingTool and @data.profile.usingTool[tool.id()]
 
   usedTools: ->
-    if not @data.profile.usingTool or not Session.get('devdevFullySynched')
-      return []
-    (Tool.findOne(toolId) for toolId, using of @data.profile.usingTool when using)
+    Tool.findOne(t) for t in @_usedBy.elements()
+    # if not @data.profile.usingTool or not Session.get('devdevFullySynched')
+    #   return []
+    # (Tool.findOne(toolId) for toolId, using of @data.profile.usingTool when using)
 
   # save: ->
   #   Meteor.users.update(@data._id, @data)

@@ -1,5 +1,5 @@
 
-Meteor.methods
+# Meteor.methods
   # createNewTechnology: (technologyName) ->
   #   contributor = Contributor.current()
   #   if not contributor
@@ -69,11 +69,11 @@ Meteor.methods
 
   # Marks the technology as used by the current user.
   # used:boolean true to mean that it's used, false to mean that it isn't
-  iUseIt: (toolId, used) ->
-    contributor = Contributor.current()
-    if not contributor
-      throw new Meteor.Error 404, 'Please log in'
-    tool = Tool.findOne(toolId)
-    if not tool
-      throw new Meteor.Error 401, "Tool #{toolId} was not found"
-    contributor.setUsingTool(tool, used)
+  # iUseIt: (toolId, used) ->
+  #   contributor = Contributor.current()
+  #   if not contributor
+  #     throw new Meteor.Error 404, 'Please log in'
+  #   tool = Tool.findOne(toolId)
+  #   if not tool
+  #     throw new Meteor.Error 401, "Tool #{toolId} was not found"
+  #   contributor.setUsingTool(tool, used)
