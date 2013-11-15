@@ -72,14 +72,7 @@ Template.tool.events
 
   'click .i-use-it': ->
     analytics.track('I use it', {loggedIn: !!Meteor.userId()})
-    if not Meteor.userId()
-      alertify.alert(Html.pleasLoginAlertifyHtml())
-      return
-    current = User.current()
-    used = current.isUsingTool(@tool)
-    Meteor.call 'iUseIt', @tool.id(), not used, (err, ret) ->
-      if err
-        alertify.error err
+    Helpers.useTool(@tool)
 
   'click #index-tool': ->
     Meteor.call 'indexTool', @tool.id(), (err, ret) ->
