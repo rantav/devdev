@@ -5,6 +5,18 @@ class @Tool extends Model
   @findOne: (idOrName) ->
     super({$or: [{_id: idOrName}, {'name': new RegExp('^' + idOrName + '$', 'i')}]})
 
+  @create: (name, user) ->
+    if not name or not user then return
+    now = new Date()
+    data =
+      name: name
+      creatorId: user.id()
+      createdAt: now
+      updatedAt: now
+      usedBy: {}
+    id = @_collection.insert(data)
+    @findOne(id)
+
   constructor: (data) ->
     super(data)
     @_usedBy = new MinimongoidHashBooleanSet(Tool._collection, data, 'usedBy')
@@ -34,7 +46,7 @@ class @Tool extends Model
 Tool._collection.allow
   insert: (userId, doc) ->
     # the user must be logged in, and the document must be owned by the user
-    userId and doc.creatorId == userId
+    userId and doc.data.creatorId == userId
 
   update: (userId, doc, fields, modifier) ->
 #     # can only change your own documents

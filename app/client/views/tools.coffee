@@ -18,7 +18,7 @@ Template.tools.events
 
     alertify.prompt '<h1>Tool Name:</h1>', (e, str) ->
       if e
-        addTool(str)
+        Helpers.addTool(str)
 
   'click i.icon-trash': ->
     analytics.track('Delete tool')

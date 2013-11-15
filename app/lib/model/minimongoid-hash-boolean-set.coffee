@@ -12,5 +12,5 @@ class @MinimongoidHashBooleanSet
     obj = @data
     for name in @attrNames
       obj = obj[name]
-    obj
+    obj || {}
 

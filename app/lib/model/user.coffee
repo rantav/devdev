@@ -13,8 +13,6 @@ class @User extends Model
     @data.profile.name ||= 'unknown'
     @_usedBy = new MinimongoidHashBooleanSet(User._collection, data, 'profile.usingTool')
 
-
-
   @findOneUser: (idOrName) ->
     Meteor.users.findOne(
       {$or: [{_id: idOrName}, {'profile.name': new RegExp('^' + idOrName + '$', 'i')}]},
