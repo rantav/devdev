@@ -24,12 +24,12 @@ class @Tool extends Model
     if not logo then return options.default
     Url.imageUrl(logo, options)
 
-  isUsedBy: (user) -> @_usedBy.has(user.id())
+  isUsedBy: (user) -> @_usedBy.has(user.id()) if user
 
   usedBy: ->
     User.findOneUser(e) for e in @_usedBy.elements()
 
-  setUsedBy: (user, used) -> @_usedBy.update(user.id(), used)
+  setUsedBy: (user, used) -> @_usedBy.update(user.id(), used) if user
 
 Tool._collection.allow
   insert: (userId, doc) ->

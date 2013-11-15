@@ -6,7 +6,7 @@
 <div class='user pull-left' style='border-left-color: {{user.color}}'>
   <img class='img-polaroid' src='{{user.photoUrl 40 }}'/>
 </div>
-<h1>Contributions by {{user.name}}</h1>
+<h1>{{user.name}}'s tools</h1>
 <table class='table'>
   <thead>
     <tr>
@@ -20,39 +20,5 @@
       </th>
     </tr>
   </thead>
-  <tbody>
-    {{#each user.contributions}}
-      {{#if tool}}
-        <tr class='contribution'>
-          {{#if typeIs 'tool'}}
-            <th>
-              Created tool
-              <a href='{{tool.route}}'>{{tool.name}}</a>
-            </th>
-            <td class='contribution-data'></td>
-            <td>
-              <small class='pull-right muted'>Created {{timeAgo tool.createdAt}}, last update {{timeAgo tool.updatedAt}}</small>
-            </td>
-          {{/if}}
-          {{#if typeIs 'aspectContribution'}}
-            <th>
-              Contributed to
-              <a href='{{tool.route}}'>{{tool.name}}</a>
-              to aspect
-              <span class='label'>{{aspect.name}}</span>
-            </th>
-            <td class='contribution-data'>
-              {{#with content}}
-                {{> aspectViewer readonly}}
-              {{/with}}
-            </td>
-            <td>
-              <small class='pull-right muted'>Created {{timeAgo content.createdAt}}, last update {{timeAgo content.updatedAt}}</small>
-            </td>
-          {{/if}}
-        </tr>
-      {{/if}}
-    {{/each}}
-  </tbody>
 </table>
 </template>
