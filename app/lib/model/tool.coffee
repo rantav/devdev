@@ -2,6 +2,9 @@ class @Tool extends Model
   @_collection: new Meteor.Collection('tools', transform: (data) => @modelize(data))
   @modelize: (data) -> new Tool(data)
 
+  @find: (selector, options) ->
+    super(_.extend({deletedAt: $exists: false}, selector), options)
+
   @findOne: (idOrName) ->
     super({$or: [{_id: idOrName}, {'name': new RegExp('^' + idOrName + '$', 'i')}]})
 
@@ -37,11 +40,13 @@ class @Tool extends Model
     Url.imageUrl(logo, options)
 
   isUsedBy: (user) -> @_usedBy.has(user.id()) if user
-
-  usedBy: ->
-    User.findOneUser(e) for e in @_usedBy.elements()
-
+  usedBy: -> User.findOneUser(e) for e in @_usedBy.elements()
   setUsedBy: (user, used) -> @_usedBy.update(user.id(), used) if user
+
+  isCurrentUserOwner: -> @data.creatorId == Meteor.userId()
+
+  delete: ->
+    Tool._collection.update({_id: @id()}, {$set: {deletedAt: new Date()}})
 
 Tool._collection.allow
   insert: (userId, doc) ->
@@ -60,6 +65,15 @@ Tool._collection.allow
         modifier.$set.hasOwnProperty("usedBy.#{userId}"))
       return true
 
+    # Allow deletion if you are the owner
+    if (userId and
+        userId == doc.data.creatorId and
+        fields.length == 1 and
+        fields[0] == 'deletedAt' and
+        modifier.$set and
+        modifier.$set.hasOwnProperty("deletedAt"))
+      return true
+
 #     # Allowed to add comments
 #     if (userId and
 #         fields.length == 1 and
@@ -72,8 +86,7 @@ Tool._collection.allow
 #     # can only remove your own documents
 #     doc.owner == userId
 
-  fetch: ['owner']
-  transform: null
+  fetch: ['creatorId']
 
 # Wishes.deny
 #   update: (userId, doc, fields, modifier) ->

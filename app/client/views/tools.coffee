@@ -15,7 +15,6 @@ Template.tools.events
     if not Meteor.userId()
       alertify.alert(Html.pleasLoginAlertifyHtml())
       return
-
     alertify.prompt '<h1>Tool Name:</h1>', (e, str) ->
       if e
         Helpers.addTool(str)
@@ -24,13 +23,9 @@ Template.tools.events
     analytics.track('Delete tool')
     id = @id()
     name = @name()
-    alertify.confirm "<i class='icon-exclamation-sign pull-left icon-4x'> </i><h2>Sure you want to delete #{name}?</h2>", (ok) ->
+    alertify.confirm "<i class='icon-exclamation-sign pull-left icon-4x'> </i><h2>Sure you want to delete #{name}?</h2>", (ok) =>
       if ok
-        Meteor.call 'deleteTool', id, (err, ret) ->
-          if err
-            alertify.error err
-          else
-            alertify.log "OK, deleted #{name}"
+        @delete()
       else
         alertify.log "<i class='icon-thumbs-up-alt pull-right'></i> <em>Oh, that was close!...</em>"
 
