@@ -8,12 +8,13 @@ Accounts.onCreateUser (options, user) ->
         }
       })
 
-      if (result.error)
-        throw result.error;
+      if (result.error) then throw result.error;
 
       user.services.github.picture = result.data.avatar_url;
       user.services.github.url = result.data.url;
       user.services.github.html_url = result.data.html_url;
+      # Some GH users don't have a name. Use their usernames instead.
+      if not options.profile.name then options.profile.name = user.services.github.username
 
   # Google login details take care of themselves
 
