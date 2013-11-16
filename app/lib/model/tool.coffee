@@ -49,6 +49,12 @@ class @Tool extends Model
 
   isCurrentUserOwner: -> @data.creatorId == Meteor.userId()
 
+  nameEditableByCurrentUser: -> @isCurrentUserOwner()
+
+  rename: (name) ->
+    if name == @name() then return
+    Tool._collection.update({_id: @id()}, {$set: {name: name}})
+
   delete: ->
     Tool._collection.update({_id: @id()}, {$set: {deletedAt: new Date()}})
 
@@ -76,6 +82,15 @@ Tool._collection.allow
         fields[0] == 'deletedAt' and
         modifier.$set and
         modifier.$set.hasOwnProperty("deletedAt"))
+      return true
+
+    # Allow rename, if you are the owner
+    if (userId and
+        userId == doc.data.creatorId and
+        fields.length == 1 and
+        fields[0] == 'name' and
+        modifier.$set and
+        modifier.$set.hasOwnProperty("name"))
       return true
 
 #     # Allowed to add comments

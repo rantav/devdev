@@ -64,11 +64,7 @@ Template.tool.events
     name = event.srcElement.innerText
     if name != @tool.name()
       analytics.track('Rename tool')
-      Meteor.call 'setName', @tool.id(), name, (err, ret) ->
-        if err
-          alertify.error err
-        else
-          alertify.success "OK, renamed to #{name}"
+      @tool.rename(name)
 
   'click .i-use-it': ->
     analytics.track('I use it', {loggedIn: !!Meteor.userId()})
