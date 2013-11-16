@@ -40,7 +40,11 @@ class @Tool extends Model
     Url.imageUrl(logo, options)
 
   isUsedBy: (user) -> @_usedBy.has(user.id()) if user
-  usedBy: -> User.findOneUser(e) for e in @_usedBy.elements()
+  usedBy: ->
+    elems = @_usedBy.elements()
+    if elems and elems.length
+      User.findUsers($or: elems.map((id)->{_id: id}))
+
   setUsedBy: (user, used) -> @_usedBy.update(user.id(), used) if user
 
   isCurrentUserOwner: -> @data.creatorId == Meteor.userId()
