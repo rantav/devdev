@@ -51,19 +51,14 @@ class @User extends Model
 
   setUsingTool: (tool, using) ->
     @_usedBy.update(tool.id(), using) if tool
-    # if not @data.profile.usingTool then @data.profile.usingTool = {}
-    # @data.profile.usingTool[tool.id()] = using
-    # @save()
 
   isUsingTool: (tool) ->
     @_usedBy.has(tool.id()) if tool
-    # @data.profile.usingTool and @data.profile.usingTool[tool.id()]
 
   usedTools: ->
-    Tool.findOne(t) for t in @_usedBy.elements()
-    # if not @data.profile.usingTool or not Session.get('devdevFullySynched')
-    #   return []
-    # (Tool.findOne(toolId) for toolId, using of @data.profile.usingTool when using)
+    elems = @_usedBy.elements()
+    if elems and elems.length
+      Tool.find($or: elems.map((id)->{_id: id}))
 
   # save: ->
   #   Meteor.users.update(@data._id, @data)
