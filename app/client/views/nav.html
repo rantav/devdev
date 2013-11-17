@@ -1,0 +1,20 @@
+<template name='nav'>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <a class="brand" href="{{pathFor 'welcome'}}">devdev.io</a>
+      <ul class="nav">
+        <li class='{{activeClass "tools"}}'><a href="{{pathFor 'tools'}}">Tools</a></li>
+        <li class='{{activeClass "users"}}'><a href="{{pathFor 'users'}}">Users</a></li>
+      </ul>
+      <div class="pull-right">
+        {{loginButtons}}
+      </div>
+      <ul class="nav pull-right">
+        <li>{{> search-form}}</li>
+        <li class="divider-vertical"></li>
+        <li class='{{activeClass "about"}}'><a href="{{pathFor 'about'}}">About</a></li>
+        <li class="divider-vertical"></li>
+      </ul>
+    </div>
+  </div>
+</template>

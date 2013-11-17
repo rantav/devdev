@@ -16,6 +16,6 @@ momentjs
 page-js-ie-support
 npm
 collection-hooks
-iron-router
 spiderable
 migrations
+iron-router

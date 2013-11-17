@@ -1,6 +1,8 @@
 class @UsersController extends RouteController
-
+  template: 'users'
   waitOn: -> subscriptionHandles['users']
+  data:
+    page: 'users'
 
 
 class @UserController extends RouteController
@@ -14,6 +16,8 @@ class @UserController extends RouteController
       Session.set('userId', @params.id)
       return null
     user: @user
+    page: 'users'
 
   waitOn: -> subscriptionHandles['users']
+
 

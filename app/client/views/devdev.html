@@ -21,36 +21,18 @@
 </head>
 
 <body>
-  {{> setup}}
 </body>
 
 <template name='layout'>
   <div class="container">
-    <div class="navbar">
-      <div class="navbar-inner">
-        <a class="brand" href="{{pathFor 'welcome'}}">devdev.io</a>
-        <ul class="nav">
-          <li><a href="{{pathFor 'tools'}}" data-href-aliases="/tool">Tools</a></li>
-          <li><a href="{{pathFor 'users'}}" data-href-aliases="/users">Users</a></li>
-        </ul>
-        <div class="pull-right">
-          {{loginButtons}}
-        </div>
-        <ul class="nav pull-right">
-          <li>{{> search-form}}</li>
-          <li class="divider-vertical"></li>
-          <li><a href="{{pathFor 'about'}}">About</a></li>
-          <li class="divider-vertical"></li>
-        </ul>
-      </div>
-    </div>
-
+    {{> nav}}
     <div class="row-fluid">
       <div class="span12">
-        {{{yield}}}
+        {{yield}}
       </div>
     </div>
   </div>
+  {{> setup}}
 </template>
 
 <template name="setup">

@@ -2,9 +2,11 @@ This had moved over to here https://trello.com/b/vyu4D9O5/devdev
 
 Short term:
 
+- Fix the navigation highlighter
 - Redirect /technology to /tool
 - Redirect /contributor to /user
 - Fix image uploading
 - Download data and test with production data
 - Limit the amount of data on page.
+- Upgrade iron-router
 - Do subscriptions and page titles proporly with iron-router https://mail.google.com/mail/u/0/?ui=2&shva=1#inbox/14254d1b7f921237

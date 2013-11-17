@@ -1,15 +1,10 @@
 class @ToolsController extends RouteController
-  data: -> {}
+  data:
+    page: 'tools'
+
   waitOn: -> subscriptionHandles['tools']
 
 class @ToolController extends RouteController
-
-  run: ->
-    t = Tool.findOne(@params.id)
-    if t and t.deletedAt()
-      @render('toolDeleted')
-    else
-      @render('tool')
 
   notFoundTemplate: 'toolNotFound'
 
@@ -19,8 +14,10 @@ class @ToolController extends RouteController
     if not @tool
       Session.set('toolId', @params.id)
       return null
+
     tool: @tool
     toolId: @params.id
+    page: 'tools'
 
   waitOn: -> subscriptionHandles['tools']
 

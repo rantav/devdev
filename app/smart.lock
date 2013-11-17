@@ -11,7 +11,8 @@
       "collection-hooks": {
         "version": "0.3.2"
       },
-      "migrations": {}
+      "migrations": {},
+      "iron-router": {}
     },
     "packages": {
       "momentjs": {
@@ -38,6 +39,11 @@
         "git": "https://github.com/rantav/meteor-migrations.git",
         "tag": "v0.0.2",
         "commit": "4e75c06b8e94961567765c4dea20a007816ad274"
+      },
+      "iron-router": {
+        "git": "https://github.com/EventedMind/iron-router.git",
+        "tag": "v0.6.1",
+        "commit": "4e1ee0581d68bff422a915dacb0bd30eae10fe08"
       }
     }
   }

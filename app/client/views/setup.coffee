@@ -6,7 +6,6 @@ Template.setup.displayLogs = ->
 Template.setup.rendered = ->
   setupSegmentIo()
   analytics.pageview(document.location.pathname)
-  setupNavigation()
   setupDropdowns()
   showSpinners()
   window.scrollTo(0, 0)
@@ -30,16 +29,6 @@ spin = (target) ->
     top: 'auto',
     left: 'auto'
   spinner = new Spinner(opts).spin(target);
-
-Meteor.startup ->
-  marked.setOptions
-    gfm: true,
-    tables: true,
-    breaks: true,
-    pedantic: false,
-    sanitize: true,
-    smartLists: true,
-    smartypants: false,
 
 
 showSpinners = ->
@@ -110,17 +99,6 @@ setupGa = ->
         m.parentNode.insertBefore(a, m)
     )(window, document, 'script', '//www.google-analytics.com/analytics.js','ga')
     ga('create', 'UA-42577800-1', 'devdev.io')
-
-setupNavigation = ->
-  # Highlight the selected navigation item.
-  $('ul.nav li a').each( (index, elem) ->
-    aliases = $(elem).data('hrefAliases')
-    href = document.location.href
-    if href.indexOf(elem.href) == 0 or (aliases and (alias for alias in aliases.split(' ') when href.indexOf(alias) >= 0).length)
-      $(elem).parent().addClass('active')
-    else
-      $(elem).parent().removeClass('active')
-    )
 
 setupDropdowns = ->
   Meteor.setTimeout (-> $('.dropdown-toggle').dropdown()), 1000

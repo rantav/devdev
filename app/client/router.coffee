@@ -5,6 +5,7 @@ Router.map ->
 
   @route 'about'
 
+  # @route 'technology', path: '/tool/:id/:name?', action: -> @redirect(Router.path('tool', {id: this.id, name: this.name}))
   @route 'tools', path: '/tools', controller: 'ToolsController'
   @route 'tool', path: '/tool/:id/:name?', controller: 'ToolController'
 
@@ -15,5 +16,5 @@ Router.map ->
 
 
 Router.configure
-  layout: 'layout'
+  layoutTemplate: 'layout'
   loadingTemplate: 'loading'

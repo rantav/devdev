@@ -8,6 +8,7 @@
     "collection-hooks": {
       "version": "0.3.2"
     },
-    "migrations": {}
+    "migrations": {},
+    "iron-router": {}
   }
 }
