@@ -1,9 +1,5 @@
 {
   "packages": {
-    "marked": {
-      "git": "https://github.com/rantav/meteor-marked",
-      "version": "v0.2.9"
-    },
     "momentjs": {},
     "accounts-ui-bootstrap-dropdown": {
       "git": "https://github.com/rantav/meteor-accounts-ui-bootstrap-dropdown"
@@ -12,7 +8,6 @@
     "collection-hooks": {
       "version": "0.3.2"
     },
-    "observatory": {},
     "migrations": {}
   }
 }

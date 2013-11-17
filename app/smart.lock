@@ -2,10 +2,6 @@
   "meteor": {},
   "dependencies": {
     "basePackages": {
-      "marked": {
-        "git": "https://github.com/rantav/meteor-marked",
-        "branch": "master"
-      },
       "momentjs": {},
       "accounts-ui-bootstrap-dropdown": {
         "git": "https://github.com/rantav/meteor-accounts-ui-bootstrap-dropdown",
@@ -15,15 +11,9 @@
       "collection-hooks": {
         "version": "0.3.2"
       },
-      "observatory": {},
       "migrations": {}
     },
     "packages": {
-      "marked": {
-        "git": "https://github.com/rantav/meteor-marked",
-        "branch": "master",
-        "commit": "34f07881dd902ad8e24fcd5672da8245b8d0889e"
-      },
       "momentjs": {
         "git": "https://github.com/crapthings/meteor-momentjs.git",
         "tag": "v2.1.0.2",
@@ -44,25 +34,10 @@
         "tag": "v0.3.2",
         "commit": "200b3b1de905fdc639223d7696d64ce41dd8cebd"
       },
-      "observatory": {
-        "git": "https://github.com/jhoxray/observatory.git",
-        "tag": "v0.3.21",
-        "commit": "3d6b436af0a70b784d0f9ec4709907c77bd4fd63"
-      },
       "migrations": {
         "git": "https://github.com/rantav/meteor-migrations.git",
         "tag": "v0.0.2",
         "commit": "4e75c06b8e94961567765c4dea20a007816ad274"
-      },
-      "observatory-apollo": {
-        "git": "https://github.com/superstringsoftware/observatory-apollo.git",
-        "tag": "v0.3.2",
-        "commit": "f704848187a4da2bd179864ae80a1f73a3fd22a6"
-      },
-      "observatory-galileo": {
-        "git": "https://github.com/superstringsoftware/observatory-galileo.git",
-        "branch": "master",
-        "commit": "f21b80e6502d38a7ce66206374b706f2cbd0228d"
       }
     }
   }
