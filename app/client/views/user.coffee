@@ -1,6 +1,4 @@
-Template.user.user = ->
-  document.title = "#{@user.name()} | devdev.io"
-  @user
+Template.user.user = -> @user
 
 Template.user.imgPolaroid = ->
   Html.imgPolaroid(@logoUrl({h: 15, default: Cdn.cdnify('/img/cogs-17x15.png')}))

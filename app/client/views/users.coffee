@@ -1,7 +1,4 @@
-Template.users.users = ->
-  users = User.findUsers()
-  document.title = "#{users.count()} users | devdev.io"
-  users
+Template.users.users = -> @users
 
 Template.users.imgPolaroid = ->
   Html.imgPolaroid(@logoUrl({h: 15, default: Cdn.cdnify('/img/cogs-17x15.png')}))

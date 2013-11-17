@@ -2,6 +2,8 @@ class @UsersController extends RouteController
   waitOn: -> [Meteor.subscribe('tools'), Meteor.subscribe('users')]
   data:
     page: 'users'
+    users: User.findUsers()
+  after: -> document.title = "#{@data.users.count()} users | devdev.io"
 
 
 class @UserController extends RouteController
@@ -18,5 +20,5 @@ class @UserController extends RouteController
     page: 'users'
 
   waitOn: -> Meteor.subscribe('user', @params.id)
-
+  after: -> document.title = "#{@user.name()} | devdev.io"
 

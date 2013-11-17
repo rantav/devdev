@@ -1,9 +1,9 @@
 root = exports ? this
 
 Router.map ->
-  @route 'welcome', path: '/'
+  @route 'welcome', path: '/', controller: 'WelcomeController'
 
-  @route 'about'
+  @route 'about', after: -> document.title = 'About devdev.io'
 
   @route 'tools', path: '/tools', controller: 'ToolsController'
   @route 'tool', path: '/tool/:id/:name?', controller: 'ToolController'

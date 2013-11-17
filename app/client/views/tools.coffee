@@ -1,7 +1,4 @@
-Template.tools.tools = ->
-  @tools = Tool.find({}, {sort: {updatedAt: -1}})
-  document.title = "#{@tools.count()} tools | devdev.io"
-  @tools
+Template.tools.tools = -> @tools
 
 Template.tools.imgPolaroid = ->
   Html.imgPolaroid(@logoUrl({h: 15, default: Cdn.cdnify('/img/cogs-17x15.png')}))

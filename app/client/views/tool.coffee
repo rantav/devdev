@@ -1,6 +1,4 @@
 Template.tool.tool = ->
-  if @tool
-    document.title = "#{@tool.name()} | devdev.io"
   @tool
 
 Template.tool.toolId = ->

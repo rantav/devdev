@@ -1,7 +1,10 @@
 class @ToolsController extends RouteController
   data:
     page: 'tools'
+    tools: Tool.find({}, {sort: {updatedAt: -1}})
+
   waitOn: -> [Meteor.subscribe('tools'), Meteor.subscribe('users')]
+  after: -> document.title = "#{@data.tools.count()} tools | devdev.io"
 
 class @ToolController extends RouteController
 
@@ -19,4 +22,6 @@ class @ToolController extends RouteController
     page: 'tools'
 
   waitOn: -> Meteor.subscribe('tool', @params.id)
+
+  after: -> document.title = "#{@tool.name()} | devdev.io"
 
