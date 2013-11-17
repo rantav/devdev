@@ -1,6 +1,6 @@
 class @Tool extends Model
-  @_collection: new Meteor.Collection('tools', transform: (data) => @modelize(data))
-  @modelize: (data) -> new Tool(data)
+  transform = (data) -> new Tool(data)
+  @_collection: new Meteor.Collection('tools', transform: transform)
 
   @find: (selector, options) ->
     super(_.extend({deletedAt: $exists: false}, selector), options)
@@ -23,7 +23,6 @@ class @Tool extends Model
   constructor: (data) ->
     super(data)
     @_usedBy = new MinimongoidHashBooleanSet(Tool._collection, data, 'usedBy')
-
 
   name: -> @data.name
   id: -> @data._id

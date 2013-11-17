@@ -3,6 +3,7 @@ class @MinimongoidHashBooleanSet
     @attrNames = @attrPath.split('.')
   has: (element) => element and @_getObj()[element]
   elements: => (id for id, value of @_getObj() when value)
+
   update: (element, exists) =>
     update = {}
     update["#{@attrPath}.#{element}"] = exists
