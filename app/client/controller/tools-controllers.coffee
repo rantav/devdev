@@ -1,8 +1,7 @@
 class @ToolsController extends RouteController
   data:
     page: 'tools'
-
-  waitOn: -> subscriptionHandles['tools']
+  waitOn: -> [Meteor.subscribe('tools'), Meteor.subscribe('users')]
 
 class @ToolController extends RouteController
 
@@ -19,5 +18,5 @@ class @ToolController extends RouteController
     toolId: @params.id
     page: 'tools'
 
-  waitOn: -> subscriptionHandles['tools']
+  waitOn: -> Meteor.subscribe('tool', @params.id)
 

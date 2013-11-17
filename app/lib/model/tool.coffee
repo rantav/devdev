@@ -39,10 +39,10 @@ class @Tool extends Model
     Url.imageUrl(logo, options)
 
   isUsedBy: (user) -> @_usedBy.has(user.id()) if user
-  usedBy: ->
+  usedBy: (options) ->
     elems = @_usedBy.elements()
     if elems and elems.length
-      User.findUsers($or: elems.map((id)->{_id: id}))
+      User.findUsers({$or: elems.map((id)->{_id: id})}, options)
 
   setUsedBy: (user, used) -> @_usedBy.update(user.id(), used) if user
 

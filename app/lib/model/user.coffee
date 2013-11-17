@@ -54,7 +54,7 @@ class @User extends Model
   isUsingTool: (tool) ->
     @_usedBy.has(tool.id()) if tool
 
-  usedTools: ->
+  usedTools: (options) ->
     elems = @_usedBy.elements()
     if elems and elems.length
-      Tool.find($or: elems.map((id)->{_id: id}))
+      Tool.find({$or: elems.map((id)->{_id: id})}, options)

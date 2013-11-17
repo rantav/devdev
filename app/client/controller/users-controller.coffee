@@ -1,6 +1,5 @@
 class @UsersController extends RouteController
-  template: 'users'
-  waitOn: -> subscriptionHandles['users']
+  waitOn: -> [Meteor.subscribe('tools'), Meteor.subscribe('users')]
   data:
     page: 'users'
 
@@ -18,6 +17,6 @@ class @UserController extends RouteController
     user: @user
     page: 'users'
 
-  waitOn: -> subscriptionHandles['users']
+  waitOn: -> Meteor.subscribe('user', @params.id)
 
 

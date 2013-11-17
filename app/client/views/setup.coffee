@@ -7,7 +7,6 @@ Template.setup.rendered = ->
   setupSegmentIo()
   analytics.pageview(document.location.pathname)
   setupDropdowns()
-  showSpinners()
   window.scrollTo(0, 0)
 
 spin = (target) ->
@@ -30,11 +29,6 @@ spin = (target) ->
     left: 'auto'
   spinner = new Spinner(opts).spin(target);
 
-
-showSpinners = ->
-  if not Session.get('devdevFullySynched')
-    NProgress.start()
-  $('.spin').each (i, e) -> spin(e)
 
 setupSegmentIo = ->
   if !window.analytics?

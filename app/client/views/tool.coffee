@@ -3,9 +3,6 @@ Template.tool.tool = ->
     document.title = "#{@tool.name()} | devdev.io"
   @tool
 
-Template.tool.synched = ->
-  Session.get('devdevFullySynched')
-
 Template.tool.toolId = ->
   @toolId
 
