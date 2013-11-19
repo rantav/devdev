@@ -4,6 +4,10 @@ Template.tool.tool = ->
 Template.tool.toolId = ->
   @toolId
 
+Template.tool.hasLogo = ->
+  if @tool
+    @tool.hasLogo()
+
 Template.tool.iUseItClass = ->
   if @tool and @tool.isUsedBy(User.current()) then "btn-success" else ""
 

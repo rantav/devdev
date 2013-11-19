@@ -16,9 +16,17 @@
   </div>
 
   <h1 class='name'>
-    <a class='pull-left tool-logo' href='{{tool.route}}'>
-      {{{imgPolaroid h=40}}}
-    </a>
+    {{#if hasLogo}}
+      <a class='pull-left tool-logo' href='{{tool.route}}'>
+        {{{imgPolaroid h=40}}}
+      </a>
+    {{else}}
+      <div class='pull-left'>
+        {{#with tool}}
+          {{> uploadWidget}}
+        {{/with}}
+      </div>
+    {{/if}}
     <div id='tool-name' class='pull-left' contenteditable='{{tool.nameEditableByCurrentUser}}'>{{tool.name}}</div>
   </h1>
   <div class='clearfix' style='margin:5px'></div>

@@ -33,10 +33,14 @@ class @Tool extends Model
 
   route: -> Router.path('tool', id: @id(), name: @name())
 
+  hasLogo: -> !!@data.logo
   logoUrl: (options) ->
     logo = @data.logo
     if not logo then return options.default
     Url.imageUrl(logo, options)
+
+  setLogo: (url) ->
+    Tool._collection.update({_id: @id()}, {$set: {logo: url}})
 
   isUsedBy: (user) -> @_usedBy.has(user.id()) if user
   usedBy: (options) ->
@@ -90,6 +94,15 @@ Tool._collection.allow
         fields[0] == 'name' and
         modifier.$set and
         modifier.$set.hasOwnProperty("name"))
+      return true
+
+    # Allow change logo, if you are the owner
+    if (userId and
+        userId == doc.data.creatorId and
+        fields.length == 1 and
+        fields[0] == 'logo' and
+        modifier.$set and
+        modifier.$set.hasOwnProperty("logo"))
       return true
 
 #     # Allowed to add comments
