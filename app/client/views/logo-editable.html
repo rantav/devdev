@@ -1,0 +1,20 @@
+<template name='logoEditable'>
+    {{#if hasLogo}}
+      <a class="close tool-logo-delete" rel='tooltip' title='Remove Logo (you may upload another one)'>&times;</a>
+      <a class='tool-logo' href='{{route}}'>
+        {{{imgPolaroid h=40}}}
+      </a>
+    {{else}}
+      <input class='filepicker'
+           type='filepicker'
+           data-fp-button-text='Pick Logo'
+           data-fp-mimetypes='image/*'
+           data-fp-container='modal'
+           data-fp-button-class='btn btn-small'
+           data-fp-multiple='false'
+           data-fp-store-location='S3'
+           data-fp-store-path='{{storePath}}'
+           data-fp-store-access='public'
+           data-fp-services='COMPUTER,IMAGE_SEARCH,URL'></input>
+    {{/if}}
+</template>

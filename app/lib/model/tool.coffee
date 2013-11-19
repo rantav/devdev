@@ -41,6 +41,8 @@ class @Tool extends Model
 
   setLogo: (url) ->
     Tool._collection.update({_id: @id()}, {$set: {logo: url}})
+  removeLogo: ->
+    Tool._collection.update({_id: @id()}, {$unset: {logo: 1}})
 
   isUsedBy: (user) -> @_usedBy.has(user.id()) if user
   usedBy: (options) ->
@@ -101,8 +103,9 @@ Tool._collection.allow
         userId == doc.data.creatorId and
         fields.length == 1 and
         fields[0] == 'logo' and
-        modifier.$set and
-        modifier.$set.hasOwnProperty("logo"))
+        ((modifier.$set and modifier.$set.hasOwnProperty("logo")) or
+        (modifier.$unset and modifier.$unset.hasOwnProperty("logo")))
+        )
       return true
 
 #     # Allowed to add comments
