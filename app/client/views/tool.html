@@ -36,4 +36,9 @@
       </button>
     {{/each}}
   </div>
+  {{#if iUseIt}}
+    {{#each projects}}
+      {{> toolProject }}
+    {{/each}}
+  {{/if}}
 </template>

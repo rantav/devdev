@@ -8,6 +8,9 @@ Template.tool.hasLogo = ->
   if @tool
     @tool.hasLogo()
 
+Template.tool.iUseIt = ->
+  @tool and @tool.isUsedBy(User.current())
+
 Template.tool.iUseItClass = ->
   if @tool and @tool.isUsedBy(User.current()) then "btn-success" else ""
 
@@ -19,6 +22,17 @@ Template.tool.twitterShareUrl = ->
 Template.tool.imgPolaroid = (options) ->
   if @tool
     Html.imgPolaroid(@tool.logoUrl(options.hash))
+
+Template.tool.projects = ->
+  u = User.current()
+  ps = u.projects().fetch()
+  if ps.length == 0
+    ps = [Project.new('', u)]
+  # ugly hack, I know...
+  for p in ps
+    p.currentTool = @tool
+    p.toolNamesSub = @toolNamesSub
+  ps
 
 Template.tool.events
   'click .icon-trash': ->
@@ -66,7 +80,6 @@ Template.tool.events
 Template.tool.rendered = ->
   # initialize all tooltips in this template
   $('.user-dense[rel=tooltip]').tooltip()
-
   if @data.tool and @data.tool.isUsedBy(User.current())
     $('.i-use-it').hover(->
       $(@).removeClass('btn-success').addClass('btn-danger').find('.text').html(' Unuse It')

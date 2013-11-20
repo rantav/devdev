@@ -1,8 +1,5 @@
 Template.user.user = -> @user
 
-Template.user.imgPolaroid = (height)->
-  Html.imgPolaroid(@logoUrl({h: height, default: Cdn.cdnify('/img/cogs-47x40.png')}))
-
 Template.user.readonly = ->
   # trick from http://stackoverflow.com/questions/18413457/meteor-template-pass-a-parameter-into-each-sub-template-and-retrieve-it-in-the
   _.extend({readonly: true},this)

@@ -9,10 +9,12 @@
 <h1>{{user.name}}'s tools</h1>
 <div class='usage'>
   <div class='title'>{{user.name}} Uses</div>
-  {{#each user.usedTools}}
-    <a class='tool-logo' href='{{route}}' title='{{name}}' rel='tooltip' style='margin-left: 3px'>
-      {{{imgPolaroid 40}}}
-    </a>
-  {{/each}}
+  <ul class="inline">
+    {{#each user.usedTools}}
+      <li>
+        {{> _tool}}
+      </li>
+    {{/each}}
+  </ul>
 </div>
 </template>

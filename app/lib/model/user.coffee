@@ -58,3 +58,6 @@ class @User extends Model
     elems = @_usedBy.elements()
     if elems and elems.length
       Tool.find({$or: elems.map((id)->{_id: id})}, options)
+
+  projects: (options) ->
+    Project.findByUserId(@id(), options)

@@ -15,10 +15,20 @@ Meteor.publish "tools", (options) ->
 
 Meteor.publish "tool", (id) ->
   check(id, String)
-  pubs = [Tool._collection.find({_id: id})]
+  pubs = []
+  toolIds = [id]
   if t = Tool.findOne(id)
     usedBy = t.usedBy(fields: userFields)
     pubs.push(usedBy) if usedBy
+  if u = User.findOneUser(@userId)
+    projects = u.projects()
+    if projects
+      pubs.push(projects)
+      projects.forEach((p) ->
+        tools = p.tools({}, {fields: {_id: 1}, transform: null})
+        toolIds = _.union(toolIds, tools.map((t) -> t._id))
+      )
+  pubs.push(Tool._collection.find($or: toolIds.map((tid) -> _id: tid)))
   pubs
 
 Meteor.publish "toolsDeleted", ->
@@ -29,6 +39,12 @@ Meteor.publish "toolsDeleted", ->
   fields:
     name: 1
     deletedAt: 1
+
+Meteor.publish "toolNames", ->
+  Tool.find(notDeleted, fields: name: 1)
+
+Meteor.publish "projects", ->
+  Project.find(notDeleted)
 
 userFields =
   profile: 1
@@ -48,10 +64,12 @@ Meteor.publish "users", (options) ->
     pubs.push(Tool._collection.find(_.extend({$or: toolIds}, notDeleted)))
   pubs
 
-Meteor.publish "user", (id)->
+Meteor.publish "user", (id) ->
   check(id, String)
   pubs = [Meteor.users.find({_id: id}, fields: userFields)]
   if u = User.findOneUser(id)
-    usedTools = u.usedTools()
-    pubs.push(usedTools) if usedTools
+    tools = u.usedTools()
+    pubs.push(tools) if tools
+    projects = u.projects(transform: null)
+    pubs.push(projects) if projects
   pubs

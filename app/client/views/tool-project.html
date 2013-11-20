@@ -1,0 +1,10 @@
+<template name='toolProject'>
+  <div class='usage'>
+    <div class='title'>Used With <!-- {{name}} --></div>
+    <input type='text' class='used-with'/>
+    <input type='hidden' class='used-with-id'/>
+    {{#each tools}}
+      {{> _tool}}
+    {{/each}}
+  </div>
+</template>

@@ -17,9 +17,12 @@ class @ToolController extends RouteController
       Session.set('toolId', @params.id)
       return null
 
+    toolNamesSub = Meteor.subscribe('toolNames')
+
     tool: @tool
     toolId: @params.id
     page: 'tools'
+    toolNamesSub: toolNamesSub
 
   waitOn: -> Meteor.subscribe('tool', @params.id)
 
