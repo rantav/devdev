@@ -1,6 +1,9 @@
 #!/bin/bash
 # Download the user's prod db into a local meteor db for testing/etc.
 
+# TO delete local data, download production data and test in load DB: (press CTRL+c in the middle)
+# rm -rf .meteor/local/db && METEOR_MIGRATIONS_OFF=1 mrt --settings settings.local.json; ./download-db.sh devdev.io && mrt --settings settings.local.json
+
 USAGE="Usage: download.sh YOURAPP.meteor.com [local meteor directory, defaults to .]"
 TEMP_DUMP_LOCATION=/tmp/meteor-download.mongodump
 
