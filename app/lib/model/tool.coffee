@@ -44,6 +44,9 @@ class @Tool extends Model
   removeLogo: ->
     Tool._collection.update({_id: @id()}, {$unset: {logo: 1}})
 
+  # Can the current user edit the logo?
+  canEditLogo: -> @data.creatorId == Meteor.userId()
+
   isUsedBy: (user) -> @_usedBy.has(user.id()) if user
   usedBy: (options) ->
     elems = @_usedBy.elements()

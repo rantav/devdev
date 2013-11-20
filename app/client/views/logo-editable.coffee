@@ -6,9 +6,6 @@ Template.logoEditable.storePath = ->
   tool = @
   'logos/'
 
-Template.logoEditable.hasLogo = ->
-  @hasLogo()
-
 Template.logoEditable.imgPolaroid = (options) ->
   Html.imgPolaroid(@logoUrl(options.hash))
 
