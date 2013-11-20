@@ -20,23 +20,6 @@ Template.tool.imgPolaroid = (options) ->
   if @tool
     Html.imgPolaroid(@tool.logoUrl(options.hash))
 
-newAspect = null
-Template.tool.newAspect = ->
-  if not newAspect
-    newAspect = new Aspect({aspectId: 'new-aspect'}, @tool)
-  newAspect.depend()
-  newAspect
-
-Template.tool.aspectEditor = (options) ->
-  aspect = options.hash.aspect
-  jqpath = options.hash.jqpath or '#aspect-edit-' + aspect.id()
-  renderAspectEditor(aspect, jqpath)
-
-Template.tool.aspectContributionViewer = (options) ->
-  contribution = options.hash.contribution
-  jqpath = options.hash.jqpath or '#aspect-view-' + contribution.id()
-  renderAspectContribution(contribution, jqpath)
-
 Template.tool.events
   'click .icon-trash': ->
     analytics.track('Delete aspect contribution')

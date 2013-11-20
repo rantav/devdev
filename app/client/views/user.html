@@ -7,18 +7,12 @@
   <img class='img-polaroid' src='{{user.photoUrl 40 }}'/>
 </div>
 <h1>{{user.name}}'s tools</h1>
-<table class='table'>
-  <thead>
-    <tr>
-      <th>
-        {{user.name}} Uses:
-        {{#each user.usedTools}}
-          <a class='tool-logo-small' href='{{route}}' title='{{name}}' rel='tooltip' style='margin-left: 3px'>
-            {{{imgPolaroid}}}
-          </a>
-        {{/each}}
-      </th>
-    </tr>
-  </thead>
-</table>
+<div class='usage'>
+  <div class='title'>{{user.name}} Uses</div>
+  {{#each user.usedTools}}
+    <a class='tool-logo' href='{{route}}' title='{{name}}' rel='tooltip' style='margin-left: 3px'>
+      {{{imgPolaroid 40}}}
+    </a>
+  {{/each}}
+</div>
 </template>

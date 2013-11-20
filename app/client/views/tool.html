@@ -24,22 +24,16 @@
     <div id='tool-name' class='pull-left' contenteditable='{{tool.nameEditableByCurrentUser}}'>{{tool.name}}</div>
   </h1>
   <div class='clearfix' style='margin:5px'></div>
-  <table class='table'>
-    <tbody>
-      <tr class='used-by'>
-        <th>Used By</th>
-        <td>
-          {{#each tool.usedBy}}
-            <a class='user-dense pull-left' href='{{route}}' rel='tooltip' title='Used by {{name}}'>
-              <img class='img-polaroid' src='{{photoUrl 40}}'/>
-            </a>
-          {{else}}
-            <button class='btn i-use-it {{disableAnonymous}}'>
-              <i class='icon-white icon-thumbs-up'></i> Be the first to use it
-            </button>
-          {{/each}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class='usage'>
+    <div class='title'>Used By</div>
+    {{#each tool.usedBy}}
+      <a class='user-dense' href='{{route}}' rel='tooltip' title='Used by {{name}}'>
+        <img class='img-polaroid' src='{{photoUrl 40}}'/>
+      </a>
+    {{else}}
+      <button class='btn i-use-it {{disableAnonymous}}'>
+        <i class='icon-white icon-thumbs-up'></i> Be the first to use it
+      </button>
+    {{/each}}
+  </div>
 </template>
