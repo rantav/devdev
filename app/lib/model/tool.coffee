@@ -45,7 +45,9 @@ class @Tool extends Model
     Tool._collection.update({_id: @id()}, {$unset: {logo: 1}})
 
   # Can the current user edit the logo?
-  canEditLogo: -> @data.creatorId == Meteor.userId()
+  canEditLogo: ->
+    uid = Meteor.userId()
+    uid and (@data.creatorId == uid or !@data.logo)
 
   isUsedBy: (user) -> @_usedBy.has(user.id()) if user
   usedBy: (options) ->
@@ -101,7 +103,7 @@ Tool._collection.allow
         modifier.$set.hasOwnProperty("name"))
       return true
 
-    # Allow change logo, if you are the owner
+    # Allow change the logo, if you are the owner
     if (userId and
         userId == doc.data.creatorId and
         fields.length == 1 and
@@ -109,6 +111,15 @@ Tool._collection.allow
         ((modifier.$set and modifier.$set.hasOwnProperty("logo")) or
         (modifier.$unset and modifier.$unset.hasOwnProperty("logo")))
         )
+      return true
+
+    # Allow add a logo, if there's no logo yet
+    if (userId and
+        fields.length == 1 and
+        fields[0] == 'logo' and
+        modifier.$set and
+        modifier.$set.hasOwnProperty("logo") and
+        not doc.data.logo)
       return true
 
 #     # Allowed to add comments
@@ -123,7 +134,7 @@ Tool._collection.allow
 #     # can only remove your own documents
 #     doc.owner == userId
 
-  fetch: ['creatorId']
+  fetch: ['creatorId', 'logo']
 
 # Wishes.deny
 #   update: (userId, doc, fields, modifier) ->
