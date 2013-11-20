@@ -17,7 +17,8 @@ Meteor.publish "tool", (id) ->
   check(id, String)
   pubs = [Tool._collection.find({_id: id})]
   if t = Tool.findOne(id)
-    pubs.push(t.usedBy(fields: userFields));
+    usedBy = t.usedBy(fields: userFields)
+    pubs.push(usedBy) if usedBy
   pubs
 
 Meteor.publish "toolsDeleted", ->
@@ -51,5 +52,6 @@ Meteor.publish "user", (id)->
   check(id, String)
   pubs = [Meteor.users.find({_id: id}, fields: userFields)]
   if u = User.findOneUser(id)
-    pubs.push(u.usedTools());
+    usedTools = u.usedTools()
+    pubs.push(usedTools) if usedTools
   pubs
