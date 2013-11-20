@@ -8,7 +8,7 @@ CDN_ROOT = 'd16azfexq1dof6.cloudfront.net'
 
 Cdn.cdnify = (url) ->
   if not url then return ''
-  if isLocalhost then return url
+  if isLocalhost and url.indexOf('/') == 0 then return url
   l = getLocation(url)
   l.hostname = CDN_ROOT
   l.port = if l.protocol == 'https:' then 443 else 80
