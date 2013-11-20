@@ -1,5 +1,8 @@
-
+Technologies = new Meteor.Collection('technologies')
 Meteor.startup ->
+
+  if process.env.METEOR_MIGRATIONS_OFF
+    return
 
   Meteor.Migrations.add 'move logo', (log) ->
     Technologies.find().forEach (t) ->
