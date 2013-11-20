@@ -6,6 +6,5 @@ class @WelcomeController extends RouteController
     users: User.findUsers()
 
   waitOn: -> [
-    Meteor.subscribe('tools', _.extend({limit: 10}, toolsSort)),
-    Meteor.subscribe('users', {limit: 10})]
+    Meteor.subscribe('tools', _.extend({limit: 10}, toolsSort))]
   after: -> document.title = 'Choose the right tool for the job. Smartly | devdev.io'
