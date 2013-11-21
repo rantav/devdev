@@ -3,6 +3,17 @@ Template.toolProject.rendered = ->
   $(@find('.used-with')).typeahead(
     name: 'accounts'
     remote: "/typeahead/used-with?pid=#{@data.id()}&q=%QUERY"
+    template: (datum) ->
+      tool = Tool.findOne(datum.id)
+      url = tool.logoUrl({h: 20, default: Cdn.cdnify('/img/cogs-17x15.png')})
+      [
+        "<div class='media'>",
+          "<img class='media-object img pull-right' src='#{url}'/>",
+          "<div class='media-body'>",
+            "<p>#{datum.value}</p>",
+          "</div>",
+        "</div>"
+      ].join('')
   ).bind('typeahead:selected', (obj, datum) ->
     find('.used-with-id').value = datum.id
   )

@@ -21,8 +21,3 @@ Handlebars.registerHelper 'tagLink', (tagName, category) ->
 Handlebars.registerHelper 'marked', (markdown) ->
   marked(markdown)
 
-# Deps.autorun ->
-#   window.currentUser = User.current()
-
-# Handlebars.registerHelper 'currentUser', ->
-#   currentUser
