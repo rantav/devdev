@@ -21,3 +21,4 @@ observatory
 observatory-apollo
 observatory-galileo
 /migrations
+/http-methods

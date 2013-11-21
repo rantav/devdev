@@ -12,7 +12,8 @@
         "version": "0.3.2"
       },
       "migrations": {},
-      "iron-router": {}
+      "iron-router": {},
+      "http-methods": {}
     },
     "packages": {
       "momentjs": {
@@ -44,6 +45,11 @@
         "git": "https://github.com/EventedMind/iron-router.git",
         "tag": "v0.6.1",
         "commit": "4e1ee0581d68bff422a915dacb0bd30eae10fe08"
+      },
+      "http-methods": {
+        "git": "https://github.com/CollectionFS/Meteor-http-methods.git",
+        "tag": "v0.0.10",
+        "commit": "7fd4c5231611162add8cd849b0f7d6fbe041d5ba"
       }
     }
   }

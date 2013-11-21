@@ -19,3 +19,4 @@ collection-hooks
 spiderable
 migrations
 iron-router
+http-methods

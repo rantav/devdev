@@ -9,6 +9,7 @@
       "version": "0.3.2"
     },
     "migrations": {},
-    "iron-router": {}
+    "iron-router": {},
+    "http-methods": {}
   }
 }
