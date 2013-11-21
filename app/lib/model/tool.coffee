@@ -54,8 +54,20 @@ class @Tool extends Model
     elems = @_usedBy.elements()
     if elems and elems.length
       User.findUsers({$or: elems.map((id)->{_id: id})}, options)
-
   setUsedBy: (user, used) -> @_usedBy.update(user, used)
+
+  isUsedWithOtherTools: ->
+    Project.findByToolId(@id()).count() > 0
+
+  usedWithOtherTools: ->
+    projects = @projects()
+    toolIds = []
+    if projects
+      projects.forEach (p) ->
+        tools = p.tools({}, {fields: {_id: 1}, transform: null})
+        toolIds = _.union(toolIds, tools.map((t) -> t._id))
+      toolIds = _.without(toolIds, @id())
+    Tool.find(_id: $in: toolIds)
 
   isCurrentUserOwner: -> @data.creatorId == Meteor.userId()
 
@@ -67,6 +79,9 @@ class @Tool extends Model
 
   delete: ->
     Tool._collection.update({_id: @id()}, {$set: {deletedAt: new Date()}})
+
+  projects: (options) ->
+    Project.findByToolId(@id(), options)
 
 Tool._collection.allow
   insert: (userId, doc) ->

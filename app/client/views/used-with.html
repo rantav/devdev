@@ -1,0 +1,14 @@
+<template name='usedWith'>
+  {{#if isUsedWithOtherTools}}
+    <div class='usage'>
+      <div class='title'>Used With</div>
+      <ul class='inline'>
+        {{#each usedWithOtherTools}}
+          <li>
+            {{> _tool}}
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+</template>

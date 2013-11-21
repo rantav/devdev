@@ -10,10 +10,21 @@ class @Project extends Model
     pred["users.#{userId}"] = true
     @find(pred, options)
 
+  @findByToolId: (toolId, options) ->
+    pred = {}
+    pred["tools.#{toolId}"] = true
+    @find(pred, options)
+
   @findByUserIdAndTool: (userId, toolId, options) ->
     pred = {$and: [{},{}]}
     pred.$and[0]["users.#{userId}"] = true
     pred.$and[1]["tools.#{toolId}"] = true
+    @find(pred, options)
+
+  @findByUserIdOrTool: (userId, toolId, options) ->
+    pred = {$or: [{},{}]}
+    pred.$or[0]["users.#{userId}"] = true
+    pred.$or[1]["tools.#{toolId}"] = true
     @find(pred, options)
 
   @new: (name, user) ->

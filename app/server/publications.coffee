@@ -20,14 +20,19 @@ Meteor.publish "tool", (id) ->
   if t = Tool.findOne(id)
     usedBy = t.usedBy(fields: userFields)
     pubs.push(usedBy) if usedBy
-  if u = User.findOneUser(@userId)
-    projects = u.projects()
-    if projects
-      pubs.push(projects)
-      projects.forEach((p) ->
-        tools = p.tools({}, {fields: {_id: 1}, transform: null})
-        toolIds = _.union(toolIds, tools.map((t) -> t._id))
-      )
+  if @userId
+    # Publish projects (and their tools) with the currently logged in user,
+    # or that contain this tool
+    projects = Project.findByUserIdOrTool(@userId, id)
+  else
+    # Collect projects (and their tools) that contain this tool
+    projects = t.projects()
+  if projects
+    pubs.push(projects)
+    projects.forEach (p) ->
+      tools = p.tools({}, {fields: {_id: 1}, transform: null})
+      toolIds = _.union(toolIds, tools.map((t) -> t._id))
+
   pubs.push(Tool._collection.find($or: toolIds.map((tid) -> _id: tid)))
   pubs
 
