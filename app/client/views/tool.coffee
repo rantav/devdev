@@ -25,7 +25,7 @@ Template.tool.imgPolaroid = (options) ->
 
 Template.tool.projects = ->
   u = User.current()
-  ps = u.projects().fetch()
+  ps = u.projectsWithTool(@tool).fetch()
   if ps.length == 0
     ps = [Project.new('', u)]
   # ugly hack, I know...

@@ -6,8 +6,14 @@ class @Project extends Model
     super({$or: [{_id: idOrName}, {'name': new RegExp('^' + idOrName + '$', 'i')}]})
 
   @findByUserId: (userId, options) ->
-    pred = {users: {}}
-    pred.users[userId] = true
+    pred = {}
+    pred["users.#{userId}"] = true
+    @find(pred, options)
+
+  @findByUserIdAndTool: (userId, toolId, options) ->
+    pred = {$and: [{},{}]}
+    pred.$and[0]["users.#{userId}"] = true
+    pred.$and[1]["tools.#{toolId}"] = true
     @find(pred, options)
 
   @new: (name, user) ->
@@ -50,8 +56,8 @@ class @Project extends Model
   hasTool: (tool) -> @_tools.has(tool)
   tools: (q, options) ->
     elems = @_tools.elements()
-    if elems and elems.length
-      Tool.find(_.extend({$or: elems.map((id)->{_id: id})}, q), options)
+    if not elems or not elems.length then return []
+    Tool.find(_.extend({$or: elems.map((id)->{_id: id})}, q), options)
   setToolUsage: (tool, isUsed) -> @_tools.update(tool.id(), isUsed) if tool
 
   addUserAndTools: (user, tool1, tool2) ->

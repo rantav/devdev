@@ -60,3 +60,7 @@ class @User extends Model
 
   projects: (options) ->
     Project.findByUserId(@id(), options)
+
+  projectsWithTool: (tool, options) ->
+    toolId = if typeof tool == 'string' then tool else tool.id()
+    Project.findByUserIdAndTool(@id(), toolId, options)
