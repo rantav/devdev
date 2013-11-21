@@ -1,7 +1,10 @@
 class @MinimongoidHashBooleanSet
   constructor: (@collection, @data, @attrPath) ->
     @attrNames = @attrPath.split('.')
-  has: (element) => element and @_getObj()[element]
+  has: (element) =>
+    if element
+      id = if typeof element == 'string' then element else element.id()
+      return !!@_getObj()[id]
   elements: => (id for id, value of @_getObj() when value)
 
   update: (element, exists) =>

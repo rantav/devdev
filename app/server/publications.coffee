@@ -41,7 +41,7 @@ Meteor.publish "toolsDeleted", ->
     deletedAt: 1
 
 Meteor.publish "toolNames", ->
-  Tool.find(notDeleted, fields: name: 1)
+  Tool.find(notDeleted, fields: name: 1, logo: 1)
 
 Meteor.publish "projects", ->
   Project.find(notDeleted)

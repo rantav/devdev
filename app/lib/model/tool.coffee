@@ -49,7 +49,7 @@ class @Tool extends Model
     uid = Meteor.userId()
     uid and (@data.creatorId == uid or !@data.logo)
 
-  isUsedBy: (user) -> @_usedBy.has(user.id()) if user
+  isUsedBy: (user) -> @_usedBy.has(user)
   usedBy: (options) ->
     elems = @_usedBy.elements()
     if elems and elems.length

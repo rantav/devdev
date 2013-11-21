@@ -31,7 +31,6 @@ Template.tool.projects = ->
   # ugly hack, I know...
   for p in ps
     p.currentTool = @tool
-    p.toolNamesSub = @toolNamesSub
   ps
 
 Template.tool.events

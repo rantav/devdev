@@ -159,6 +159,22 @@ td.tags {
   top: -13px;
 }
 
+.tool-use-unuse {
+  position: relative;
+  right: 17px;
+  top: -7px;
+}
+
+.tool-use {
+  .tool-use-unuse();
+  color: green;
+}
+
+.tool-unuse {
+  .tool-use-unuse();
+  color: red;
+}
+
 .filepicker + .btn {
   margin-right: 5px;
 }

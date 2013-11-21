@@ -51,8 +51,7 @@ class @User extends Model
   setUsingTool: (tool, using) ->
     @_usedBy.update(tool.id(), using) if tool
 
-  isUsingTool: (tool) ->
-    @_usedBy.has(tool.id()) if tool
+  isUsingTool: (tool) -> @_usedBy.has(tool)
 
   usedTools: (options) ->
     elems = @_usedBy.elements()

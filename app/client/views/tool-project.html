@@ -1,10 +1,14 @@
 <template name='toolProject'>
   <div class='usage'>
     <div class='title'>Used With <!-- {{name}} --></div>
-    <input type='text' class='used-with'/>
+    <input type='text' class='used-with' placeholder='Add tool...'/>
     <input type='hidden' class='used-with-id'/>
-    {{#each tools}}
-      {{> _tool}}
-    {{/each}}
+    <ul class='inline'>
+      {{#each tools}}
+        <li>
+          {{> _tool}}
+        </li>
+      {{/each}}
+    </ul>
   </div>
 </template>

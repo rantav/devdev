@@ -40,14 +40,14 @@ class @Project extends Model
   deletedAt: -> @data.deletedAt
   creator: -> User.findOneUser(@data.creatorId)
 
-  hasUser: (user) -> @_users.has(user.id()) if user
+  hasUser: (user) -> @_users.has(user)
   users: (q, options) ->
     elems = @_users.elements()
     if elems and elems.length
       User.findUsers(_.extend({$or: elems.map((id)->{_id: id})}, q), options)
   setUserMembership: (user, isMember) -> @_users.update(user.id(), isMember) if user
 
-  hasTool: (tool) -> @_tools.has(tool.id()) if tool
+  hasTool: (tool) -> @_tools.has(tool)
   tools: (q, options) ->
     elems = @_tools.elements()
     if elems and elems.length
@@ -77,8 +77,6 @@ Project._collection.allow
 
   update: (userId, doc, fields, modifier) ->
     # can only change your own documents for now
-    console.log("doc.creatorId=#{doc.data.creatorId}")
-    console.log("userId=#{userId}")
     if doc.data.creatorId == userId then return true
 
 

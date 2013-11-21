@@ -8,7 +8,11 @@ Template.toolProject.rendered = ->
   )
 
 Template.toolProject.tools = ->
-  @tools(_id: $ne: @currentTool.id())
+  currentProject = @
+  @tools(_id: $ne: @currentTool.id()).map((t) ->
+    t.currentProject = currentProject
+    t
+  )
 
 Template.toolProject.events
   'keydown .used-with': (event) ->
