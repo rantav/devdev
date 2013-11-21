@@ -40,6 +40,9 @@
     {{#each projects}}
       {{> toolProject }}
     {{/each}}
+    {{#if displayAddProjectButton}}
+      <button class='btn btn-primary' id='add-project'>Add another project with {{tool.name}}</button>
+    {{/if}}
   {{/if}}
   {{#with tool}}
     {{> usedWith}}

@@ -33,6 +33,9 @@ Template.tool.projects = ->
     p.currentTool = @tool
   ps
 
+Template.tool.displayAddProjectButton = ->
+  User.current().projectsWithTool(@tool).count() > 0
+
 Template.tool.events
   'click .icon-trash': ->
     analytics.track('Delete aspect contribution')
@@ -75,6 +78,10 @@ Template.tool.events
   'click .not-implemented': (event) ->
     alertify.log '<strong>Coming soonish...</strong> <i class="icon-cogs pull-right"> </i>'
     analytics.track('Clicked disabled', {id: event.srcElement.id})
+
+  'click #add-project': ->
+    project = Project.create('', User.current())
+    project.setToolUsage(@tool, true)
 
 Template.tool.rendered = ->
   # initialize all tooltips in this template
