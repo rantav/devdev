@@ -8,7 +8,8 @@ HTTP.methods
     projectToolIds = []
     if project
       projectToolIds = project.tools({}, transform: null).map((t) -> t._id)
-    tools = Tool.find({$and: [{_id: {$nin: projectToolIds}}, {'name': new RegExp('^' + q , 'i')}]}, {transform: null})
+    tools = Tool.find({$and: [{_id: {$nin: projectToolIds}}, {'name': new RegExp('^' + q , 'i')}]},
+      {transform: null, limit: 10})
     tools = tools.map (t) ->
       id: t._id
       value: t.name
