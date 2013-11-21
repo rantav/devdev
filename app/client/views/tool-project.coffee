@@ -28,18 +28,18 @@ Template.toolProject.tools = ->
 Template.toolProject.currentTool = -> @currentTool
 
 Template.toolProject.events
-  'keydown .used-with': (event) ->
+  'keydown .used-with': (event, template) ->
     enter = event.which == 13
     if enter
-      addUsedWith(@, @currentTool)
+      withId = template.find('.used-with-id').value
+      withName = template.find('.used-with').value
+      addUsedWith(@, @currentTool, withId, withName)
 
 
-addUsedWith = (project, tool) ->
+addUsedWith = (project, tool, withId, withName) ->
   user = User.current()
-  withId = $('.used-with-id').val()
-  withName = $('.used-with').val()
   if project.isNew()
-    project = Project.create('Project X', user)
+    project = Project.create('', user)
   if withId
     addUsedWithId(user, project, tool, withId)
 
