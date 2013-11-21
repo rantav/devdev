@@ -3,6 +3,9 @@
 
 # TO delete local data, download production data and test in load DB: (press CTRL+c in the middle)
 # rm -rf .meteor/local/db && METEOR_MIGRATIONS_OFF=1 mrt --settings settings.local.json; ./download-db.sh devdev.io && mrt --settings settings.local.json
+# Then you have ot remove service login data:
+# mrt mongo
+# db.meteor_accounts_loginServiceConfiguration.remove({"service":"google"})
 
 USAGE="Usage: download.sh YOURAPP.meteor.com [local meteor directory, defaults to .]"
 TEMP_DUMP_LOCATION=/tmp/meteor-download.mongodump
