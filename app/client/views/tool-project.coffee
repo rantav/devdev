@@ -17,6 +17,7 @@ Template.toolProject.rendered = ->
   ).bind('typeahead:selected', (obj, datum) ->
     find('.used-with-id').value = datum.id
   )
+  @find('.used-with').focus()
 
 Template.toolProject.tools = ->
   currentProject = @
