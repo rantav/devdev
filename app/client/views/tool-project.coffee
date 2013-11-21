@@ -43,11 +43,27 @@ addUsedWith = (project, tool, withId, withName) ->
     project = Project.create('', user)
   if withId
     addUsedWithId(user, project, tool, withId)
-
-  # TODO: addUsedWithName
+    return
+  if withName
+    addUsedWithName(user, project, tool, withName)
 
 addUsedWithId = (user, project, tool, anotherToolId) ->
   anotherTool = Tool.findOne(anotherToolId)
   project.addUserAndTools(user, tool, anotherTool)
   user.setUsingTool(anotherTool, true)
   anotherTool.setUsedBy(user, true)
+
+addUsedWithName = (user, project, tool, withName) ->
+  withName = withName.trim()
+  Meteor.call 'resolveToolName', withName, (error, anotherToolId) ->
+    # If result is not null then it's the ID this tool was resolved to
+    if anotherToolId
+      Meteor.call('userUsesTool', user.id(), anotherToolId)
+    else
+      anotherTool = Tool.create(withName, user)
+      anotherTool.setUsedBy(user, true)
+      anotherToolId = anotherTool.id()
+    project.addUserAndTools(user, tool, anotherToolId)
+    user.setUsingTool(anotherToolId, true)
+
+

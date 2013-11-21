@@ -5,8 +5,8 @@ class @Tool extends Model
   @find: (selector, options) ->
     super(_.extend({deletedAt: $exists: false}, selector), options)
 
-  @findOne: (idOrName) ->
-    super({$or: [{_id: idOrName}, {'name': new RegExp('^' + idOrName + '$', 'i')}]})
+  @findOne: (idOrName, options) ->
+    super({$or: [{_id: idOrName}, {'name': new RegExp('^' + idOrName + '$', 'i')}]}, options)
 
   @create: (name, user) ->
     if not name or not user then return
@@ -55,7 +55,7 @@ class @Tool extends Model
     if elems and elems.length
       User.findUsers({$or: elems.map((id)->{_id: id})}, options)
 
-  setUsedBy: (user, used) -> @_usedBy.update(user.id(), used) if user
+  setUsedBy: (user, used) -> @_usedBy.update(user, used)
 
   isCurrentUserOwner: -> @data.creatorId == Meteor.userId()
 

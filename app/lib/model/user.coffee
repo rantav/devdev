@@ -48,8 +48,7 @@ class @User extends Model
         picture = Cdn.cdnify('/img/user.png')
     picture
 
-  setUsingTool: (tool, using) ->
-    @_usedBy.update(tool.id(), using) if tool
+  setUsingTool: (tool, using) -> @_usedBy.update(tool, using)
 
   isUsingTool: (tool) -> @_usedBy.has(tool)
 

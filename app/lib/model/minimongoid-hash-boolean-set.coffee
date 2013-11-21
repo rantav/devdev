@@ -2,12 +2,12 @@ class @MinimongoidHashBooleanSet
   constructor: (@collection, @data, @attrPath) ->
     @attrNames = @attrPath.split('.')
   has: (element) =>
-    if element
-      id = if typeof element == 'string' then element else element.id()
-      return !!@_getObj()[id]
+    if i = id(element)
+      return !!@_getObj()[i]
   elements: => (id for id, value of @_getObj() when value)
 
   update: (element, exists) =>
+    element = id(element)
     update = {}
     update["#{@attrPath}.#{element}"] = exists
     @collection.update({_id: @data._id}, $set: update)
@@ -18,3 +18,6 @@ class @MinimongoidHashBooleanSet
       obj = obj[name]
     obj || {}
 
+id = (element) ->
+  if element
+    return if typeof element == 'string' then element else element.id()

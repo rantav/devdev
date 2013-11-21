@@ -51,14 +51,14 @@ class @Project extends Model
     elems = @_users.elements()
     if elems and elems.length
       User.findUsers(_.extend({$or: elems.map((id)->{_id: id})}, q), options)
-  setUserMembership: (user, isMember) -> @_users.update(user.id(), isMember) if user
+  setUserMembership: (user, isMember) -> @_users.update(user, isMember)
 
   hasTool: (tool) -> @_tools.has(tool)
   tools: (q, options) ->
     elems = @_tools.elements()
     if not elems or not elems.length then return []
     Tool.find(_.extend({$or: elems.map((id)->{_id: id})}, q), options)
-  setToolUsage: (tool, isUsed) -> @_tools.update(tool.id(), isUsed) if tool
+  setToolUsage: (tool, isUsed) -> @_tools.update(tool, isUsed)
 
   addUserAndTools: (user, tool1, tool2) ->
     @setToolUsage(tool1, true)
