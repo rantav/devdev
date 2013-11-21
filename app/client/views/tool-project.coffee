@@ -7,9 +7,6 @@ Template.toolProject.rendered = ->
     find('.used-with-id').value = datum.id
   )
 
-Template.toolProject.destroyed = ->
-  console.log('destroyed')
-
 Template.toolProject.tools = ->
   @tools(_id: $ne: @currentTool.id())
 

@@ -5,4 +5,6 @@ Template._tool.rendered = ->
   $(@find('[rel=tooltip]')).tooltip()
 
 Template._tool.destroyed = ->
-  $(@find('[rel=tooltip]')).tooltip('hide')
+  try
+    $(@find('[rel=tooltip]')).tooltip('hide')
+  catch e
