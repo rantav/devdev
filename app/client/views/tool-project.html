@@ -1,6 +1,10 @@
 <template name='toolProject'>
   <div class='usage'>
-    <div class='title'>Used With <!-- {{name}} --></div>
+    <div class='title'>I use {{currentTool.name}}
+      {{#if name}}
+        at project {{name}}
+      {{/if}}
+      With</div>
     <input type='text' class='used-with' placeholder='Add tool...'/>
     <input type='hidden' class='used-with-id'/>
     <ul class='inline'>

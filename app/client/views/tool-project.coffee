@@ -25,6 +25,8 @@ Template.toolProject.tools = ->
     t
   )
 
+Template.toolProject.currentTool = -> @currentTool
+
 Template.toolProject.events
   'keydown .used-with': (event) ->
     enter = event.which == 13
