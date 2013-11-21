@@ -2,7 +2,9 @@ This had moved over to here https://trello.com/b/vyu4D9O5/devdev
 
 Short term:
 
-- Fix image uploading
-- Download data and test with production data
-- Limit the amount of data on page.
-- Do subscriptions and page titles proporly with iron-router https://mail.google.com/mail/u/0/?ui=2&shva=1#inbox/14254d1b7f921237
+- Add new tools by name in the project section
+
+- Name projects
+- Add projects implicitly
+- Merge projects data
+
