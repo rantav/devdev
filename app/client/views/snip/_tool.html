@@ -1,9 +1,11 @@
 <template name='_tool'>
   {{#if loggedIn}}
-    {{#if inProject}}
-      <a class="close tool-unuse" rel='tooltip' title='Remove {{name}} from project'>&times;</a>
-    {{else}}
-      <a class="close tool-use" rel='tooltip' title='Use {{name}}'>+</a>
+    {{#if inProjectView}}
+      {{#if inProject}}
+        <a class="close tool-unuse" rel='tooltip' title='Remove {{name}} from project'>&times;</a>
+      {{else}}
+        <a class="close tool-use" rel='tooltip' title='Use {{name}}'>+</a>
+      {{/if}}
     {{/if}}
   {{/if}}
   <a class='tool-logo tool-logo-list' href='{{route}}' title='{{name}}' rel='tooltip'>

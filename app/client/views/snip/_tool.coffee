@@ -1,6 +1,8 @@
 Template._tool.imgPolaroid = (height) ->
   Html.imgPolaroid(@logoUrl({h: height, default: Cdn.cdnify('/img/cogs-47x40.png')}))
 
+Template._tool.inProjectView = -> @currentProject
+
 Template._tool.inProject = -> @currentProject.hasUser(Meteor.userId())
 
 Template._tool.rendered = ->
