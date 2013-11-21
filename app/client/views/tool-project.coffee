@@ -28,6 +28,9 @@ Template.toolProject.tools = ->
 
 Template.toolProject.currentTool = -> @currentTool
 
+Template.toolProject.canRemoveProject = ->
+  (not @isNew()) and @isCurrentUserOwner()
+
 Template.toolProject.events
   'keydown .used-with': (event, template) ->
     enter = event.which == 13
@@ -36,6 +39,8 @@ Template.toolProject.events
       withName = template.find('.used-with').value
       addUsedWith(@, @currentTool, withId, withName)
 
+  'click .remove-project': ->
+    @delete()
 
 addUsedWith = (project, tool, withId, withName) ->
   user = User.current()

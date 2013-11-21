@@ -1,6 +1,7 @@
 class @Project extends Model
   transform = (data) -> new Project(data)
   @_collection: new Meteor.Collection('projects', transform: transform)
+  @_collection_del: new Meteor.Collection('projects_del', transform: transform)
 
   @findOne: (idOrName) ->
     super({$or: [{_id: idOrName}, {'name': new RegExp('^' + idOrName + '$', 'i')}]})
@@ -56,6 +57,7 @@ class @Project extends Model
   updatedAt: -> @data.updatedAt
   deletedAt: -> @data.deletedAt
   creator: -> User.findOneUser(@data.creatorId)
+  isNew: -> !@id()
 
   hasUser: (user) -> @_users.has(user)
   users: (q, options) ->
@@ -85,7 +87,8 @@ class @Project extends Model
     @_collection.update({_id: @id()}, {$set: {name: name}})
 
   delete: ->
-    @_collection.update({_id: @id()}, {$set: {deletedAt: new Date()}})
+    Project._collection_del.insert(@data)
+    Project._collection.remove({_id: @id()})
 
 Project._collection.allow
   insert: (userId, doc) ->
@@ -96,6 +99,17 @@ Project._collection.allow
     # can only change your own documents for now
     if doc.data.creatorId == userId then return true
 
+  remove: (userId, doc) ->
+    # the user must be logged in, and the document must be owned by the user
+    userId and doc.data.creatorId == userId
+
+
+  fetch: ['creatorId']
+
+Project._collection_del.allow
+  insert: (userId, doc) ->
+    # the user must be logged in, and the document must be owned by the user
+    userId and doc.data.creatorId == userId
 
   fetch: ['creatorId']
 

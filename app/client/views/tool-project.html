@@ -1,10 +1,15 @@
 <template name='toolProject'>
   <div class='usage'>
-    <div class='title'>I use {{currentTool.name}}
+    <div class='title'>
+      I use {{currentTool.name}}
       {{#if name}}
         at project {{name}}
       {{/if}}
-      With</div>
+      With
+    </div>
+    {{#if canRemoveProject}}
+      <a class="close remove-project pull-right" rel='tooltip' title='Remove Project'>&times;</a>
+    {{/if}}
     <input type='text' class='used-with' placeholder='Add tool...'/>
     <input type='hidden' class='used-with-id'/>
     <ul class='inline'>
