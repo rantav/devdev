@@ -17,9 +17,9 @@ Meteor.publish "tool", (id) ->
   check(id, String)
   pubs = []
   toolIds = [id]
-  if t = Tool.findOne(id)
-    usedBy = t.usedBy(fields: userFields)
-    pubs.push(usedBy) if usedBy
+  if not t = Tool.findOne(id) then return
+  usedBy = t.usedBy(fields: userFields)
+  pubs.push(usedBy) if usedBy
   if @userId
     # Publish projects (and their tools) with the currently logged in user,
     # or that contain this tool
