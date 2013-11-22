@@ -1,3 +1,4 @@
+refocus = false
 Template.toolProject.rendered = ->
   find = @find
   $(@find('.used-with')).typeahead(
@@ -17,7 +18,12 @@ Template.toolProject.rendered = ->
   ).bind('typeahead:selected', (obj, datum) ->
     find('.used-with-id').value = datum.id
   )
-  @find('.used-with').focus()
+
+  console.log(refocus)
+  if refocus
+    @find('.used-with').focus()
+    refocus = false
+
   $(@find('[rel=tooltip]')).tooltip()
 
 Template.toolProject.tools = ->
@@ -39,6 +45,7 @@ Template.toolProject.events
   'keydown .used-with': (event, template) ->
     enter = event.which == 13
     if enter
+      refocus = true
       withId = template.find('.used-with-id').value
       withName = template.find('.used-with').value
       addUsedWith(@, @currentTool, withId, withName)

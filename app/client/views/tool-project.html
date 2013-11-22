@@ -3,11 +3,10 @@
     <div class='title'>
       I
       {{#if usingCurrentTool}}
-        <button class='use-unuse btn btn-mini btn-success active' rel='tooltip' title='Click to remove {{currentTool.name}} from this project'>already use</button>
+        <button class='use-unuse btn btn-mini btn-success active' rel='tooltip' title='Click to remove {{currentTool.name}} from this project'>already use {{currentTool.name}}</button>
       {{else}}
-        <button class='use-unuse btn btn-mini btn-success' rel='tooltip' title='Click to mark that you use {{currentTool.name}} in this project'>would like to use</button>
+        <button class='use-unuse btn btn-mini btn-success' rel='tooltip' title='Click to mark that you use {{currentTool.name}} in this project'>would like to use {{currentTool.name}}</button>
       {{/if}}
-      <strong>{{currentTool.name}}</strong>
       {{#if name}}
         at project {{name}}
       {{/if}}
