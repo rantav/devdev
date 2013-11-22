@@ -26,6 +26,7 @@ Template.tool.imgPolaroid = (options) ->
 Template.tool.projects = ->
   u = User.current()
   ps = u.projectsWithTool(@tool).fetch()
+  #   ps = Project.findByUserIdOrTool(Meteor.userId(), @tool.id()).fetch()
   if ps.length == 0
     ps = [Project.new('', u)]
   # ugly hack, I know...
