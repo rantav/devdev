@@ -2,10 +2,14 @@
   <div class='usage'>
     <div class='title'>
       I
-      {{#if usingCurrentTool}}
-        <button class='use-unuse btn btn-mini btn-success active' rel='tooltip' title='Click to remove {{currentTool.name}} from this project'>already use {{currentTool.name}}</button>
+      {{#if isNew}}
+        use
       {{else}}
-        <button class='use-unuse btn btn-mini btn-success' rel='tooltip' title='Click to mark that you use {{currentTool.name}} in this project'>would like to use {{currentTool.name}}</button>
+        {{#if usingCurrentTool}}
+          <button class='use-unuse btn btn-mini btn-success active' rel='tooltip' title='Click to remove {{currentTool.name}} from this project'>already use {{currentTool.name}}</button>
+        {{else}}
+          <button class='use-unuse btn btn-mini btn-success' rel='tooltip' title='Click to mark that you use {{currentTool.name}} in this project'>would like to use {{currentTool.name}}</button>
+        {{/if}}
       {{/if}}
       {{#if name}}
         at project {{name}}

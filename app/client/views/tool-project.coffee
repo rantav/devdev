@@ -19,7 +19,6 @@ Template.toolProject.rendered = ->
     find('.used-with-id').value = datum.id
   )
 
-  console.log(refocus)
   if refocus
     @find('.used-with').focus()
     refocus = false

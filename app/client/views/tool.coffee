@@ -26,7 +26,7 @@ Template.tool.imgPolaroid = (options) ->
 Template.tool.projects = ->
   ps = Project.findByUserIdOrTool(Meteor.userId(), @tool.id()).fetch()
   if ps.length == 0
-    ps = [Project.new('', u)]
+    ps = [Project.new('', User.current())]
   # ugly hack, I know...
   for p in ps
     p.currentTool = @tool
@@ -39,7 +39,7 @@ Template.tool.projects = ->
     if bHas then return 1
 
 Template.tool.displayAddProjectButton = ->
-  User.current().projectsWithTool(@tool).count() > 0
+  Project.findByUserIdOrTool(Meteor.userId(), @tool.id()).count() > 0
 
 Template.tool.events
   'click .icon-trash': ->
