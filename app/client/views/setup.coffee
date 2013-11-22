@@ -74,10 +74,8 @@ setupSegmentIo = ->
 # Identifies the user for analytics purpose
 identify = ->
   Deps.autorun ->
-    if Meteor.userId()
-      user = Meteor.user()
-      if user and user.id()
-        analytics.identify("#{user.name()} - #{user.id()}")
+    if user = User.current()
+      analytics.identify("#{user.name()} - #{user.id()}")
 
 setupGa = ->
   if !window.ga?
