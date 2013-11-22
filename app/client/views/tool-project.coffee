@@ -18,6 +18,7 @@ Template.toolProject.rendered = ->
     find('.used-with-id').value = datum.id
   )
   @find('.used-with').focus()
+  $(@find('[rel=tooltip]')).tooltip()
 
 Template.toolProject.tools = ->
   currentProject = @
@@ -27,6 +28,9 @@ Template.toolProject.tools = ->
   )
 
 Template.toolProject.currentTool = -> @currentTool
+
+Template.toolProject.usingCurrentTool = ->
+  @hasTool(@currentTool)
 
 Template.toolProject.canRemoveProject = ->
   (not @isNew()) and @isCurrentUserOwner()
@@ -41,6 +45,9 @@ Template.toolProject.events
 
   'click .remove-project': ->
     @delete()
+
+  'click .use-unuse': ->
+    @setToolUsage(@currentTool, not @hasTool(@currentTool))
 
 addUsedWith = (project, tool, withId, withName) ->
   user = User.current()

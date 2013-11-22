@@ -24,15 +24,19 @@ Template.tool.imgPolaroid = (options) ->
     Html.imgPolaroid(@tool.logoUrl(options.hash))
 
 Template.tool.projects = ->
-  u = User.current()
-  ps = u.projectsWithTool(@tool).fetch()
-  #   ps = Project.findByUserIdOrTool(Meteor.userId(), @tool.id()).fetch()
+  ps = Project.findByUserIdOrTool(Meteor.userId(), @tool.id()).fetch()
   if ps.length == 0
     ps = [Project.new('', u)]
   # ugly hack, I know...
   for p in ps
     p.currentTool = @tool
-  ps
+  tool = @tool
+  ps.sort (a, b) ->
+    aHas = a.hasTool(tool)
+    bHas = b.hasTool(tool)
+    if aHas == bHas then return 0
+    if aHas then return -1
+    if bHas then return 1
 
 Template.tool.displayAddProjectButton = ->
   User.current().projectsWithTool(@tool).count() > 0

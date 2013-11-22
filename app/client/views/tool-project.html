@@ -1,7 +1,13 @@
 <template name='toolProject'>
   <div class='usage'>
     <div class='title'>
-      I use {{currentTool.name}}
+      I
+      {{#if usingCurrentTool}}
+        <button class='use-unuse btn btn-mini btn-success active' rel='tooltip' title='Click to remove {{currentTool.name}} from this project'>already use</button>
+      {{else}}
+        <button class='use-unuse btn btn-mini btn-success' rel='tooltip' title='Click to mark that you use {{currentTool.name}} in this project'>would like to use</button>
+      {{/if}}
+      <strong>{{currentTool.name}}</strong>
       {{#if name}}
         at project {{name}}
       {{/if}}
