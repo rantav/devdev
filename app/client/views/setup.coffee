@@ -76,7 +76,7 @@ identify = ->
   Deps.autorun ->
     if Meteor.userId()
       user = Meteor.user()
-      if user.id()
+      if user and user.id()
         analytics.identify("#{user.name()} - #{user.id()}")
 
 setupGa = ->
