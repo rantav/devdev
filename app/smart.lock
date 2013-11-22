@@ -13,7 +13,8 @@
       },
       "migrations": {},
       "iron-router": {},
-      "http-methods": {}
+      "http-methods": {},
+      "pince": {}
     },
     "packages": {
       "momentjs": {
@@ -50,6 +51,11 @@
         "git": "https://github.com/CollectionFS/Meteor-http-methods.git",
         "tag": "v0.0.10",
         "commit": "7fd4c5231611162add8cd849b0f7d6fbe041d5ba"
+      },
+      "pince": {
+        "git": "https://github.com/mad-eye/pince.git",
+        "tag": "v0.0.2",
+        "commit": "ac4c09d12b850ce09f2deefbcbfd13a6620ec7aa"
       }
     }
   }

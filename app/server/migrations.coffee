@@ -1,7 +1,9 @@
 Technologies = new Meteor.Collection('technologies')
+log = new Logger('startup');
 Meteor.startup ->
 
   if process.env.METEOR_MIGRATIONS_OFF
+    log.info("METEOR_MIGRATIONS_OFF is set, will not run migrations")
     return
 
   Meteor.Migrations.add 'move logo', (log) ->

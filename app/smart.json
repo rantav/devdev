@@ -10,6 +10,7 @@
     },
     "migrations": {},
     "iron-router": {},
-    "http-methods": {}
+    "http-methods": {},
+    "pince": {}
   }
 }

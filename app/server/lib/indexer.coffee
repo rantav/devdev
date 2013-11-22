@@ -1,5 +1,5 @@
 root = exports ? this
-
+log = new Logger('indexer')
 class Indexer
 
   elasticsearch = Meteor.require('elasticsearch')
@@ -7,7 +7,7 @@ class Indexer
   priv = Meteor.settings['elastic-search']
   suggestEnabled = settings['suggest-enabled']
   if settings
-    console.log('Will connect to ES at ' + settings.host + ':' + settings.port + '  Using index: ' + settings.index)
+    log.trace('Will connect to ES at ' + settings.host + ':' + settings.port + '  Using index: ' + settings.index)
     conf =
       _index: settings.index
       _type: 'tool'
@@ -87,10 +87,10 @@ class Indexer
     Meteor.sync((done) ->
       tools.indices.putMapping(options, mapping, (err, data) ->
         if err
-          console.log(err)
+          log.error(err)
           done(err)
         else
-          console.log('ES Mapping success.')
+          log.trace('ES Mapping success.')
           done(null, data)
       )
     )
@@ -102,10 +102,10 @@ class Indexer
     Meteor.sync((done) ->
       tools.index({_id: techData._id}, techData, (err, data) ->
         if err
-          console.error(err)
+          log.error(err)
           done(err)
         else
-          console.log("ES Index success.")
+          log.trace("ES Index success.")
           done(null, data)
       )
     )
@@ -118,10 +118,10 @@ class Indexer
     Meteor.sync((done) =>
       @bulkIndex(tools, options, techDatas, (err, data) ->
         if err
-          console.error(err)
+          log.error(err)
           done(err)
         else
-          console.log("ES Index success.")
+          log.trace("ES Index success.")
           done(null, data)
       )
     )
@@ -149,10 +149,10 @@ class Indexer
     Meteor.sync((done) ->
       tools.delete({_id: techId}, (err, data) ->
         if err
-          console.error(err)
+          log.error(err)
           done(err)
         else
-          console.log("Delete success. " + data)
+          log.trace("Delete success. " + data)
           done(null, data)
       )
     )
