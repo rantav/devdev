@@ -1,5 +1,5 @@
 class @UsersController extends RouteController
-  waitOn: -> [Meteor.subscribe('tools'), Meteor.subscribe('users')]
+  waitOn: -> Meteor.subscribe('users')
   data:
     page: 'users'
     users: User.findUsers()

@@ -1,10 +1,15 @@
+toolsSort = sort: updatedAt: -1
 class @ToolsController extends RouteController
-  data:
+  data: ->
     page: 'tools'
-    tools: Tool.find({}, {sort: {updatedAt: -1}})
+    tools: Tool.find({}, toolsSort)
+    limit: parseInt(@params.limit || 10)
 
-  waitOn: -> [Meteor.subscribe('tools'), Meteor.subscribe('users')]
-  after: -> document.title = "#{@data.tools.count()} tools | devdev.io"
+  waitOn: ->
+    limit = @params.limit || 10
+    Meteor.subscribe('tools', _.extend({limit: limit}, toolsSort))
+
+  after: -> document.title = "#{@data().tools.count()} tools | devdev.io"
 
 class @ToolController extends RouteController
 

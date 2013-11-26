@@ -1,4 +1,23 @@
-root = exports ? this
+filters =
+  nProgressHook: ->
+    if @ready()
+      NProgress.done()
+    else
+      NProgress.start()
+      @stop()
+
+  resetScroll: ->
+    scrollTo = window.currentScroll || 0;
+    $('body').scrollTop(scrollTo);
+    $('body').css("min-height", 0);
+
+Router.before(filters.nProgressHook, {only: [
+  'welcome',
+  'tools',
+  'users',
+]})
+
+# Router.after(filters.resetScroll, {except:['welcome', 'tools', 'users']});
 
 Router.map ->
   @route 'welcome', path: '/', controller: 'WelcomeController'
@@ -20,4 +39,3 @@ Router.map ->
 
 Router.configure
   layoutTemplate: 'layout'
-  loadingTemplate: 'loading'

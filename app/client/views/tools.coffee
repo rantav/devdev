@@ -1,4 +1,7 @@
-Template.tools.tools = -> @tools
+Template.tools.tools = ->
+  @tools.rewind()
+  @tools
+
 
 Template.tools.imgPolaroid = ->
   Html.imgPolaroid(@logoUrl({h: 15, default: Cdn.cdnify('/img/cogs-17x15.png')}))
@@ -36,6 +39,9 @@ Template.tools.events
         alertify.error err
       else
         log.info('indexed. ' + JSON.stringify(ret))
+
+  'click #load-more': ->
+    Router.go("#{Router.current().route.originalPath}?limit=#{@limit + 10}")
 
 Template.tools.rendered = ->
   $('.user-xsmall[rel=tooltip]').tooltip()

@@ -7,7 +7,6 @@ Template.setup.rendered = ->
   setupSegmentIo()
   analytics.pageview(document.location.pathname)
   setupDropdowns()
-  window.scrollTo(0, 0)
 
 spin = (target) ->
   opts =
