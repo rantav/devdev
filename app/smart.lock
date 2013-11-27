@@ -14,7 +14,8 @@
       "migrations": {},
       "iron-router": {},
       "http-methods": {},
-      "pince": {}
+      "pince": {},
+      "server-eval": {}
     },
     "packages": {
       "momentjs": {
@@ -56,6 +57,11 @@
         "git": "https://github.com/mad-eye/pince.git",
         "tag": "v0.0.2",
         "commit": "ac4c09d12b850ce09f2deefbcbfd13a6620ec7aa"
+      },
+      "server-eval": {
+        "git": "https://github.com/gandev-de/meteor-server-eval.git",
+        "tag": "v0.4.0",
+        "commit": "15ea0a6ae43f453d772fff09956bc247331d4b65"
       }
     }
   }

@@ -11,6 +11,7 @@
     "migrations": {},
     "iron-router": {},
     "http-methods": {},
-    "pince": {}
+    "pince": {},
+    "server-eval": {}
   }
 }

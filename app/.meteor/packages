@@ -21,3 +21,4 @@ migrations
 iron-router
 http-methods
 pince
+server-eval
