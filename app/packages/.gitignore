@@ -24,3 +24,5 @@ observatory-galileo
 /http-methods
 /pince
 /server-eval
+/crypto-base64
+/crypto-base

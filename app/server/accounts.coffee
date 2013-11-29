@@ -2,11 +2,12 @@ Accounts.onCreateUser (options, user) ->
   # Take care of github details
   if (user.services.github)
       accessToken = user.services.github.accessToken
-      result = Meteor.http.get("https://api.github.com/user", {
-        params: {
+      result = Meteor.http.get("https://api.github.com/user",
+        params:
           access_token: accessToken
-        }
-      })
+        headers:
+          "User-Agent": "Meteor/1.0"
+      )
 
       if (result.error) then throw result.error;
 

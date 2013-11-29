@@ -15,7 +15,8 @@
       "iron-router": {},
       "http-methods": {},
       "pince": {},
-      "server-eval": {}
+      "server-eval": {},
+      "crypto-base64": {}
     },
     "packages": {
       "momentjs": {
@@ -62,6 +63,16 @@
         "git": "https://github.com/gandev-de/meteor-server-eval.git",
         "tag": "v0.4.0",
         "commit": "15ea0a6ae43f453d772fff09956bc247331d4b65"
+      },
+      "crypto-base64": {
+        "git": "https://github.com/dandv/meteor-crypto-base64.git",
+        "tag": "v3.1.2.0",
+        "commit": "03e523e80faaf7b10191ea50493414bec7cd0e3d"
+      },
+      "crypto-base": {
+        "git": "https://github.com/oortcloud/meteor-crypto-base.git",
+        "tag": "v3.1.2.1",
+        "commit": "5df8d82a0595553415bbfae2930c6ecbeece5794"
       }
     }
   }

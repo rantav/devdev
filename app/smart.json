@@ -12,6 +12,7 @@
     "iron-router": {},
     "http-methods": {},
     "pince": {},
-    "server-eval": {}
+    "server-eval": {},
+    "crypto-base64": {}
   }
 }
