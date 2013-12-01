@@ -58,6 +58,8 @@ class @Project extends Model
   deletedAt: -> @data.deletedAt
   creator: -> User.findOneUser(@data.creatorId)
   isNew: -> !@id()
+  githubUrl: -> @data.githubUrl
+  hasGithubUrl: -> !!@data.githubUrl
 
   hasUser: (user) -> @_users.has(user)
   users: (q, options) ->
@@ -84,7 +86,10 @@ class @Project extends Model
 
   rename: (name) ->
     if name == @name() then return
-    @_collection.update({_id: @id()}, {$set: {name: name}})
+    Project._collection.update({_id: @id()}, {$set: {name: name}})
+
+  setGithubUrl: (url) ->
+    Project._collection.update({_id: @id()}, {$set: {githubUrl: url}})
 
   delete: ->
     Project._collection_del.insert(@data)

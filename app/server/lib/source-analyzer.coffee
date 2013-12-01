@@ -9,7 +9,7 @@ knownPackagers =
   'java': /(^|\/)(pom\.xml)$/
 
 repoHanlers =
-  'github': /\bgithub.com\/([^\/]+)\/([^\/]+)\/?.*/
+  'github': Url.githubRegEx
 
 log = new Logger('source-analyzer')
 

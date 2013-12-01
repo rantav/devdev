@@ -55,6 +55,18 @@ Template.toolProject.events
   'click .use-unuse': ->
     @setToolUsage(@currentTool, not @hasTool(@currentTool))
 
+  'submit .github-url-form': (e, c) ->
+    e.preventDefault()
+    input = c.find('.github-url')
+    url = input.value
+    if Url.looksLikeGithubUrl(url) or url == ''
+      @setGithubUrl(url)
+      $(c.find('.control-group')).removeClass('error')
+      # Meteor.call('suggestUsedTools')
+    else
+      $(c.find('.control-group')).addClass('error')
+
+
 addUsedWith = (project, tool, withId, withName) ->
   user = User.current()
   if project.isNew()

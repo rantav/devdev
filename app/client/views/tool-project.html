@@ -15,6 +15,9 @@
         at project {{name}}
       {{/if}}
       With
+      {{#if hasGithubUrl}}
+        (at <a href='{{githubUrl}}'>{{githubUrl}}</a>)
+      {{/if}}
     </div>
     {{#if canRemoveProject}}
       <a class="close remove-project pull-right" rel='tooltip' title='Remove Project'>&times;</a>
@@ -28,5 +31,13 @@
         </li>
       {{/each}}
     </ul>
+    <div class="input-append">
+      <form class='github-url-form'>
+        <div class="control-group">
+          <input class='github-url input-xlarge' type="text" placeholder='Project GitHub URL' value='{{githubUrl}}'/>
+          <button class="btn" type="submit">OK</button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
