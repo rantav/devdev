@@ -31,7 +31,8 @@ Meteor.publish "tool", (id) ->
     pubs.push(projects)
     projects.forEach (p) ->
       tools = p.tools({}, {fields: {_id: 1}, transform: null})
-      toolIds = _.union(toolIds, tools.map((t) -> t._id))
+      suggestedTools = p.suggestedTools({}, {fields: {_id: 1}, transform: null})
+      toolIds = _.union(toolIds, tools.map((t) -> t._id), suggestedTools.map((t) -> t._id))
 
   pubs.push(Tool._collection.find($or: toolIds.map((tid) -> _id: tid)))
   pubs

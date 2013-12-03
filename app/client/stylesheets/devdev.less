@@ -159,19 +159,32 @@ td.tags {
   top: -13px;
 }
 
-.tool-use-unuse {
-  position: relative;
-  right: 6px;
-  top: -7px;
-}
 
 .tool-use {
-  .tool-use-unuse();
   color: green;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+  text-decoration: none;
+  text-align: center;
+  overflow: hidden;
+  width: 50px;
+  display: block;
+  position: relative;
+  top: -81px;
+  left: inherit;
+  line-height: 13px;
+}
+.tool-use:hover {
+  text-decoration: none;
+  color: green;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
 }
 
 .tool-unuse {
-  .tool-use-unuse();
+  position: relative;
+  right: 6px;
+  top: -7px;
   color: red;
 }
 

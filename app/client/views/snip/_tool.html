@@ -2,9 +2,7 @@
   {{#if loggedIn}}
     {{#if inProjectView}}
       {{#if inProject}}
-        <a class="close tool-unuse" rel='tooltip' title='Remove {{name}} from project'>&times;</a>
-      {{else}}
-        <a class="close tool-use" rel='tooltip' title='Use {{name}}'>+</a>
+        <a class="close tool-unuse" rel='tooltip' title='{{removeTitle}}'>&times;</a>
       {{/if}}
     {{/if}}
   {{/if}}
@@ -12,4 +10,11 @@
     {{{imgPolaroid 40}}}
     <span class='tool-caption'>{{name}}<span>
   </a>
+  {{#if loggedIn}}
+    {{#if inProjectView}}
+      {{#if suggested}}
+        <a class="tool-use" rel='tooltip' title='Add {{name}}' href='javascript:void 0'><i class="icon-plus-sign icon-2x"></i></a>
+      {{/if}}
+    {{/if}}
+  {{/if}}
 </template>

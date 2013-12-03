@@ -1,4 +1,7 @@
+log = new Logger('tool-project')
+
 refocus = false
+
 Template.toolProject.rendered = ->
   find = @find
   $(@find('.used-with')).typeahead(
@@ -25,12 +28,9 @@ Template.toolProject.rendered = ->
 
   $(@find('[rel=tooltip]')).tooltip()
 
-Template.toolProject.tools = ->
-  currentProject = @
-  @tools(_id: $ne: @currentTool.id()).map((t) ->
-    t.currentProject = currentProject
-    t
-  )
+Template.toolProject.tools = -> @tools(_id: $ne: @currentTool.id())
+
+Template.toolProject.suggestedTools = -> @suggestedTools()
 
 Template.toolProject.currentTool = -> @currentTool
 
@@ -62,8 +62,21 @@ Template.toolProject.events
     if Url.looksLikeGithubUrl(url) or url == ''
       @setGithubUrl(url)
       $(c.find('.control-group')).removeClass('error')
-      # Meteor.call('suggestUsedTools')
+      Meteor.call 'suggestUsedTools', url, (err, res) =>
+        if err
+          log.error(err)
+        else
+          usedToolIds = @tools({}, {fields: {_id: 1}, transform: null}).map((t) -> t._id)
+          tools = (new Tool(tool) for tool in res when tool._id not in usedToolIds)
+          user = User.current()
+          tools = tools.map (t) ->
+            if t.isNew()
+              return Tool.create(t.name(), user)
+            t
+          @addSuggestedTools(tools)
+
     else
+      @clearSuggestedTools([])
       $(c.find('.control-group')).addClass('error')
 
 

@@ -39,5 +39,12 @@
         </div>
       </form>
     </div>
+    <ul class='inline'>
+      {{#each suggestedTools}}
+        <li>
+          {{> _tool}}
+        </li>
+      {{/each}}
+    </ul>
   </div>
 </template>

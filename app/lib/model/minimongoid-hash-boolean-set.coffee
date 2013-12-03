@@ -12,6 +12,11 @@ class @MinimongoidHashBooleanSet
     update["#{@attrPath}.#{element}"] = exists
     @collection.update({_id: @data._id}, $set: update)
 
+  clear: =>
+    update = {}
+    update["#{@attrPath}"] = {}
+    @collection.update({_id: @data._id}, $set: update)
+
   _getObj: ->
     obj = @data
     for name in @attrNames

@@ -50,6 +50,7 @@ class @Project extends Model
     super(data)
     @_users = new MinimongoidHashBooleanSet(Project._collection, data, 'users')
     @_tools = new MinimongoidHashBooleanSet(Project._collection, data, 'tools')
+    @_suggestedTools = new MinimongoidHashBooleanSet(Project._collection, data, 'suggestedTools')
 
   name: -> @data.name
   id: -> @data._id
@@ -57,9 +58,19 @@ class @Project extends Model
   updatedAt: -> @data.updatedAt
   deletedAt: -> @data.deletedAt
   creator: -> User.findOneUser(@data.creatorId)
-  isNew: -> !@id()
   githubUrl: -> @data.githubUrl
   hasGithubUrl: -> !!@data.githubUrl
+
+  suggestedTools: (q, options) ->
+    ret = @toolsByIds(@_suggestedTools.elements(), q, options)
+    ret.forEach (t) -> t.suggested = true
+    ret
+  addSuggestedTools: (tools) ->
+    for t in tools
+      @setSuggestedTool(t, true)
+  clearSuggestedTools: -> @_suggestedTools.clear()
+  setSuggestedTool: (tool, isSuggested) -> @_suggestedTools.update(tool, isSuggested)
+
 
   hasUser: (user) -> @_users.has(user)
   users: (q, options) ->
@@ -69,10 +80,17 @@ class @Project extends Model
   setUserMembership: (user, isMember) -> @_users.update(user, isMember)
 
   hasTool: (tool) -> @_tools.has(tool)
-  tools: (q, options) ->
-    elems = @_tools.elements()
-    if not elems or not elems.length then return []
-    Tool.find(_.extend({$or: elems.map((id)->{_id: id})}, q), options)
+  tools: (q, options) -> @toolsByIds(@_tools.elements(), q, options)
+
+  toolsByIds: (toolIds, q, options) ->
+    if not toolIds or not toolIds.length then return []
+    ts = Tool.find(_.extend({$or: toolIds.map((id)->{_id: id})}, q), options)
+    currentProject = @
+    ts = ts.map (t) ->
+      t.currentProject = currentProject
+      t
+    ts
+
   setToolUsage: (tool, isUsed) -> @_tools.update(tool, isUsed)
 
   addUserAndTools: (user, tool1, tool2) ->
