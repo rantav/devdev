@@ -51,6 +51,7 @@ class @Project extends Model
     @_users = new MinimongoidHashBooleanSet(Project._collection, data, 'users')
     @_tools = new MinimongoidHashBooleanSet(Project._collection, data, 'tools')
     @_suggestedTools = new MinimongoidHashBooleanSet(Project._collection, data, 'suggestedTools')
+    @fetchingSuggestionsDep = new Deps.Dependency
 
   name: -> @data.name
   id: -> @data._id
@@ -70,7 +71,14 @@ class @Project extends Model
       @setSuggestedTool(t, true)
   clearSuggestedTools: -> @_suggestedTools.clear()
   setSuggestedTool: (tool, isSuggested) -> @_suggestedTools.update(tool, isSuggested)
+  hasSuggestedTools: -> not @_suggestedTools.isEmpty()
 
+  fetchingSuggestions: ->
+    @fetchingSuggestionsDep.depend()
+    @_fetchingSuggestions
+  setFetchingSuggestions: (val) ->
+    @fetchingSuggestions = val
+    @fetchingSuggestionsDep.changed()
 
   hasUser: (user) -> @_users.has(user)
   users: (q, options) ->

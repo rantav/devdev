@@ -13,6 +13,7 @@
     "http-methods": {},
     "pince": {},
     "server-eval": {},
-    "crypto-base64": {}
+    "crypto-base64": {},
+    "spin": {}
   }
 }

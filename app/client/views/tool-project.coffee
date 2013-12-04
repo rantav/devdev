@@ -55,6 +55,9 @@ Template.toolProject.events
   'click .use-unuse': ->
     @setToolUsage(@currentTool, not @hasTool(@currentTool))
 
+  'click .clear-suggestions': ->
+    @clearSuggestedTools()
+
   'submit .github-url-form': (e, c) ->
     e.preventDefault()
     input = c.find('.github-url')
@@ -62,9 +65,12 @@ Template.toolProject.events
     if Url.looksLikeGithubUrl(url) or url == ''
       @setGithubUrl(url)
       $(c.find('.control-group')).removeClass('error')
+      @setFetchingSuggestions(true)
       Meteor.call 'suggestUsedTools', url, (err, res) =>
+        @setFetchingSuggestions(false)
         if err
           log.error(err)
+          alertify.error("Sorry, we're unable to fetch #{url}")
         else
           usedToolIds = @tools({}, {fields: {_id: 1}, transform: null}).map((t) -> t._id)
           tools = (new Tool(tool) for tool in res when tool._id not in usedToolIds)
@@ -76,7 +82,7 @@ Template.toolProject.events
           @addSuggestedTools(tools)
 
     else
-      @clearSuggestedTools([])
+      @clearSuggestedTools()
       $(c.find('.control-group')).addClass('error')
 
 

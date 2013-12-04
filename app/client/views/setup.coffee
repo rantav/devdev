@@ -8,27 +8,6 @@ Template.setup.rendered = ->
   analytics.pageview(document.location.pathname)
   setupDropdowns()
 
-spin = (target) ->
-  opts =
-    lines: 9,
-    length: 10,
-    width: 5,
-    radius: 8,
-    corners: 1,
-    rotate: 0,
-    direction: 1,
-    color: '#000',
-    speed: 1,
-    trail: 60,
-    shadow: false,
-    hwaccel: false,
-    className: 'spinner',
-    zIndex: 2e9,
-    top: 'auto',
-    left: 'auto'
-  spinner = new Spinner(opts).spin(target);
-
-
 setupSegmentIo = ->
   if !window.analytics?
     # Create a queue, but don't obliterate an existing one!

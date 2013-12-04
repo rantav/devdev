@@ -16,7 +16,8 @@
       "http-methods": {},
       "pince": {},
       "server-eval": {},
-      "crypto-base64": {}
+      "crypto-base64": {},
+      "spin": {}
     },
     "packages": {
       "momentjs": {
@@ -61,13 +62,18 @@
       },
       "server-eval": {
         "git": "https://github.com/gandev-de/meteor-server-eval.git",
-        "tag": "v0.4.0",
-        "commit": "15ea0a6ae43f453d772fff09956bc247331d4b65"
+        "tag": "v0.4.1",
+        "commit": "4b9eb658ae02ad34fd4b525852bac9be90938744"
       },
       "crypto-base64": {
         "git": "https://github.com/dandv/meteor-crypto-base64.git",
         "tag": "v3.1.2.0",
         "commit": "03e523e80faaf7b10191ea50493414bec7cd0e3d"
+      },
+      "spin": {
+        "git": "https://github.com/SachaG/meteor-spin.git",
+        "tag": "v0.2.0",
+        "commit": "fd3a2871a69442848b4b4e74f5e1ae28fa4a95a4"
       },
       "crypto-base": {
         "git": "https://github.com/oortcloud/meteor-crypto-base.git",
