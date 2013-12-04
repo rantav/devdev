@@ -1,4 +1,4 @@
 {
   "elasticsearch": "0.3.11",
-  "node-github-list-packages": "0.0.3"
+  "node-github-list-packages": "0.0.4"
 }

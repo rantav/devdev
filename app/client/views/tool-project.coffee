@@ -77,7 +77,7 @@ Template.toolProject.events
           user = User.current()
           tools = tools.map (t) ->
             if t.isNew()
-              return Tool.create(t.name(), user)
+              return Helpers.addTool(t.name(), user)
             t
           @addSuggestedTools(tools)
 
