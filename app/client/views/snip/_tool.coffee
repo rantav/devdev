@@ -24,3 +24,6 @@ Template._tool.events
   'click .tool-use': ->
     @currentProject.setToolUsage(@, true)
     @currentProject.setSuggestedTool(@, false)
+    user = User.current()
+    @setUsedBy(user, true)
+    user.setUsingTool(@, true)
