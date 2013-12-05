@@ -11,3 +11,9 @@ Meteor.startup ->
   #     delete u.profile.contributionCount
   #     User._collection.update(u._id, u)
   #     log.info("Deleted from #{u._id}"))
+
+  Meteor.Migrations.add 'calculate usageCount for tools', ((log) ->
+    Tool.find().forEach (t) ->
+      usageCount = t.usedByCount()
+      Tool._collection.update({_id: t.id()}, {$set: {usageCount: usageCount}})
+      log.info("Updated usageCount for #{t.id()} to #{usageCount}"))

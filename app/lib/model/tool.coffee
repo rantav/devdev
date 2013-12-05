@@ -55,6 +55,7 @@ class @Tool extends Model
     if elems and elems.length
       User.findUsers({$or: elems.map((id)->{_id: id})}, options)
   setUsedBy: (user, used) -> @_usedBy.update(user, used)
+  usedByCount: -> @_usedBy.elements().length
 
   isUsedWithOtherTools: ->
     Project.findByToolId(@id()).count() > 0
