@@ -1,4 +1,4 @@
-toolsSort = sort: updatedAt: -1
+toolsSort = sort: usageCount: -1
 class @WelcomeController extends RouteController
   data: ->
     page: 'welcome'
